@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22-may-2018 21:23:14 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Subcategoriapuesto" table="subcategoriapuesto" catalog="mydbproyecto" optimistic-lock="version">
+        <id name="pkIdSubcategoriapuesto" type="java.lang.Integer">
+            <column name="PK_Id_subcategoriapuesto" />
+            <generator class="identity" />
+        </id>
+        <property name="puesto" type="java.lang.Integer">
+            <column name="Fk_Id_puesto" not-null="true" />
+        </property>
+        <property name="subcategoria" type="java.lang.Integer">
+            <column name="Fk_Id_subcategoria" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

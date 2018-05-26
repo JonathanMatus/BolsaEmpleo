@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 05-may-2018 16:26:21 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Puesto" table="puesto" catalog="mydbproyecto" optimistic-lock="version">
+        <id name="pkIdPuesto" type="java.lang.Integer">
+            <column name="Pk_Id_Puesto" />
+            <generator class="identity" />
+        </id>
+        <property name="empresa" type="java.lang.Integer" >
+            <column name="Fk_id_Emp" not-null="true" />
+        </property>
+        <property name="tipoPublicacion" type="string">
+            <column name="tipo_publicacion" length="45" not-null="true" />
+        </property>
+        <property name="salario" type="big_decimal">
+            <column name="salario" precision="10" not-null="true" />
+        </property>
+        <property name="ultimoUsuario" type="java.lang.Integer">
+            <column name="ultimoUsuario" />
+        </property>
+        <property name="fechaCambios" type="date">
+            <column name="fechaCambios" length="10" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" not-null="true" />
+        </property>
+        
+    </class>
+</hibernate-mapping>

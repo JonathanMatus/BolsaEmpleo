@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 05-may-2018 16:26:21 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Usuario" table="usuario" catalog="mydbproyecto" optimistic-lock="version">
+        <id name="pkUsuario" type="java.lang.Integer">
+            <column name="PK_Usuario" />
+            <generator class="identity" />
+        </id>
+        <property name="usuario" type="string">
+            <column name="usuario" length="16" not-null="true" unique="true" />
+        </property>
+        <property name="pkEmail" type="string">
+            <column name="PK_Email" length="100" not-null="true" unique="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="32" not-null="true" />
+        </property>
+        <property name="fechaCreacion" type="date">
+            <column name="fecha_creacion" length="10" not-null="true" />
+        </property>
+        <property name="tipo" type="int">
+            <column name="tipo" not-null="true" />
+        </property>
+        <property name="fechaCambios" type="date">
+            <column name="fechaCambios" length="10" />
+        </property>
+        <property name="ultimoUsuario" type="java.lang.Integer">
+            <column name="ultimoUsuario" />
+        </property>
+       
+    </class>
+</hibernate-mapping>

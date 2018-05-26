@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 05-may-2018 16:26:21 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Oferente" table="oferente" catalog="mydbproyecto" optimistic-lock="version">
+        <id name="pkCedula" type="int">
+            <column name="Pk_Cedula" />
+            <generator class="assigned" />
+        </id>
+        <property name="localizacion"  type="java.lang.Integer">
+            <column name="Fk_Localizacion" not-null="true" />
+        </property>
+        <property name="usuario" type="java.lang.Integer">
+            <column name="Usuario_PK_Usuario" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" not-null="true" />
+        </property>
+        <property name="apellido1" type="string">
+            <column name="apellido1" length="45" not-null="true" />
+        </property>
+        <property name="apellido2" type="string">
+            <column name="apellido2" length="45" not-null="true" />
+        </property>
+        <property name="nacionalidad" type="string">
+            <column name="nacionalidad" length="45" not-null="true" />
+        </property>
+        <property name="correo" type="string">
+            <column name="correo" length="45" not-null="true" unique="true" />
+        </property>
+        <property name="residencia" type="string">
+            <column name="residencia" length="45" />
+        </property>
+        <property name="ultimoUsuario" type="java.lang.Integer">
+            <column name="ultimoUsuario" />
+        </property>
+        <property name="fechaCambios" type="date">
+            <column name="fechaCambios" length="10" />
+        </property>
+       
+    </class>
+</hibernate-mapping>
