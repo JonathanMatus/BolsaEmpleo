@@ -91,7 +91,7 @@ public class SubcategoriaDao extends HibernateUtil implements IBaseDAO<Subcatego
            List<Subcategoria> acesso;
         try{
             iniciaOperacion();
-            acesso = (List<Subcategoria>) getSesion().createQuery(query);
+             acesso = (List<Subcategoria>) getSesion().createSQLQuery(query).addEntity(Subcategoria.class).list();
         }catch(HibernateException he){
             manejaExcepcion(he);
             throw he;

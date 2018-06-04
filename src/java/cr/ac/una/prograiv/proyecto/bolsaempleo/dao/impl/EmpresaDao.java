@@ -91,7 +91,7 @@ public class EmpresaDao extends HibernateUtil implements IBaseDAO<Empresa, Integ
           List<Empresa> acesso;
         try{
             iniciaOperacion();
-            acesso = (List<Empresa>) getSesion().createQuery(query);
+      acesso = (List<Empresa>) getSesion().createSQLQuery(query).addEntity(Empresa.class).list();
         }catch(HibernateException he){
             manejaExcepcion(he);
             throw he;

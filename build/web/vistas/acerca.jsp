@@ -23,7 +23,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Acerca de</title>
-<!--CSS Lbrary -->
+        <!--CSS Lbrary -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
         <!-- jQuery library -->
@@ -154,11 +154,13 @@
                                                 <hr>
                                             </div>
                                             <div class="col-md-6 "><div class="btnLogin">
-                                                    <a id="" href="vistas/registroEmpresa.jsp"><button type="button"  id="registrarEmpresa" name="signupE" class="btn btn-success" >Registrar Empresa</button> </a>
-                                                </div></div>
+                                                    <a id="" href="registroEmpresa.jsp"><button type="button"  id="registrarEmpresa" name="signupE" class="btn btn-success" >Registrar Empresa</button> </a>
+                                                </div>
+                                            </div>
                                             <div class="col-md-6 "><div class="btnLogin">
-                                                    <a id="" href="vistas/registro.jsp"><button type="button"  id="registrarOferente" name="signupO" class="btn btn-success" >Registrar Oferente</button> </a>
-                                                </div></div>
+                                                    <a id="" href="registro.jsp"><button type="button"  id="registrarOferente" name="signupO" class="btn btn-success" >Registrar Oferente</button> </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade active in" id="signin">

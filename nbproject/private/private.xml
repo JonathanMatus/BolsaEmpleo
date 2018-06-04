@@ -3,20 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/patei/Desktop/prograIV/ProyectoBolsaEmpleo/src/java/cr/ac/una/prograiv/proyecto/bolsaempleo/controller/SubCategoriaServlet.java</file>
-            <file>file:/C:/Users/patei/Desktop/prograIV/ProyectoBolsaEmpleo/src/java/cr/ac/una/prograiv/proyecto/bolsaempleo/bl/impl/OferenteBL.java</file>
-            <file>file:/C:/Users/patei/Desktop/prograIV/ProyectoBolsaEmpleo/src/java/cr/ac/una/prograiv/proyecto/bolsaempleo/dao/impl/OferenteDao.java</file>
-            <file>file:/C:/Users/patei/Desktop/prograIV/ProyectoBolsaEmpleo/src/java/cr/ac/una/prograiv/proyecto/bolsaempleo/controller/UsuarioServlet.java</file>
-            <file>file:/C:/Users/patei/Desktop/prograIV/ProyectoBolsaEmpleo/web/vistas/administrador.jsp</file>
-            <file>file:/C:/Users/patei/Desktop/prograIV/ProyectoBolsaEmpleo/src/java/cr/ac/una/prograiv/proyecto/bolsaempleo/bl/impl/UsuarioBL.java</file>
-            <file>file:/C:/Users/patei/Desktop/prograIV/ProyectoBolsaEmpleo/src/java/cr/ac/una/prograiv/proyecto/bolsaempleo/domain/Oferente.java</file>
-            <file>file:/C:/Users/patei/Desktop/prograIV/ProyectoBolsaEmpleo/web/js/Administrador.js</file>
-            <file>file:/C:/Users/patei/Desktop/prograIV/ProyectoBolsaEmpleo/src/java/cr/ac/una/prograiv/proyecto/bolsaempleo/dao/impl/UsuarioDao.java</file>
-            <file>file:/C:/Users/patei/Desktop/prograIV/ProyectoBolsaEmpleo/web/css/administrador.css</file>
-            <file>file:/C:/Users/patei/Desktop/prograIV/ProyectoBolsaEmpleo/src/java/cr/ac/una/prograiv/proyecto/bolsaempleo/controller/OferenteServlet.java</file>
-            <file>file:/C:/Users/patei/Desktop/prograIV/ProyectoBolsaEmpleo/src/java/cr/ac/una/prograiv/proyecto/bolsaempleo/bl/IBaseBL.java</file>
-            <file>file:/C:/Users/patei/Desktop/prograIV/ProyectoBolsaEmpleo/src/java/cr/ac/una/prograiv/proyecto/bolsaempleo/dao/IBaseDAO.java</file>
-            <file>file:/C:/Users/patei/Desktop/prograIV/ProyectoBolsaEmpleo/src/java/cr/ac/una/prograiv/proyecto/bolsaempleo/bl/BaseBL.java</file>
+            <file>file:/C:/wamp64/www/BolsaEmpleo/src/java/cr/ac/una/prograiv/proyecto/bolsaempleo/dao/impl/OferenteDao.java</file>
+            <file>file:/C:/wamp64/www/BolsaEmpleo/src/java/cr/ac/una/prograiv/proyecto/bolsaempleo/controller/OferenteServlet.java</file>
+            <file>file:/C:/wamp64/www/BolsaEmpleo/src/java/cr/ac/una/prograiv/proyecto/bolsaempleo/dao/impl/EmpresaDao.java</file>
         </group>
     </open-files>
 </project-private>

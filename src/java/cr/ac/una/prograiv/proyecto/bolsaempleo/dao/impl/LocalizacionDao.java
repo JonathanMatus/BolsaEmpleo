@@ -90,7 +90,7 @@ public class LocalizacionDao extends HibernateUtil implements IBaseDAO<Localizac
           List<Localizacion> acesso;
         try{
             iniciaOperacion();
-            acesso = (List<Localizacion>) getSesion().createQuery(query);
+            acesso = (List<Localizacion>) getSesion().createSQLQuery(query).addEntity(Localizacion.class).list();
         }catch(HibernateException he){
             manejaExcepcion(he);
             throw he;

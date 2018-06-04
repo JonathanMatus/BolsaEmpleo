@@ -97,7 +97,7 @@ public class OferenteDao extends HibernateUtil implements IBaseDAO<Oferente, Int
           List<Oferente> acesso;
         try{
             iniciaOperacion();
-            acesso = (List<Oferente>) getSesion().createQuery(query);
+            acesso = (List<Oferente>) getSesion().createSQLQuery(query).addEntity(Oferente.class).list();
         }catch(HibernateException he){
             manejaExcepcion(he);
             throw he;

@@ -97,7 +97,8 @@ public class SubcategoriapuestoDao extends HibernateUtil implements IBaseDAO<Sub
            List<Subcategoriapuesto> acesso;
         try{
             iniciaOperacion();
-            acesso = (List<Subcategoriapuesto>) getSesion().createQuery(query);
+       acesso = (List<Subcategoriapuesto>) getSesion().createSQLQuery(query).addEntity(Subcategoriapuesto.class).list();
+
         }catch(HibernateException he){
             manejaExcepcion(he);
             throw he;
