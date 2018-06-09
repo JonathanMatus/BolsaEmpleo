@@ -167,7 +167,7 @@
 
                             <div class="  col-sm-12 col-md-12" >
 
-                                <div class="">
+                                <div id="registroPuesto">
                                     <h1 class="well" id="titulo">Registro Puesto</h1>
                                     <div class="col-lg-12 well">
                                         <div class="row">
@@ -283,11 +283,13 @@
                                                         <hr>
                                                     </div>
                                                     <div class="col-md-6 "><div class="btnLogin">
-                                                            <a id="" href="vistas/registroEmpresa.jsp"><button type="button"  id="registrarEmpresa" name="signupE" class="btn btn-success" >Registrar Empresa</button> </a>
-                                                        </div></div>
-                                                    <div class="col-md-6 "><div class="btnLogin">
-                                                            <a id="" href="vistas/registro.jsp"><button type="button"  id="registrarOferente" name="signupO" class="btn btn-success" >Registrar Oferente</button> </a>
-                                                        </div></div>
+                                                    <a id="" href="registroEmpresa.jsp"><button type="button"  id="registrarEmpresa" name="signupE" class="btn btn-success" >Registrar Empresa</button> </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 "><div class="btnLogin">
+                                                    <a id="" href="registro.jsp"><button type="button"  id="registrarOferente" name="signupO" class="btn btn-success" >Registrar Oferente</button> </a>
+                                                </div>
+                                            </div>
                                                 </div>
                                             </div>
                                             <div class="tab-pane fade active in" id="signin">

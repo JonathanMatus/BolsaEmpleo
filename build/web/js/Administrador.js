@@ -436,56 +436,74 @@ function eliminarOferente(idOferente) {
                     swal("Cancelado", "Se cancelo con exito!", "info");
                 }
             });
+            
+    function AsignarUsuarioOferente(correo, cedula) {
+        if (validar()) {
+//Se envia la información por ajax
+            swal({
+                title: "Espere por favor..",
+                text: "Ingresando la información de la empresa en la base de datos",
+                icon: "info",
+                buttons: false
+            });
+            $.ajax({
+                url: '../UsuarioServlet',
+                data: {
+                    accion: "guardarUsuario",
+                    usuario: $("#usu-" + cedula).val(),
+                    contra: $("#con-" + cedula).val(),
+                    tipo: 1,
+                    correo: correo
+                },
+                error: function () { //si existe un error en la respuesta del ajax
+                    swal("Error!", "Se genero un error, contacte al administrador (Error del ajax)", "error");
+                },
+                success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+                    var respuestaTxt = data.substring(2);
+                    var tipoRespuesta = data.substring(0, 2);
+                    if (tipoRespuesta === "C~") {
+                        swal("Correcto!", respuestaTxt, "success");
+                    } else {
+                        if (tipoRespuesta === "E~") {
+                            swal("Error!", respuestaTxt, "error");
+                        } else {
+                            swal("Error!", "Se genero un error, contacte al administrador", "error");
+                        }
+                    }
 
+
+                },
+                type: 'POST'
+            });
+        } else {
+            swal("Error!", "Debe digitar los campos del formulario", "error");
+        }
+    }
+
+    function validar() {
+        var validacion = true;
+        //Elimina estilo de error en los css
+        //notese que es sobre el grupo que contienen el input
+
+        $("#groupUsuario").removeClass("has-error");
+        $("#groupContra").removeClass("has-error");
+        $("#groupTipo").removeClass("has-error");
+
+
+        if ($("#usuario").val() === "") {
+            $("#groupUsuario").addClass("has-error");
+            validacion = false;
+        }
+        if ($("#contra").val() === "") {
+            $("#groupContra").addClass("has-error");
+            validacion = false;
+        }
+
+        if ($("#tipo").val() === "") {
+            $("#groupTipo").addClass("has-error");
+            validacion = false;
+        }
+        return validacion;
+    }
 }
-
-//******************************************************************************
-//******************************************************************************
-//metodos para eliminar personas
-//******************************************************************************
-//******************************************************************************
-//
-//function consultarPersonaByID(idPersona) {
-//    mostrarModal("myModal", "Espere por favor..", "Consultando la persona seleccionada");
-//    //Se envia la información por ajax
-//    $.ajax({
-//        url: 'PersonasServlet',
-//        data: {
-//            accion: "consultarPersonasByID",
-//            idPersona: idPersona
-//        },
-//        error: function () { //si existe un error en la respuesta del ajax
-//            cambiarMensajeModal("myModal", "Resultado acción", "Se presento un error, contactar al administador");
-//        },
-//        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
-//            // se oculta el mensaje de espera
-//            ocultarModal("myModal");
-//            limpiarForm();
-//            //se muestra el formulario
-//            $("#myModalFormulario").modal();
-//            //************************************************************************
-//            //carga información de la persona en el formulario
-//            //************************************************************************
-//            //se indicar que la cédula es solo readOnly
-//            $("#cedula").attr('readonly', 'readonly');
-//            //se modificar el hidden que indicar el tipo de accion que se esta realizando
-//            $("#personasAction").val("modificarPersona");
-//            //se carga la información en el formulario
-//            $("#cedula").val(data.pkCedula);
-//            $("#nombre").val(data.nombre);
-//            $("#apellido1").val(data.apellido1);
-//            $("#apellido2").val(data.apellido2);
-//            //carga de fecha
-//            var fecha = new Date(data.fecNacimiento);
-//            var fechatxt = fecha.getDate() + "/" + fecha.getMonth() + 1 + "/" + fecha.getFullYear();
-//            $("#dpFechaNacimiento").data({date: fechatxt});
-//            $("#dpFechaNacimientoText").val(fechatxt);
-//            //$("#dpFechaNacimiento")$('.datepicker').datepicker('update', new Date(2011, 2, 5));
-//            $("#sexo").val(data.sexo);
-//            $("#observaciones").val(data.observaciones);
-//        },
-//        type: 'POST',
-//        dataType: "json"
-//    });
-//}
 

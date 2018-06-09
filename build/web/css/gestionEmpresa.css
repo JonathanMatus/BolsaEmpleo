@@ -28,3 +28,6 @@ and open the template in the editor.
 #titulo{
     color: white;
 }
+#registroPuesto>.btn{
+     white-space: normal;
+}
