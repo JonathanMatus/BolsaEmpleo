@@ -32,3 +32,11 @@ build/web/WEB-INF/classes/cr/ac/una/prograiv/proyecto/bolsaempleo/controller/Sub
 build/web/WEB-INF/classes/hibernate.cfg.xml
 nbproject/private/private.properties
 nbproject/private/private.xml
+nbproject/private/private.xml
+nbproject/private/private.properties
+build/web/WEB-INF/classes/hibernate.cfg.xml
+build/web/WEB-INF/classes/cr/ac/una/prograiv/proyecto/bolsaempleo/controller/UsuarioServlet.class
+build/web/WEB-INF/classes/cr/ac/una/prograiv/proyecto/bolsaempleo/controller/SubCategoriaServlet.class
+build/web/WEB-INF/classes/cr/ac/una/prograiv/proyecto/bolsaempleo/controller/ControllerLogin.class
+build/web/js/Administrador.js
+build/web/css/gestionEmpresa.css
