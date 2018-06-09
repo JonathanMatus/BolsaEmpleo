@@ -208,13 +208,12 @@
                                                                 <select class="js-example-data-ajax form-control" id="categoria">
                                                                 </select>
                                                             </div>
-                                                            <div class=" form-group " >
-                                                                <div class=" form-group col-sm-6 " >
-                                                                    <button type="button" id="ingresarCategoria" class="btn  btn-info " data-toggle="modal" data-target="#ModalCategorias">ingresar</button>
+                                                            <div class=" form-group col-sm-12 " >
+                                                                <div class="col-sm-6 form-group">
+                                                                    <button type="button" id="ingresarCategoria" class="btn  btn-info form-control" data-toggle="modal" data-target="#ModalCategorias">ingresar</button>
                                                                 </div>
-                                                                <div class=" form-group col-sm-6 " >
-                                                                    <button type="button" id="mostrarSubCategoria" class="btn  btn-info">mostrar subcategorias</button>
-                                                                </div>
+                                                                <div class="col-sm-6 form-group"></div>
+
                                                             </div>
 
 
@@ -223,8 +222,11 @@
                                                                 <select class="js-example-data-ajax form-control" id="subCategoria" disabled="true">
                                                                 </select>
                                                             </div>
-                                                            <div class=" form-group" >
-                                                                <button type="button" id="ingresarSubCategoria" class="btn  btn-info " data-toggle="modal" data-target="#ModalSubCategorias">ingresar</button>
+                                                            <div class=" form-group col-sm-12" >
+                                                                <div class="col-sm-6 form-group">
+                                                                    <button type="button" id="ingresarSubCategoria" class="btn  btn-info form-control" data-toggle="modal" data-target="#ModalSubCategorias">ingresar</button>
+                                                                </div>
+                                                                <div class="col-sm-6 form-group"></div>
                                                             </div>
 
 
@@ -284,13 +286,13 @@
                                                         <hr>
                                                     </div>
                                                     <div class="col-md-6 "><div class="btnLogin">
-                                                    <a id="" href="registroEmpresa.jsp"><button type="button"  id="registrarEmpresa" name="signupE" class="btn btn-success" >Registrar Empresa</button> </a>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 "><div class="btnLogin">
-                                                    <a id="" href="registro.jsp"><button type="button"  id="registrarOferente" name="signupO" class="btn btn-success" >Registrar Oferente</button> </a>
-                                                </div>
-                                            </div>
+                                                            <a id="" href="registroEmpresa.jsp"><button type="button"  id="registrarEmpresa" name="signupE" class="btn btn-success" >Registrar Empresa</button> </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 "><div class="btnLogin">
+                                                            <a id="" href="registro.jsp"><button type="button"  id="registrarOferente" name="signupO" class="btn btn-success" >Registrar Oferente</button> </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="tab-pane fade active in" id="signin">

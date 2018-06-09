@@ -37,6 +37,81 @@ $(function () {
         $('#tablaOferente1').show();
         consultarOferente();
     });
+    $('#listaCategorias').click(function () {
+        ocultarTablas();
+        datatable = $('#tablaCategorias').DataTable({
+            responsive: true,
+            "destroy": true,
+            "language": {
+                "emptyTable": "No hay Datos disponibles en la tabla",
+                "lengthMenu": "Mostrar _MENU_ datos por pagina",
+                "zeroRecords": "Nada encontrado",
+                "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                "infoEmpty": "Sin datos para mostrar",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+
+        });
+        $('#tablaCategorias').show();
+        consultarCategorias();
+    });
+    $('#listaSubCategorias').click(function () {
+        ocultarTablas();
+        datatable = $('#tablaSubCategorias').DataTable({
+            responsive: true,
+            "destroy": true,
+            "language": {
+                "emptyTable": "No hay Datos disponibles en la tabla",
+                "lengthMenu": "Mostrar _MENU_ datos por pagina",
+                "zeroRecords": "Nada encontrado",
+                "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                "infoEmpty": "Sin datos para mostrar",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+
+        });
+        $('#tablaSubCategorias').show();
+        consultarSubCategorias();
+    });
+    $('#listaSubCategorias').click(function () {
+        ocultarTablas();
+        datatable = $('#tablaSubCategorias').DataTable({
+            responsive: true,
+            "destroy": true,
+            "language": {
+                "emptyTable": "No hay Datos disponibles en la tabla",
+                "lengthMenu": "Mostrar _MENU_ datos por pagina",
+                "zeroRecords": "Nada encontrado",
+                "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                "infoEmpty": "Sin datos para mostrar",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+
+        });
+        $('#tablaSubCategorias').show();
+        consultarSubCategorias();
+    });
     $('#listaPuestos').click(function () {
         ocultarTablas();
         datatable = $('#tablaPuestos').DataTable({
@@ -114,7 +189,7 @@ $(function () {
         ocultarTablas();
         datatable = $('#tablaEmpresaEspera').DataTable({
             responsive: true,
-            "destroy": true,          
+            "destroy": true,
             "language": {
                 "emptyTable": "No hay Datos disponibles en la tabla",
                 "lengthMenu": "Mostrar _MENU_ datos por pagina",
@@ -134,6 +209,7 @@ $(function () {
         $('#tablaEmpresaEspera').show();
         consultarEmpresaEspera();
     });
+    
 });
 function dibujarTablaOferenteEspera(dataJson) {
 //    //limpia la información que tiene la tabla
@@ -176,7 +252,7 @@ function dibujarTablaEmpresaEspera(dataJson) {
     }
 }
 function consultarOferenteEspera() {
-    datatable.clear();
+    
     swal({
         title: "Espere por favor..",
         text: "Consultando la información de oferentes en la base de datos",
@@ -202,7 +278,7 @@ function consultarOferenteEspera() {
     });
 }
 function consultarEmpresaEspera() {
-    datatable.clear();
+    
     swal({
         title: "Espere por favor..",
         text: "Consultando la información de Empresas en la base de datos",
@@ -229,6 +305,8 @@ function consultarEmpresaEspera() {
 }
 function ocultarTablas() {
     $('#tablaOferente1').hide();
+    $('#tablaCategorias').hide();
+    $('#tablaSubCategorias').hide();
     $('#tablaEmpresas1').hide();
     $('#tablaPuestos').hide();
     $('#tablaOferenteEspera1').hide();
@@ -268,7 +346,7 @@ function consultarPuestos() {
     });
 }
 function consultarEmpresas() {
-    datatable.clear();
+    
     swal({
         title: "Espere por favor..",
         text: "Consultando la información de empresas en la base de datos",
@@ -295,7 +373,7 @@ function consultarEmpresas() {
 }
 
 function consultarOferente() {
-    datatable.clear();
+    
     swal({
         title: "Espere por favor..",
         text: "Consultando la información de oferentes en la base de datos",
@@ -320,7 +398,101 @@ function consultarOferente() {
         dataType: "json"
     });
 }
+function consultarCategorias() {
+    
+    swal({
+        title: "Espere por favor..",
+        text: "Consultando la información de categorias en la base de datos",
+        icon: "info",
+        buttons: false
+    });
+    //Se envia la información por ajax
+    $.ajax({
+        url: 'CategoriaServlet',
+        data: {
+            accion: "consultarCategorias"
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de las categorias en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            dibujarTablaCategorias(data);
+            // se oculta el modal esta funcion se encuentra en el utils.js
+            swal("Correcto!", "La informacion ha sido cargada correctamente.", "success");
+        },
+        type: 'POST',
+        dataType: "json"
+    });
+}
+function consultarSubCategorias() {
+    datatable.clear();
+    swal({
+        title: "Espere por favor..",
+        text: "Consultando la información de subcategorias en la base de datos",
+        icon: "info",
+        buttons: false
+    });
+    //Se envia la información por ajax
+    $.ajax({
+        url: 'SubCategoriaServlet',
+        data: {
+            accion: "consultarSubCategorias"
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de las subcategorias en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            dibujarTablaSubCategorias(data);
+            // se oculta el modal esta funcion se encuentra en el utils.js
+            swal("Correcto!", "La informacion ha sido cargada correctamente.", "success");
+        },
+        type: 'POST',
+        dataType: "json"
+    });
+}
+function dibujarTablaCategorias(dataJson) {
+//    //limpia la información que tiene la tabla
+    var rowData;
+    datatable.clear();
+    for (var i = 0; i < dataJson.length; i++) {
 
+        rowData = dataJson[i];
+        datatable.row.add([
+            rowData.pkIdCategoria,
+            rowData.nombreCat,
+            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="consultarCategoriaByID(' + rowData.pkIdEmp + ');">' +
+                    '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
+                    '</button>' +
+                    '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="eliminarCategoria(' + rowData.pkIdEmp + ');">' +
+                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>' +
+                    '</button>'
+        ]).draw(false);
+    }
+
+
+}
+function dibujarTablaSubCategorias(dataJson) {
+//    //limpia la información que tiene la tabla
+    var rowData;
+    datatable.clear();
+    for (var i = 0; i < dataJson.length; i++) {
+
+        rowData = dataJson[i];
+        datatable.row.add([
+            rowData.pkIdSubcategoria,
+            rowData.categoria,
+            rowData.nombreSub,
+            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="consultarSubCategoriaByID(' + rowData.pkIdEmp + ');">' +
+                    '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
+                    '</button>' +
+                    '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="eliminarSubCategoria(' + rowData.pkIdEmp + ');">' +
+                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>' +
+                    '</button>'
+        ]).draw(false);
+    }
+
+
+}
 function dibujarTablaEmpresa(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
@@ -480,6 +652,96 @@ function eliminarOferente(idOferente) {
                             } else {
                                 swal("Correcto", "El dato ha sido eliminado con exito!", "success")
                                         .then(consultarOferente());
+                            }
+                        },
+                        type: 'POST',
+                        dataType: "text"
+                    });
+                } else {
+                    swal("Cancelado", "Se cancelo con exito!", "info");
+                }
+            });
+}
+function eliminarCategoria(idCategoria) {
+
+    swal({
+        title: "Esta seguro?",
+        text: "Una vez eliminado, no se podra recuperar el dato eliminado!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal({
+                        title: "Espere por favor..",
+                        text: "Eliminando la información de la categoria de la base de datos",
+                        icon: "info",
+                        buttons: false
+                    });
+                    $.ajax({
+                        url: 'CategoriaServlet',
+                        data: {
+                            accion: "eliminarCategoria",
+                            idCategoria: idCategoria
+                        },
+                        error: function () { //si existe un error en la respuesta del ajax
+                            swal("Resultado acción", "Se presento un error, contactar al administador", "error");
+                        },
+                        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+                            // se cambia el mensaje del modal por la respuesta del ajax
+                            var respuestaTxt = data.substring(2);
+                            var tipoRespuesta = data.substring(0, 2);
+                            if (tipoRespuesta === "E~") {
+                                swal("Resultado acción", respuestaTxt, "info");
+                            } else {
+                                swal("Correcto", "El dato ha sido eliminado con exito!", "success")
+                                        .then(consultarCategorias());
+                            }
+                        },
+                        type: 'POST',
+                        dataType: "text"
+                    });
+                } else {
+                    swal("Cancelado", "Se cancelo con exito!", "info");
+                }
+            });
+}
+function eliminarSubCategoria(idSubCategoria) {
+
+    swal({
+        title: "Esta seguro?",
+        text: "Una vez eliminado, no se podra recuperar el dato eliminado!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal({
+                        title: "Espere por favor..",
+                        text: "Eliminando la información de la subcategoria de la base de datos",
+                        icon: "info",
+                        buttons: false
+                    });
+                    $.ajax({
+                        url: 'SubCategoriaServlet',
+                        data: {
+                            accion: "eliminarSubCategoria",
+                            idSubCategoria: idSubCategoria
+                        },
+                        error: function () { //si existe un error en la respuesta del ajax
+                            swal("Resultado acción", "Se presento un error, contactar al administador", "error");
+                        },
+                        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+                            // se cambia el mensaje del modal por la respuesta del ajax
+                            var respuestaTxt = data.substring(2);
+                            var tipoRespuesta = data.substring(0, 2);
+                            if (tipoRespuesta === "E~") {
+                                swal("Resultado acción", respuestaTxt, "info");
+                            } else {
+                                swal("Correcto", "El dato ha sido eliminado con exito!", "success")
+                                        .then(consultarSubCategorias());
                             }
                         },
                         type: 'POST',

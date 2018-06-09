@@ -20,16 +20,27 @@ $(function () {
         cargarListaEmpresas();
         cargarListaCategorias();
     });
-
-    $('#mostrarSubCategoria').click(function () {
+    $('#categoria').on('select2:select', function (e) {
         var idCategoria = $('#categoria').select2('data');
-//        alert(idEmpresaText.val);
-        if ((idCategoria[0] != null)) {
-            document.getElementById("subCategoria").disabled = false;
-            $('#ingresarSubCategoria').show();
-            cargarListaSubCategorias(idCategoria[0].id);
-        }
+        document.getElementById("subCategoria").disabled = false;
+        $('#ingresarSubCategoria').show();
+        cargarListaSubCategorias(idCategoria[0].id);
     });
+    $('#categoria').on('select2:change', function (e) {
+        var idCategoria = $('#categoria').select2('data');
+        document.getElementById("subCategoria").disabled = false;
+        $('#ingresarSubCategoria').show();
+        cargarListaSubCategorias(idCategoria[0].id);
+    });
+//    $('#mostrarSubCategoria').click(function () {
+//        var idCategoria = $('#categoria').select2('data');
+////        alert(idEmpresaText.val);
+//        if ((idCategoria[0] != null)) {
+//            document.getElementById("subCategoria").disabled = false;
+//            $('#ingresarSubCategoria').show();
+//            cargarListaSubCategorias(idCategoria[0].id);
+//        }
+//    });
 
     $('#registrarPuesto').click(function () {
         enviar();
@@ -341,13 +352,14 @@ function cargarListaSubCategorias(id) {
                         if (params.term) {
                             return {
                                 where: params.term,
-                                accion: 'consultarSubCategoriasByCat'
-
+                                accion: 'consultarSubCategoriasByCat',
+                                idCategoria: id
                             };
                         } else {
                             return {
                                 where: "",
-                                accion: 'consultarSubCategoriasByCat'
+                                accion: 'consultarSubCategoriasByCat',
+                                idCategoria: id
                             };
                         }
                     },

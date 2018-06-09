@@ -74,7 +74,7 @@
         <link href="../css/gestionEmpresa.css" rel="stylesheet" type="text/css"/>
         <link href="../css/cssRegistro.css" rel="stylesheet" type="text/css"/>
         <link href="../css/css.css" rel="stylesheet" type="text/css"/>
-
+   
     </head>
     <body>
 
@@ -111,6 +111,9 @@
                         <% if (tipoUsuario.equals("1")) { %> 
 
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
+                        <% }%> 
+                        <% if (tipoUsuario.equals("0")) { %> 
+                    <li> <a href="actualizacion.jsp">Actualizacion</a></li>
                         <% }%> 
                 </ul>
                 <ul class="nav navbar-right top-nav">
@@ -189,16 +192,16 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        
-                                                       <div class="col-sm-6 form-group" >
+
+                                                        <div class="col-sm-6 form-group" >
                                                             <div class=" form-group" id="groupSubCate">
                                                                 <label>Subcategoria</label>
-                                                                <select class="js-example-data-ajax form-control" id="SubcategoriaList">
+                                                                <select class="js-example-data-ajax form-control" id="SubcategoriaList" disabled="true">
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        
-                                                 
+
+
                                                         <div class="col-sm-12 form-group" id="groupDescripcion">
                                                             <label>Descripción</label>
                                                             <textarea placeholder="Ingresar descripción.." rows="11" class="form-control" id="descripcion"></textarea>
