@@ -294,8 +294,20 @@ function cargarListaCategorias() {
             dataType: 'json',
             type: "GET",
             quietMillis: 50,
-            data: {
-                accion: "consultarCategorias"
+            data: function (params) {
+                if (params.term) {
+                    return {
+                        where: params.term,
+                        accion: 'consultarCategorias'
+
+                    };
+                } else {
+                    return {
+                        where: "",
+                        accion: 'consultarCategorias'
+                    };
+                }
+
             },
             processResults: function (data) {
 
@@ -317,7 +329,7 @@ function cargarListaCategorias() {
 }
 function cargarListaSubCategorias(id) {
     $('#subCategoria').select2({
-        minimumInputLength: 1,
+        minimumInputLength: 0,
         tags: [],
         ajax: {
             url: 'SubCategoriaServlet',
@@ -326,11 +338,18 @@ function cargarListaSubCategorias(id) {
             quietMillis: 50,
             data:
                     function (params) {
-                        return {
-                            where:  params.term,
-                            accion:'consultarSubCategoriasByCat',
-                            idCategoria:id
-                        };
+                        if (params.term) {
+                            return {
+                                where: params.term,
+                                accion: 'consultarSubCategoriasByCat'
+
+                            };
+                        } else {
+                            return {
+                                where: "",
+                                accion: 'consultarSubCategoriasByCat'
+                            };
+                        }
                     },
 
             processResults: function (data) {

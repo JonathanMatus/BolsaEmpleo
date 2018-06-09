@@ -8,8 +8,12 @@ package cr.ac.una.prograiv.proyecto.bolsaempleo.controller;
 import com.google.gson.Gson;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.EmpresaBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.LocalizacionBL;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.PuestoBL;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.UsuarioBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Empresa;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Localizacion;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Puesto;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
@@ -48,10 +52,13 @@ public class EmpresaServlet extends HttpServlet {
             //Se crea el objeto Persona
             Empresa p = new Empresa();
             Localizacion l = new Localizacion();
-            
+
             //Se crea el objeto de la logica de negocio
             EmpresaBL pBL = new EmpresaBL();
             LocalizacionBL lpBL = new LocalizacionBL();
+
+            Usuario u = new Usuario();
+            UsuarioBL ubl = new UsuarioBL();
             //Se hace una pausa para ver el modal
             Thread.sleep(1000);
 
@@ -65,13 +72,47 @@ public class EmpresaServlet extends HttpServlet {
             //**********************************************************************
             String accion = request.getParameter("accion");
             switch (accion) {
+                case "empresaEspera":
+                    json = new Gson().toJson(pBL.findByQuery("Select * from  mydbproyecto.empresa where Usuario_PK_Usuario is null"));
+                    out.print(json);
+                    break;
                 case "eliminarEmpresa":
 
                     p.setPkIdEmp(Integer.parseInt(request.getParameter("idEmpresa")));
 
                     //Se elimina el objeto
-                    pBL.delete(p);
+                    List<Empresa> empresas = pBL.findByQuery("select * from mydbproyecto.empresa where pk_id_emp = " + request.getParameter("idEmpresa") + ";");
 
+                    Empresa emp1 = empresas.get(0);
+                    //Se elimina el objeto
+                    pBL.delete(p);
+                    l.setPkIdLocalizacion(emp1.getLocalizacion());
+                    lpBL.delete(l);
+                    PuestoBL puestoBL = new PuestoBL();
+                    List<Puesto> puestos = puestoBL.findByQuery("select * from mydbproyecto.puesto where fk_id_emp = " + request.getParameter("idEmpresa") + ";");
+                    for (int i = 0; i < puestos.size(); i++) {
+                        Puesto puesto = puestos.get(i);
+                        puestoBL.delete(puesto);
+                    }
+                    
+                    //Se imprime la respuesta con el response
+                    out.print("La empresa fue eliminada correctamente");
+
+                    break;
+                case "eliminarEmpresaConUsuario":
+
+                    p.setPkIdEmp(Integer.parseInt(request.getParameter("idEmpresa")));
+
+                    //Se elimina el objeto
+                    List<Empresa> empresas1 = pBL.findByQuery("select * from mydbproyecto.empresa where pk_id_emp = " + request.getParameter("idEmpresa") + ";");
+
+                    Empresa emp = empresas1.get(0);
+                    //Se elimina el objeto
+                    pBL.delete(p);
+                    l.setPkIdLocalizacion(emp.getLocalizacion());
+                    lpBL.delete(l);
+                    u.setPkUsuario(emp.getUsuario());
+                    ubl.delete(u);
                     //Se imprime la respuesta con el response
                     out.print("La empresa fue eliminada correctamente");
 

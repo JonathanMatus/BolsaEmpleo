@@ -74,25 +74,43 @@ public class OferenteServlet extends HttpServlet {
             //se consulta cual accion se desea realizar
             //**********************************************************************
             String accion = request.getParameter("accion");
-            switch (accion) {  
-              
-                 case "oferentesEspera":               
+            switch (accion) {
+                case "oferentesEspera":
                     json = new Gson().toJson(ofeBL.findByQuery("Select * from  mydbproyecto.oferente where oferente.Usuario_PK_Usuario is null"));
-                    out.print(json);  
+                    out.print(json);
                     break;
-                  case "eliminarOferente":
+                case "eliminarOferenteConUsuario":
 
                     ofe.setPkCedula(Integer.parseInt(request.getParameter("idOferente")));
+                    List<Oferente> ofere = ofeBL.findByQuery("select * from mydbproyecto.oferente where pk_cedula = " + request.getParameter("idOferente") + ";");
 
+                    Oferente ofer = ofere.get(0);
                     //Se elimina el objeto
                     ofeBL.delete(ofe);
-
+                    l.setPkIdLocalizacion(ofer.getLocalizacion());
+                    lpBL.delete(l);
+                    u.setPkUsuario(ofer.getUsuario());
+                    ubl.delete(u);
                     //Se imprime la respuesta con el response
                     out.print("El oferente fue eliminada correctamente");
 
                     break;
-                    
-                    case "consultarOferente":
+                case "eliminarOferente":
+
+                    ofe.setPkCedula(Integer.parseInt(request.getParameter("idOferente")));
+                    List<Oferente> oferentes = ofeBL.findByQuery("select * from mydbproyecto.oferente where pk_cedula = " + request.getParameter("idOferente") + ";");
+
+                    Oferente ofer1 = oferentes.get(0);
+                    //Se elimina el objeto
+                    ofeBL.delete(ofe);
+                    l.setPkIdLocalizacion(ofer1.getLocalizacion());
+                    lpBL.delete(l);
+                   
+                    //Se imprime la respuesta con el response
+                    out.print("El oferente fue eliminada correctamente");
+
+                    break;
+                case "consultarOferente":
                     json = new Gson().toJson(ofeBL.findAll(Oferente.class.getName()));
                     out.print(json);
                     break;
@@ -106,10 +124,7 @@ public class OferenteServlet extends HttpServlet {
                     ofe.setNacionalidad(request.getParameter("nacionalidad"));
                     ofe.setCorreo(request.getParameter("correo"));
                     ofe.setResidencia(request.getParameter("residencia"));
-                    
-                   
-                    
-                    
+
                     DecimalFormatSymbols symbols = new DecimalFormatSymbols();
                     symbols.setGroupingSeparator(',');
                     symbols.setDecimalSeparator('.');

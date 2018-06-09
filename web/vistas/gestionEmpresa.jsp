@@ -68,7 +68,7 @@
         <link href="../css/gestionEmpresa.css" rel="stylesheet" type="text/css"/>
         <link href="../css/cssRegistro.css" rel="stylesheet" type="text/css"/>
         <link href="../css/css.css" rel="stylesheet" type="text/css"/>
-
+        <link href="../css/cssSideBar.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
 
@@ -106,6 +106,7 @@
 
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
                         <% }%> 
+                    <li> <a href="puestos.jsp">Puestos</a></li>
                 </ul>
                 <ul class="nav navbar-right top-nav">
 

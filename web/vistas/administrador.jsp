@@ -56,7 +56,7 @@
         <script src="../js/jscode.js" type="text/javascript"></script>
 
         <script src="../js/Administrador.js" type="text/javascript"></script>
-        <link href="../css/gestionEmpresa.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/cssSideBar.css" rel="stylesheet" type="text/css"/>
         <link href="../css/administrador.css" rel="stylesheet" type="text/css"/>
 
         <script src="../js/LoginJS.js" type="text/javascript"></script>
@@ -94,6 +94,7 @@
                     <li> <a href="administrador.jsp">Administrador</a></li>
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
                         <% }%> 
+                    <li> <a href="puestos.jsp">Puestos</a></li>
                 </ul>
                 <ul class="nav navbar-right top-nav">
 
@@ -123,15 +124,15 @@
                         <li>
                             <a href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> Empresas <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                             <ul id="submenu-1" class="collapse">
-                                <li><a type="button" id="listaEmpresas"><i class="fa fa-angle-double-right"></i> Mostrar Empresas sin usuario</a></li>
-                                <li><a type="button" id="listaEmpresasSinUsu"><i class="fa fa-angle-double-right"></i> Mostrar Empresas con usuario</a></li>
+                                <li><a type="button" id="listaEmpresasSinUsu"><i class="fa fa-angle-double-right"></i> Mostrar Empresas sin usuario</a></li>
+                                <li><a type="button" id="listaEmpresas"><i class="fa fa-angle-double-right"></i> Mostrar Empresas con usuario</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#" data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw fa-search"></i> Oferentes <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                             <ul id="submenu-2" class="collapse">
-                                <li><a type="button" id="listaOferentes"><i class="fa fa-angle-double-right"></i> Mostrar Oferentes sin usuario</a></li>
-                                <li><a type="button" id="listaOferentesSinUsu"><i class="fa fa-angle-double-right"></i> Mostrar oferentes con usuario</a></li>
+                                <li><a type="button" id="listaOferentesSinUsu"><i class="fa fa-angle-double-right"></i> Mostrar Oferentes sin usuario</a></li>
+                                <li><a type="button" id="listaOferentes"><i class="fa fa-angle-double-right"></i> Mostrar oferentes con usuario</a></li>
                             </ul>
                         </li>
                         <li>
@@ -181,6 +182,18 @@
                                 <thead>
                                     <tr>
                                         <th>Cedula</th>
+                                        <th>Correo</th>
+                                        <th>Usuario</th>
+                                        <th>Contraseña</th>
+                                        <th>Tipo</th>
+                                        <th>Accion</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <table class="table table-hover table-condensed" id="tablaEmpresaEspera" width="100%" >
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
                                         <th>Correo</th>
                                         <th>Usuario</th>
                                         <th>Contraseña</th>

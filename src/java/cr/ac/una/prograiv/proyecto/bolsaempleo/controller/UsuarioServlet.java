@@ -5,8 +5,10 @@
  */
 package cr.ac.una.prograiv.proyecto.bolsaempleo.controller;
 
+import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.EmpresaBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.OferenteBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.UsuarioBL;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Empresa;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Oferente;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Usuario;
 import java.io.IOException;
@@ -36,7 +38,7 @@ public class UsuarioServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
             //String para guardar el JSON generaro por al libreria GSON
@@ -45,7 +47,10 @@ public class UsuarioServlet extends HttpServlet {
             //Se crea el objeto Persona
             Oferente ofe = new Oferente();
             //Se crea el objeto de la logica de negocio
-            OferenteBL ofeBL = new OferenteBL(); 
+            OferenteBL ofeBL = new OferenteBL();
+            Empresa emp = new Empresa();
+            //Se crea el objeto de la logica de negocio
+            EmpresaBL empBL = new EmpresaBL();
             Usuario u = new Usuario();
             UsuarioBL ubl = new UsuarioBL();
 
@@ -60,40 +65,71 @@ public class UsuarioServlet extends HttpServlet {
             //**********************************************************************
             //se consulta cual accion se desea realizar
             //**********************************************************************
-            
             String accion = request.getParameter("accion");
-            switch (accion) {     
-                
-                case "guardarUsuario":
-                case "modificarUsuario":
+            switch (accion) {
+
+                case "guardarUsuarioOfer":
+                case "modificarUsuarioOfer":
                     //Se llena el objeto con los datos enviados por AJAX por el metodo post
                     u.setUsuario(request.getParameter("usuario"));
                     u.setPassword(request.getParameter("contra"));
                     u.setTipo(Integer.parseInt(request.getParameter("tipo")));
                     u.setPkEmail(request.getParameter("correo"));
                     u.setFechaCreacion(new Date());
-                            
-                    if (accion.equals("guardarUsuario")) {
+
+                    if (accion.equals("guardarUsuarioOfer")) {
                         ubl.save(u);
-                        
-                       List<Usuario> usuarios = ubl.findByQuery("select * from mydbproyecto.usuario where usuario.PK_Email = '"+request.getParameter("correo") +"'");
-                    
-                       Usuario us = usuarios.get(0);
-                       
-                       List<Oferente> ofere = ofeBL.findByQuery("select * from mydbproyecto.oferente where correo = '"+request.getParameter("correo") +"';");
 
-                       Oferente ofer = ofere.get(0);
-                       
+                        List<Usuario> usuarios = ubl.findByQuery("select * from mydbproyecto.usuario where usuario.PK_Email = '" + request.getParameter("correo") + "';");
 
-                       ofer.setUsuario(us.getPkUsuario());
-                       
-                      ofeBL.merge(ofer);
-                       
+                        Usuario us = usuarios.get(0);
+
+                        List<Oferente> ofere = ofeBL.findByQuery("select * from mydbproyecto.oferente where correo = '" + request.getParameter("correo") + "';");
+
+                        Oferente ofer = ofere.get(0);
+
+                        ofer.setUsuario(us.getPkUsuario());
+
+                        ofeBL.merge(ofer);
+
                         out.print("C~El usuario fue ingresado correctamente");
-                        
+
                     } else {//es modificar persona
                         //Se guarda el objeto
-                       
+
+                        //Se imprime la respuesta con el response
+                        out.print("C~El usuario fue modificada correctamente");
+                    }
+                    break;
+                case "guardarUsuarioEmp":
+                case "modificarUsuarioEmp":
+                    //Se llena el objeto con los datos enviados por AJAX por el metodo post
+                    u.setUsuario(request.getParameter("usuario"));
+                    u.setPassword(request.getParameter("contra"));
+                    u.setTipo(Integer.parseInt(request.getParameter("tipo")));
+                    u.setPkEmail(request.getParameter("correo"));
+                    u.setFechaCreacion(new Date());
+
+                    if (accion.equals("guardarUsuarioEmp")) {
+                        ubl.save(u);
+
+                        List<Usuario> usuarios = ubl.findByQuery("select * from mydbproyecto.usuario where PK_Email = '" + request.getParameter("correo") + "';");
+
+                        Usuario us = usuarios.get(0);
+
+                        List<Empresa> empresas = empBL.findByQuery("select * from mydbproyecto.empresa where correo = '" + request.getParameter("correo") + "';");
+
+                        emp = empresas.get(0);
+
+                        emp.setUsuario(us.getPkUsuario());
+
+                        empBL.merge(emp);
+
+                        out.print("C~El usuario fue ingresado correctamente");
+
+                    } else {//es modificar persona
+                        //Se guarda el objeto
+
                         //Se imprime la respuesta con el response
                         out.print("C~El usuario fue modificada correctamente");
                     }

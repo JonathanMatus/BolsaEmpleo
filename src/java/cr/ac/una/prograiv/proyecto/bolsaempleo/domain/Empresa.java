@@ -12,7 +12,7 @@ public class Empresa implements java.io.Serializable {
 
     private Integer pkIdEmp;
     private Integer localizacion;
-    private Usuario usuario;
+    private Integer usuario;
     private String nombre;
     private String correo;
     private String telefono;
@@ -32,7 +32,7 @@ public class Empresa implements java.io.Serializable {
         this.telefono = telefono;
     }
 
-    public Empresa(Integer localizacion, Usuario usuario, String nombre, String correo, String telefono, String descripcion, Integer ultimoUsuario, Date fechaCambios) {
+    public Empresa(Integer localizacion, Integer usuario, String nombre, String correo, String telefono, String descripcion, Integer ultimoUsuario, Date fechaCambios) {
         this.localizacion = localizacion;
         this.usuario = usuario;
         this.nombre = nombre;
@@ -59,11 +59,11 @@ public class Empresa implements java.io.Serializable {
         this.localizacion = localizacion;
     }
 
-    public Usuario getUsuario() {
+    public Integer getUsuario() {
         return this.usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
 

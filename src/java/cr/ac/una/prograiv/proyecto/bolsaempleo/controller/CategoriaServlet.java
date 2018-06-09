@@ -10,6 +10,7 @@ import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.CategoriaBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Categoria;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,11 +42,10 @@ public class CategoriaServlet extends HttpServlet {
 
             //Se crea el objeto Persona
             Categoria p = new Categoria();
-           
-            
+
             //Se crea el objeto de la logica de negocio
             CategoriaBL pBL = new CategoriaBL();
-           
+
             //Se hace una pausa para ver el modal
             Thread.sleep(1000);
 
@@ -71,22 +71,27 @@ public class CategoriaServlet extends HttpServlet {
 
                     break;
                 case "consultarCategorias":
-                    json = new Gson().toJson(pBL.findAll(Categoria.class.getName()));
+                    if (!request.getParameter("where").equals("")) {
+                        List<Categoria> list = pBL.findByQuery("select * from mydbproyecto.categoria where nombre_cat like '%" + request.getParameter("where") + "%';");
+                        json = new Gson().toJson(list);
+                        out.print(json);
+                        break;
+                    }
+                    List<Categoria> list = pBL.findAll(Categoria.class.getName());
+                    json = new Gson().toJson(list);
                     out.print(json);
+
                     break;
                 case "agregarCategoria":
                 case "modificarCategoria":
 
                     //Se llena el objeto con los datos enviados por AJAX por el metodo post
                     p.setNombreCat(request.getParameter("nombre"));
-                   
 
                     //Guardar Correctamente en la base de datos
                     if (accion.equals("agregarCategoria")) { //es insertar personas
                         //Se guarda el objeto
-                      
 
-                      
                         pBL.save(p);
 
                         //Se imprime la respuesta con el response
