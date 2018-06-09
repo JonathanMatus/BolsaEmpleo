@@ -20,7 +20,7 @@
         <servlet-name>ControllerLogin</servlet-name>
         <servlet-class>cr.ac.una.prograiv.proyecto.bolsaempleo.controller.ControllerLogin</servlet-class>
     </servlet>
-     <servlet>
+    <servlet>
         <servlet-name>Logout</servlet-name>
         <servlet-class>cr.ac.una.prograiv.proyecto.bolsaempleo.controller.Logout</servlet-class>
     </servlet>
@@ -31,6 +31,10 @@
     <servlet>
         <servlet-name>SubCategoriaServlet</servlet-name>
         <servlet-class>cr.ac.una.prograiv.proyecto.bolsaempleo.controller.SubCategoriaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>caracteristicasOferenteServlet</servlet-name>
+        <servlet-class>cr.ac.una.prograiv.proyecto.bolsaempleo.controller.caracteristicasOferenteServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CategoriaServlet</servlet-name>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>ControllerLogin</servlet-name>
         <url-pattern>/ControllerLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>caracteristicasOferenteServlet</servlet-name>
+        <url-pattern>/caracteristicasOferenteServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

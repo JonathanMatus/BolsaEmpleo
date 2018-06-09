@@ -71,12 +71,12 @@ public class CategoriaServlet extends HttpServlet {
 
                     break;
                 case "consultarCategorias":
-                    if (!request.getParameter("where").equals("")) {
-                        List<Categoria> list = pBL.findByQuery("select * from mydbproyecto.categoria where nombre_cat like '%" + request.getParameter("where") + "%';");
-                        json = new Gson().toJson(list);
-                        out.print(json);
-                        break;
-                    }
+//                    if (!request.getParameter("where").equals("")) {
+//                        List<Categoria> list = pBL.findByQuery("select * from mydbproyecto.categoria where nombre_cat like '%" + request.getParameter("where") + "%';");
+//                        json = new Gson().toJson(list);
+//                        out.print(json);
+//                        break;
+//                    }
                     List<Categoria> list = pBL.findAll(Categoria.class.getName());
                     json = new Gson().toJson(list);
                     out.print(json);
