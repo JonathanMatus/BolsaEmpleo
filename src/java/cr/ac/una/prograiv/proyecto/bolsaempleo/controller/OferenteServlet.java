@@ -6,9 +6,11 @@
 package cr.ac.una.prograiv.proyecto.bolsaempleo.controller;
 
 import com.google.gson.Gson;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.CategoriaBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.LocalizacionBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.OferenteBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.UsuarioBL;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Categoria;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Localizacion;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Oferente;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Usuario;
@@ -48,15 +50,18 @@ public class OferenteServlet extends HttpServlet {
             String json;
 
             //Se crea el objeto Persona
+            
             Oferente ofe = new Oferente();
             Localizacion l = new Localizacion();
             Localizacion l1 = new Localizacion();
             Usuario u = new Usuario();
             UsuarioBL ubl = new UsuarioBL();
+            Categoria cate = new Categoria();
 
             //Se crea el objeto de la logica de negocio
             OferenteBL ofeBL = new OferenteBL();
             LocalizacionBL lpBL = new LocalizacionBL();
+            CategoriaBL cateBL = new CategoriaBL();
             //Se hace una pausa para ver el modal
             Thread.sleep(1000);
 
@@ -69,7 +74,8 @@ public class OferenteServlet extends HttpServlet {
             //se consulta cual accion se desea realizar
             //**********************************************************************
             String accion = request.getParameter("accion");
-            switch (accion) {         
+            switch (accion) {  
+              
                  case "oferentesEspera":               
                     json = new Gson().toJson(ofeBL.findByQuery("Select * from  mydbproyecto.oferente where oferente.Usuario_PK_Usuario is null"));
                     out.print(json);  

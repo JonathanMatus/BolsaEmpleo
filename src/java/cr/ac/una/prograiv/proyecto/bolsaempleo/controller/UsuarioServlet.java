@@ -80,17 +80,14 @@ public class UsuarioServlet extends HttpServlet {
                     
                        Usuario us = usuarios.get(0);
                        
-                       List<Oferente> ofere = ofeBL.findByQuery("select * from mydbproyecto.oferente where oferente.correo = '"+request.getParameter("correo") +"'");
+                       List<Oferente> ofere = ofeBL.findByQuery("select * from mydbproyecto.oferente where correo = '"+request.getParameter("correo") +"';");
 
                        Oferente ofer = ofere.get(0);
                        
 
                        ofer.setUsuario(us.getPkUsuario());
                        
-                      ofer = ofeBL.merge(new Oferente
-                      (ofer.getPkCedula(),ofer.getLocalizacion(),ofer.getUsuario(),
-                       ofer.getNombre(),ofer.getApellido1(),ofer.getApellido2(),
-                       ofer.getNacionalidad(),ofer.getCorreo(),ofer.getResidencia(),ofer.getUltimoUsuario(),ofer.getFechaCambios()));
+                      ofeBL.merge(ofer);
                        
                         out.print("C~El usuario fue ingresado correctamente");
                         

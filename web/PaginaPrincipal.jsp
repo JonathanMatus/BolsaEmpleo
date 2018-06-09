@@ -80,7 +80,7 @@
                 <li> <a href="vistas/gestionEmpresa.jsp">Gestion Empresa</a></li>
                     <% }%> 
                     <% if (tipoUsuario.equals("1")) { %> 
-                <li> <a href="vistas/gestionEmpresa.jsp">Gestion Empresa</a></li>
+                <li> <a href="vistas/actualizacion.jsp">Actualizacion</a></li>
                     <% }%> 
             </ul>
             <ul class="nav navbar-right top-nav">
