@@ -436,7 +436,74 @@ function eliminarOferente(idOferente) {
                     swal("Cancelado", "Se cancelo con exito!", "info");
                 }
             });
+    function AsignarUsuarioOferente(correo, cedula) {
+        if (validar()) {
+//Se envia la información por ajax
+            swal({
+                title: "Espere por favor..",
+                text: "Ingresando la información de la empresa en la base de datos",
+                icon: "info",
+                buttons: false
+            });
+            $.ajax({
+                url: '../UsuarioServlet',
+                data: {
+                    accion: "guardarUsuario",
+                    usuario: $("#usu-" + cedula).val(),
+                    contra: $("#con-" + cedula).val(),
+                    tipo: 1,
+                    correo: correo
+                },
+                error: function () { //si existe un error en la respuesta del ajax
+                    swal("Error!", "Se genero un error, contacte al administrador (Error del ajax)", "error");
+                },
+                success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+                    var respuestaTxt = data.substring(2);
+                    var tipoRespuesta = data.substring(0, 2);
+                    if (tipoRespuesta === "C~") {
+                        swal("Correcto!", respuestaTxt, "success");
+                    } else {
+                        if (tipoRespuesta === "E~") {
+                            swal("Error!", respuestaTxt, "error");
+                        } else {
+                            swal("Error!", "Se genero un error, contacte al administrador", "error");
+                        }
+                    }
 
+
+                },
+                type: 'POST'
+            });
+        } else {
+            swal("Error!", "Debe digitar los campos del formulario", "error");
+        }
+    }
+
+    function validar() {
+        var validacion = true;
+        //Elimina estilo de error en los css
+        //notese que es sobre el grupo que contienen el input
+
+        $("#groupUsuario").removeClass("has-error");
+        $("#groupContra").removeClass("has-error");
+        $("#groupTipo").removeClass("has-error");
+
+
+        if ($("#usuario").val() === "") {
+            $("#groupUsuario").addClass("has-error");
+            validacion = false;
+        }
+        if ($("#contra").val() === "") {
+            $("#groupContra").addClass("has-error");
+            validacion = false;
+        }
+
+        if ($("#tipo").val() === "") {
+            $("#groupTipo").addClass("has-error");
+            validacion = false;
+        }
+        return validacion;
+    }
 }
 
 //******************************************************************************

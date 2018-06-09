@@ -78,14 +78,8 @@ public class SubCategoriaServlet extends HttpServlet {
                     out.print(json);
                     break;
                 case "consultarSubCategoriasByCat":
-                    List<Subcategoria> list = pBL.findAll(Subcategoria.class.getName());
-                    List<Subcategoria> result=new ArrayList<>();
-                    for (int i = 0; i < list.size(); i++) {
-                        if (list.get(i).getCategoria() == Integer.parseInt(request.getParameter("idCategoria"))) {
-                        result.add(list.get(i));
-                        }
-                    }
-                    json = new Gson().toJson(result);
+                    List<Subcategoria> list = pBL.findByQuery("select * from mydbproyecto.subcategoria where nombre_Sub like '%"+request.getParameter("where") +"%' and Fk_id_categoria="+request.getParameter("idCategoria")+";");
+                    json = new Gson().toJson(list);
                     out.print(json);
                     break;
                 case "agregarSubCategoria":

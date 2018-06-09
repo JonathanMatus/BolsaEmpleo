@@ -167,7 +167,7 @@
 
                             <div class="  col-sm-12 col-md-12" >
 
-                                <div class="">
+                                <div id="registroPuesto">
                                     <h1 class="well" id="titulo">Registro Puesto</h1>
                                     <div class="col-lg-12 well">
                                         <div class="row">

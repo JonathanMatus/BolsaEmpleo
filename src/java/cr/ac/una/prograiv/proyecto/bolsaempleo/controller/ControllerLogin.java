@@ -43,7 +43,7 @@ public class ControllerLogin extends HttpServlet {
             Usuario usuario = new Usuario();
             UsuarioBL uBL = new UsuarioBL();
             String accion = request.getParameter("accion");
-            Thread.sleep(1000);
+            
 
             switch (accion) {
                 case "loginUsuario":

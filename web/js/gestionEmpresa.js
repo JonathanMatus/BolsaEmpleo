@@ -317,17 +317,22 @@ function cargarListaCategorias() {
 }
 function cargarListaSubCategorias(id) {
     $('#subCategoria').select2({
-        minimumInputLength: 0,
+        minimumInputLength: 1,
         tags: [],
         ajax: {
             url: 'SubCategoriaServlet',
             dataType: 'json',
             type: "GET",
             quietMillis: 50,
-            data: {
-                accion: "consultarSubCategoriasByCat",
-                idCategoria: id
-            },
+            data:
+                    function (params) {
+                        return {
+                            where:  params.term,
+                            accion:'consultarSubCategoriasByCat',
+                            idCategoria:id
+                        };
+                    },
+
             processResults: function (data) {
 
                 return {
