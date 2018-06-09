@@ -34,14 +34,11 @@ $(function () {
             }
 
         });
-
         $('#tablaOferente1').show();
         consultarOferente();
-
     });
     $('#listaPuestos').click(function () {
         ocultarTablas();
-
         datatable = $('#tablaPuestos').DataTable({
             responsive: true,
             "destroy": true,
@@ -62,11 +59,8 @@ $(function () {
             }
 
         });
-
         $('#tablaPuestos').show();
-
         consultarPuestos();
-
     });
     $('#listaEmpresas').click(function () {
         ocultarTablas();
@@ -91,7 +85,6 @@ $(function () {
         });
         $('#tablaEmpresas1').show();
         consultarEmpresas();
-
     });
     $('#listaOferentesSinUsu').click(function () {
         ocultarTablas();
@@ -116,10 +109,32 @@ $(function () {
         });
         $('#tablaOferenteEspera1').show();
         consultarOferenteEspera();
-
+    });
+    $('#listaEmpresasSinUsu').click(function () {
+        ocultarTablas();
+        datatable = $('#tablaEmpresaEspera').DataTable({
+            responsive: true,
+            "destroy": true,          
+            "language": {
+                "emptyTable": "No hay Datos disponibles en la tabla",
+                "lengthMenu": "Mostrar _MENU_ datos por pagina",
+                "zeroRecords": "Nada encontrado",
+                "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                "infoEmpty": "Sin datos para mostrar",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+        });
+        $('#tablaEmpresaEspera').show();
+        consultarEmpresaEspera();
     });
 });
-
 function dibujarTablaOferenteEspera(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
@@ -140,14 +155,34 @@ function dibujarTablaOferenteEspera(dataJson) {
         ]).draw(false);
     }
 }
+function dibujarTablaEmpresaEspera(dataJson) {
+//    //limpia la información que tiene la tabla
+    var rowData;
+    datatable.clear();
+    for (var i = 0; i < dataJson.length; i++) {
+        rowData = dataJson[i];
+        var id = dataJson[i].pkIdEmp;
+        var correo = dataJson[i].correo;
+        datatable.row.add([
+            rowData.nombre,
+            rowData.correo,
+            '<div class="col-sm-3 form-group" id="groupUsuario">' + '<input type="text"  id="usu-' + rowData.pkIdEmp + '"/>' + '</div>',
+            '<div class="col-sm-3 form-group" id="groupContra">' + '<input type="text"  id="con-' + rowData.pkIdEmp + '"/>' + '</div>',
+            '<div class="col-sm-3 form-group" id="groupTipo">' + '<input type="text"   value="Empresa" readonly/>' + '</div>',
+            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="AsignarUsuarioEmpresa(\'' + correo + '\',' + id + ');">' +
+                    'Asignar' +
+                    '</button>'
+        ]).draw(false);
+    }
+}
 function consultarOferenteEspera() {
+    datatable.clear();
     swal({
         title: "Espere por favor..",
         text: "Consultando la información de oferentes en la base de datos",
         icon: "info",
         buttons: false
     });
-
     //Se envia la información por ajax
     $.ajax({
         url: 'OferenteServlet',
@@ -161,7 +196,32 @@ function consultarOferenteEspera() {
             dibujarTablaOferenteEspera(data);
             // se oculta el modal esta funcion se encuentra en el utils.js
             swal("Correcto!", "La informacion ha sido cargada correctamente.", "success");
-
+        },
+        type: 'POST',
+        dataType: "json"
+    });
+}
+function consultarEmpresaEspera() {
+    datatable.clear();
+    swal({
+        title: "Espere por favor..",
+        text: "Consultando la información de Empresas en la base de datos",
+        icon: "info",
+        buttons: false
+    });
+    //Se envia la información por ajax
+    $.ajax({
+        url: 'EmpresaServlet',
+        data: {
+            accion: "empresaEspera"
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de los Empresas en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            dibujarTablaEmpresaEspera(data);
+            // se oculta el modal esta funcion se encuentra en el utils.js
+            swal("Correcto!", "La informacion ha sido cargada correctamente.", "success");
         },
         type: 'POST',
         dataType: "json"
@@ -172,6 +232,7 @@ function ocultarTablas() {
     $('#tablaEmpresas1').hide();
     $('#tablaPuestos').hide();
     $('#tablaOferenteEspera1').hide();
+    $('#tablaEmpresaEspera').hide();
     if (datatable !== null) {
         datatable.destroy();
         datatable = null;
@@ -188,7 +249,6 @@ function consultarPuestos() {
         icon: "info",
         buttons: false
     });
-
     //Se envia la información por ajax
     $.ajax({
         url: 'PuestoServlet',
@@ -202,20 +262,19 @@ function consultarPuestos() {
             dibujarTablaPuesto(data);
             // se oculta el modal esta funcion se encuentra en el utils.js
             swal("Correcto!", "La informacion ha sido cargada correctamente.", "success");
-
         },
         type: 'POST',
         dataType: "json"
     });
 }
 function consultarEmpresas() {
+    datatable.clear();
     swal({
         title: "Espere por favor..",
         text: "Consultando la información de empresas en la base de datos",
         icon: "info",
         buttons: false
     });
-
     //Se envia la información por ajax
     $.ajax({
         url: 'EmpresaServlet',
@@ -226,10 +285,9 @@ function consultarEmpresas() {
             swal("Error", "Se presento un error a la hora de cargar la información de las empresas en la base de datos", "error");
         },
         success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
-            dibujarTabla(data);
+            dibujarTablaEmpresa(data);
             // se oculta el modal esta funcion se encuentra en el utils.js
             swal("Correcto!", "La informacion ha sido cargada correctamente.", "success");
-
         },
         type: 'POST',
         dataType: "json"
@@ -237,13 +295,13 @@ function consultarEmpresas() {
 }
 
 function consultarOferente() {
+    datatable.clear();
     swal({
         title: "Espere por favor..",
         text: "Consultando la información de oferentes en la base de datos",
         icon: "info",
         buttons: false
     });
-
     //Se envia la información por ajax
     $.ajax({
         url: 'OferenteServlet',
@@ -257,14 +315,13 @@ function consultarOferente() {
             dibujarTablaOferente(data);
             // se oculta el modal esta funcion se encuentra en el utils.js
             swal("Correcto!", "La informacion ha sido cargada correctamente.", "success");
-
         },
         type: 'POST',
         dataType: "json"
     });
 }
 
-function dibujarTabla(dataJson) {
+function dibujarTablaEmpresa(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
     datatable.clear();
@@ -360,7 +417,7 @@ function eliminarEmpresa(idEmpresa) {
                     $.ajax({
                         url: 'EmpresaServlet',
                         data: {
-                            accion: "eliminarEmpresa",
+                            accion: "eliminarEmpresaConUsuario",
                             idEmpresa: idEmpresa
                         },
                         error: function () { //si existe un error en la respuesta del ajax
@@ -374,18 +431,15 @@ function eliminarEmpresa(idEmpresa) {
                                 swal("Resultado acción", respuestaTxt, "info");
                             } else {
                                 swal("Correcto", "El dato ha sido eliminado con exito!", "success").then(setTimeout(consultarEmpresas(), 3000));
-
                             }
                         },
                         type: 'POST',
                         dataType: "text"
                     });
-
                 } else {
                     swal("Cancelado", "Se cancelo con exito!", "info");
                 }
             });
-
 }
 
 
@@ -411,7 +465,7 @@ function eliminarOferente(idOferente) {
                     $.ajax({
                         url: 'OferenteServlet',
                         data: {
-                            accion: "eliminarOferente",
+                            accion: "eliminarOferenteConUsuario",
                             idOferente: idOferente
                         },
                         error: function () { //si existe un error en la respuesta del ajax
@@ -431,14 +485,54 @@ function eliminarOferente(idOferente) {
                         type: 'POST',
                         dataType: "text"
                     });
-
                 } else {
                     swal("Cancelado", "Se cancelo con exito!", "info");
                 }
             });
-
 }
 function AsignarUsuarioOferente(correo, cedula) {
+    if (validar()) {
+//Se envia la información por ajax
+        swal({
+            title: "Espere por favor..",
+            text: "Ingresando la información de la oferente en la base de datos",
+            icon: "info",
+            buttons: false
+        });
+        $.ajax({
+            url: '../UsuarioServlet',
+            data: {
+                accion: "guardarUsuarioOfer",
+                usuario: $("#usu-" + cedula).val(),
+                contra: $("#con-" + cedula).val(),
+                tipo: 0,
+                correo: correo
+            },
+            error: function () { //si existe un error en la respuesta del ajax
+                swal("Error!", "Se genero un error, contacte al administrador (Error del ajax)", "error");
+            },
+            success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+                var respuestaTxt = data.substring(2);
+                var tipoRespuesta = data.substring(0, 2);
+                if (tipoRespuesta === "C~") {
+                    swal("Correcto", "El dato ha sido registrado con exito!", "success").then(setTimeout(consultarOferenteEspera(), 3000));
+                } else {
+                    if (tipoRespuesta === "E~") {
+                        swal("Error!", respuestaTxt, "error");
+                    } else {
+                        swal("Error!", "Se genero un error, contacte al administrador", "error");
+                    }
+                }
+
+
+            },
+            type: 'POST'
+        });
+    } else {
+        swal("Error!", "Debe digitar los campos del formulario", "error");
+    }
+}
+function AsignarUsuarioEmpresa(correo, id) {
     if (validar()) {
 //Se envia la información por ajax
         swal({
@@ -450,9 +544,9 @@ function AsignarUsuarioOferente(correo, cedula) {
         $.ajax({
             url: '../UsuarioServlet',
             data: {
-                accion: "guardarUsuario",
-                usuario: $("#usu-" + cedula).val(),
-                contra: $("#con-" + cedula).val(),
+                accion: "guardarUsuarioEmp",
+                usuario: $("#usu-" + id).val(),
+                contra: $("#con-" + id).val(),
                 tipo: 1,
                 correo: correo
             },
@@ -463,7 +557,7 @@ function AsignarUsuarioOferente(correo, cedula) {
                 var respuestaTxt = data.substring(2);
                 var tipoRespuesta = data.substring(0, 2);
                 if (tipoRespuesta === "C~") {
-                    swal("Correcto!", respuestaTxt, "success");
+                    swal("Correcto", "El dato ha sido registrado con exito!", "success").then(setTimeout(consultarEmpresaEspera(), 3000));
                 } else {
                     if (tipoRespuesta === "E~") {
                         swal("Error!", respuestaTxt, "error");
@@ -489,8 +583,6 @@ function validar() {
     $("#groupUsuario").removeClass("has-error");
     $("#groupContra").removeClass("has-error");
     $("#groupTipo").removeClass("has-error");
-
-
     if ($("#usuario").val() === "") {
         $("#groupUsuario").addClass("has-error");
         validacion = false;

@@ -90,6 +90,7 @@
                     <li> <a href="administrador.jsp">Administrador</a></li>
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
                         <% }%> 
+                    <li> <a href="puestos.jsp">Puestos</a></li>
                 </ul>
                 <ul class="nav navbar-right top-nav">
 
