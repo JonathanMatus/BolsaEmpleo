@@ -53,7 +53,7 @@ function enviar() {
                 var tipoRespuesta = data.substring(0, 2);
                 if (tipoRespuesta === "C~") {
                     swal("Correcto!", respuestaTxt, "success");
-limpiarForm();
+                        limpiarForm();
 
                 } else {
                     if (tipoRespuesta === "E~") {

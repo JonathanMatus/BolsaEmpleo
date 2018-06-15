@@ -39,15 +39,6 @@ $(function () {
         $('#ingresarSubCategoria').show();
         cargarListaSubCategorias(idCategoria[0].id);
     });
-//    $('#categoriaList').on('select2:change', function (e) {
-//        var idCategoria = $('#categoriaList').select2('data');
-////        alert(idEmpresaText.val);
-//        if ((idCategoria[0] != null)) {
-//            document.getElementById("SubcategoriaList").disabled = false;
-//            $('#ingresarSubCategoria').show();
-//            cargarListaSubCategorias(idCategoria[0].id);
-//        }
-//    });
 
 });
 
@@ -67,36 +58,7 @@ function ocultarCampos() {
 function validar() {
     return true;
 }
-function cargarListaEmpresas() {
-    $('#empresaList').select2({
-        minimumInputLength: 0,
-        tags: [],
-        ajax: {
-            url: 'EmpresaServlet',
-            dataType: 'json',
-            type: "GET",
-            quietMillis: 50,
-            data: {
-                accion: "consultarEmpresas"
-            },
-            processResults: function (data) {
 
-                return {
-
-                    results:
-                            $.map(data, function (data) {
-                                return {
-                                    text: data.nombre,
-                                    id: data.pkIdEmp
-                                };
-                            })
-
-                };
-            }
-        }
-
-    });
-}
 function cargarListaCategorias() {
     $('#categoriaList').select2({
         minimumInputLength: 0,
@@ -172,4 +134,63 @@ function cargarListaSubCategorias(id) {
 
     });
 }
-//
+
+
+
+
+
+function enviar() {
+    if (validar()) {
+//Se envia la información por ajax
+        swal({
+            title: "Espere por favor..",
+            text: "Ingresando la información de caracteristicas en la base de datos",
+            icon: "info",
+            buttons: false
+        });
+        $.ajax({
+            url: 'OferenteServlet',
+            data: {
+                accion: $("#oferenteAction").val(),
+                cedula: $("#cedula").val(),
+                nombre: $("#nombre").val(),
+                telefono: $("#telefono").val(),
+                apellido1: $("#priApellido").val(),
+                apellido2: $("#segApellido").val(),
+                nacionalidad: $("#nacionalidad").val(),
+                correo: $("#correo").val(),
+                residencia: $("#residencia").val(),
+                latitud: $("#lat").val(),
+                longitud: $("#lng").val()
+
+            },
+            error: function () { //si existe un error en la respuesta del ajax
+                swal("Error!", "Se genero un error, contacte al administrador (Error del ajax)", "error");
+            },
+            success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+                var respuestaTxt = data.substring(2);
+                var tipoRespuesta = data.substring(0, 2);
+                if (tipoRespuesta === "C~") {
+                    swal("Correcto!", respuestaTxt, "success");
+                limpiarForm();
+
+                } else {
+                    if (tipoRespuesta === "E~") {
+                        swal("Error!", respuestaTxt, "error");
+                    } else {
+                        swal("Error!", "Se genero un error, contacte al administrador", "error");
+                    }
+                }
+
+            },
+            type: 'POST'
+        });
+    } else {
+        swal("Error!", "Debe digitar los campos del formulario y seleccionar la ubicación", "error");
+    }
+}
+
+function limpiarForm() {
+
+    $('#formulario').trigger("reset");
+}

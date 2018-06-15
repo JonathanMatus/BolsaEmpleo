@@ -79,6 +79,12 @@ public class OferenteServlet extends HttpServlet {
                     json = new Gson().toJson(ofeBL.findByQuery("Select * from  mydbproyecto.oferente where oferente.Usuario_PK_Usuario is null"));
                     out.print(json);
                     break;
+                    
+                case "guardarCaracteristicasOfe":
+                    json = new Gson().toJson(ofeBL.findByQuery("Select * from  mydbproyecto.oferente where oferente.Usuario_PK_Usuario is null"));
+                    out.print(json);
+                    break;
+                    
                 case "eliminarOferenteConUsuario":
 
                     ofe.setPkCedula(Integer.parseInt(request.getParameter("idOferente")));

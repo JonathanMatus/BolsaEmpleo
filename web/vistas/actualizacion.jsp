@@ -74,6 +74,7 @@
         <link href="../css/gestionEmpresa.css" rel="stylesheet" type="text/css"/>
         <link href="../css/cssRegistro.css" rel="stylesheet" type="text/css"/>
         <link href="../css/css.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/cssSideBar.css" rel="stylesheet" type="text/css"/>
    
     </head>
     <body>
@@ -126,6 +127,7 @@
                         </button>
                     </li>
                     <% }%> 
+                    
                     <% if (!tipoUsuario.equals("-1")) { %> 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><% out.print(sesion.getAttribute("usuario")); %> <b class="fa fa-angle-down"></b></a>
@@ -145,8 +147,8 @@
                             <a href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> Caracteristicas <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                             <ul id="submenu-1" class="collapse">
                                 <li><a type="button" id="ingresarPuesto"><i class="fa fa-angle-double-right"></i> Ingresar Caracteristicas</a></li>
-                                <li><a type="button" id="listaPuestosEmpresa"><i class="fa fa-angle-double-right"></i> Mostrar puestos</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Mostrar solicitudes de oferentes</a></li>
+                                <li><a type="button" id="listaPuestosEmpresa"><i class="fa fa-angle-double-right"></i> Mostrar Cracteristicas</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Mis datos</a></li>
                             </ul>
                         </li>
 
@@ -155,23 +157,9 @@
                 <!-- /.navbar-collapse -->
             </nav>
 
-            <div id="page-wrapper">
+                <div id="page-wrapper">
                 <div class="container-fluid">
-                    <!-- Page Heading -->
-                    <div class="row" id="main" >
-                        <div class=" tablas col-sm-12 col-md-12">
-                            <table class="table table-hover table-condensed" id="tablaPuestos" width="100%" >
-                                <thead>
-                                    <tr> 
-                                        <td>Empresa</td>
-                                        <td>Nombre</td>
-                                        <td>Salario</td>
-                                        <td>Tipo</td>
-                                        <td>Accion</td>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
+                     <div class="row" id="main" >
                         <div class=" formPuesto col-sm-12 col-md-12 well" id="content">
 
                             <div class="  col-sm-12 col-md-12" >
@@ -213,8 +201,6 @@
                                                             <input type="hidden" value="agregarPuesto" id="puestoAction"/>
                                                             <button type="button" id="registrarPuesto" class="btn btn-lg btn-info">Registrar</button>
                                                         </div>
-
-
                                                     </div>
                                             </form> 
                                         </div>
