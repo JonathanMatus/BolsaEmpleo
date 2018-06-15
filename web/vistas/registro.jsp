@@ -36,6 +36,8 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.jsrel=" rel=stylesheet"></link
+
         <!--google fonts -->
         <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
         <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyAwELjEzE3b3KXFZF7bS8AR1JTJSj6_e6o'></script>
@@ -127,13 +129,13 @@
                             <h1 class="well" id="titulo">Registro</h1>
                             <div class="col-lg-12 well" id="cam-form">
                                 <div class="row">
-                                    <form>
+                                    <form id="formulario" >
                                         <div class="col-sm-12">
 
                                             <div class="row">
                                                 <div class="col-sm-3 form-group" id="groupCedula">
                                                     <label>Cedula</label>
-                                                    <input type="text" placeholder="Ingresar Cedula.." class="form-control" id="cedula">
+                                                    <input type="text" placeholder="Ingresar Cedula.." class="form-control" id="cedula" maxlength="" >
                                                 </div>
                                                 <div class="col-sm-3 form-group" id="groupNombre">
                                                     <label>Nombre</label>
@@ -141,25 +143,25 @@
                                                 </div>
                                                 <div class="col-sm-3 form-group" id="groupApellido1">
                                                     <label>Primer apellido</label>
-                                                    <input type="text" placeholder="Ingresar Primer apellido.." class="form-control" id="priApellido">
+                                                    <input type="text" placeholder="Ingresar Primer apellido.." class="form-control" id="priApellido" maxlength="">
                                                 </div>
                                                 <div class="col-sm-3 form-group" id="groupApellido2">
                                                     <label>Segundo apellido</label>
-                                                    <input type="text" placeholder="Ingresar Segundo apellido.." class="form-control" id="segApellido">
+                                                    <input type="text" placeholder="Ingresar Segundo apellido.." class="form-control" id="segApellido" maxlength="">
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-3 form-group" id="groupNacionalidad">
                                                     <label>Nacionalidad</label>
-                                                    <input type="text" placeholder="Ingresar Nacionalidad.." class="form-control" id="nacionalidad">
+                                                    <input type="text" placeholder="Ingresar Nacionalidad.." class="form-control" id="nacionalidad" maxlength="">
                                                 </div>
                                                 <div class="col-sm-3 form-group" id="groupCorreo">
                                                     <label>Correo</label>
-                                                    <input type="email" placeholder="Ingresar Correo.." class="form-control" id="correo">
+                                                    <input type="email" placeholder="Ingresar Correo.." class="form-control" id="correo" maxlength="">
                                                 </div>
                                                 <div class="col-sm-6 form-group" id="groupResidencia">
                                                     <label>Residencia</label>
-                                                    <input type="text" placeholder="Ingresar Residencia.." class="form-control" id="residencia">
+                                                    <input type="text" placeholder="Ingresar Residencia.." class="form-control" id="residencia" maxlength="">
                                                 </div>
 
                                             </div>
