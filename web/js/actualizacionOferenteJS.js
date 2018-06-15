@@ -27,15 +27,27 @@ $(function () {
         cargarListaCategorias();
         cargarListaSubCategorias();
     });
-
-    $('#categoriaList').change(function () {
+    $('#categoriaList').on('select2:select', function (e) {
         var idCategoria = $('#categoriaList').select2('data');
-        if ((idCategoria[0] != null)) {
-            document.getElementById("SubcategoriaList").disabled = false;
-            $('#ingresarSubCategoria').show();
-            cargarListaSubCategorias(idCategoria[0].id);
-        }
+        document.getElementById("SubcategoriaList").disabled = false;
+        $('#ingresarSubCategoria').show();
+        cargarListaSubCategorias(idCategoria[0].id);
     });
+    $('#categoriaList').on('select2:change', function (e) {
+        var idCategoria = $('#categoriaList').select2('data');
+        document.getElementById("SubcategoriaList").disabled = false;
+        $('#ingresarSubCategoria').show();
+        cargarListaSubCategorias(idCategoria[0].id);
+    });
+//    $('#categoriaList').on('select2:change', function (e) {
+//        var idCategoria = $('#categoriaList').select2('data');
+////        alert(idEmpresaText.val);
+//        if ((idCategoria[0] != null)) {
+//            document.getElementById("SubcategoriaList").disabled = false;
+//            $('#ingresarSubCategoria').show();
+//            cargarListaSubCategorias(idCategoria[0].id);
+//        }
+//    });
 
 });
 
@@ -95,10 +107,11 @@ function cargarListaCategorias() {
             type: "GET",
             quietMillis: 50,
             data: {
-                accion: "consultarCategorias"
+                accion: "consultarCategorias",
+                where:""
             },
             processResults: function (data) {
-                 return {
+                return {
 
                     results:
                             $.map(data, function (data) {
@@ -109,15 +122,15 @@ function cargarListaCategorias() {
                             })
 
                 };
-        }
+            }
         }
 
     });
 }
 
-function cargarListaSubCategorias(nombre) {
+function cargarListaSubCategorias(id) {
     $('#SubcategoriaList').select2({
-        minimumInputLength: 1,
+        minimumInputLength: 0,
         tags: [],
         ajax: {
             url: 'SubCategoriaServlet',
@@ -126,16 +139,24 @@ function cargarListaSubCategorias(nombre) {
             quietMillis: 50,
             data:
                     function (params) {
-                        return {
-                            where:  params.term,
-                            accion:'consultarSubCategoriasByCat',
-                            idCategoria:nombre
-                        };
+                       if (params.term) {
+                            return {
+                                where: params.term,
+                                accion: 'consultarSubCategoriasByCat',
+                                idCategoria: id
+                            };
+                        } else {
+                            return {
+                                where: "",
+                                accion: 'consultarSubCategoriasByCat',
+                                idCategoria: id
+                            };
+                        }
                     },
 
             processResults: function (data) {
 
-                     return {
+                return {
 
                     results:
                             $.map(data, function (data) {

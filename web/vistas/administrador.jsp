@@ -141,6 +141,13 @@
                                 <li><a type="button" id="listaPuestos"><i class="fa fa-angle-double-right"></i> Mostrar puestos</a></li>           
                             </ul>
                         </li>
+                        <li>
+                            <a href="#" data-toggle="collapse" data-target="#submenu-4"><i class="fa fa-fw fa-search"></i> Categorias <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                            <ul id="submenu-4" class="collapse">
+                                <li><a type="button" id="listaCategorias"><i class="fa fa-angle-double-right"></i> Mostrar categorias</a></li>  
+                                 <li><a type="button" id="listaSubCategorias"><i class="fa fa-angle-double-right"></i> Mostrar subcategorias</a></li>           
+                            </ul>
+                        </li>
 
                     </ul>
                 </div>
@@ -160,6 +167,25 @@
                                         <td>Telefono</td>
                                         <td>Descripcion</td>
                                         <td>localizacion</td>
+                                        <td>Accion</td>
+                                    </tr>
+                                </thead>
+                            </table>
+                             <table class="table table-hover table-condensed" id="tablaCategorias" width="100%" >
+                                <thead>
+                                    <tr>
+                                        <td>id</td>
+                                        <td>nombre</td>   
+                                        <td>Accion</td>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <table class="table table-hover table-condensed" id="tablaSubCategorias" width="100%" >
+                                <thead>
+                                    <tr>
+                                        <td>id</td>
+                                        <td>id categoria</td>
+                                        <td>nombre</td>   
                                         <td>Accion</td>
                                     </tr>
                                 </thead>

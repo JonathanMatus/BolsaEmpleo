@@ -74,6 +74,7 @@ public class PuestoServlet extends HttpServlet {
                     break;
                 case "consultarPuestos":
                     json = new Gson().toJson(pBL.findAll(Puesto.class.getName()));
+//                    select empresa.nombre from mydbproyecto.empresa
                     out.print(json);
                     break;
                 case "agregarPuesto":

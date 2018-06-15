@@ -79,7 +79,10 @@
                 <li> <a href="vistas/administrador.jsp">Administrador</a></li>
                 <li> <a href="vistas/gestionEmpresa.jsp">Gestion Empresa</a></li>
                     <% }%> 
-                    <% if (tipoUsuario.equals("1")) { %> 
+                 <% if (tipoUsuario.equals("1")) { %>            
+                <li> <a href="vistas/gestionEmpresa.jsp">Gestion Empresa</a></li>
+                    <% }%> 
+                    <% if (tipoUsuario.equals("0")) { %> 
                 <li> <a href="vistas/actualizacion.jsp">Actualizacion</a></li>
                     <% }%> 
             </ul>
