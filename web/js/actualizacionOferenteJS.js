@@ -21,6 +21,13 @@ $(function () {
     $('.side-nav .collapse').on("show.bs.collapse", function () {
         $(this).prev().find(".fa").eq(1).removeClass("fa-angle-down").addClass("fa-angle-right");
     });
+    
+    
+     $('#registrarCaracteristica').click(function () {
+         
+         enviar();
+     });
+    
     $('#ingresarPuesto').click(function () {
         ocultarCampos();
         $('.formPuesto').show();
@@ -58,38 +65,8 @@ function ocultarCampos() {
 function validar() {
     return true;
 }
-function cargarListaEmpresas() {
 
-    $.ajax({
-        url: 'EmpresaServlet',
-        data: {
-            accion: "consultarEmpresas"
-        },
-        error: function () { //si existe un error en la respuesta del ajax
-            swal("Error", "Se presento un error a la hora de cargar la información de las empresas en la base de datos", "error");
-        },
-        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
-            llenarEmpresas(data);
-            // se oculta el modal esta funcion se encuentra en el utils.js
-        },
-        type: 'POST',
-        dataType: "json"
 
-    });
-}
-function llenarEmpresas(datajson) {
-    $.each(datajson, function (i, item) {
-        $("#empresaList option[value='" + item.pkIdEmp + "']").remove();
-        $('#empresaList').append($('<option>', {
-            value: item.pkIdEmp,
-            text: item.nombre
-        }));
-    });
-    $('#empresaList').select2({
-        allowClear: true,
-        placeholder: "Buscar una Empresa"
-    });
-}
 function cargarListaCategorias() {
 
     $.ajax({
@@ -103,7 +80,7 @@ function cargarListaCategorias() {
         success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
             llenarCategorias(data);
             // se oculta el modal esta funcion se encuentra en el utils.js
-        },
+    },
         type: 'POST',
         dataType: "json"
     });
@@ -145,63 +122,55 @@ function cargarListaSubCategorias(id) {
         dataType: "json"
     });
 }
+function llenarSubCategorias(datajson) {
 
 
+    $('#SubcategoriaList').select2();
+    $('#SubcategoriaList option').each(function () {
+        if ($(this).val() != 'X') {
+            $(this).remove();
+        }
+    });
+    $.each(datajson, function (i, item) {
+//        $('#SubcategoriaList option[value="' + item.pkIdSubcategoria +' "]').remove();
+        $('#SubcategoriaList').append($('<option>', {
+            value: item.pkIdSubcategoria,
+            text: item.nombreSub
+        }));
+    });
+
+}
 
 
 
 function enviar() {
-    if (validar()) {
-//Se envia la información por ajax
-        swal({
-            title: "Espere por favor..",
-            text: "Ingresando la información de caracteristicas en la base de datos",
-            icon: "info",
-            buttons: false
-        });
+
         $.ajax({
             url: 'OferenteServlet',
             data: {
-                accion: $("#oferenteAction").val(),
-                cedula: $("#cedula").val(),
-                nombre: $("#nombre").val(),
-                telefono: $("#telefono").val(),
-                apellido1: $("#priApellido").val(),
-                apellido2: $("#segApellido").val(),
-                nacionalidad: $("#nacionalidad").val(),
-                correo: $("#correo").val(),
-                residencia: $("#residencia").val(),
-                latitud: $("#lat").val(),
-                longitud: $("#lng").val()
-
+                accion: "guardarCaracteristicasOfe",          
+                nomCate: $('select[id="categoriaList"] option:selected').text(),
+                nomSub: $('select[id="SubcategoriaList"] option:selected').text(),
+                descripcion: $("#descripcion").val()
             },
             error: function () { //si existe un error en la respuesta del ajax
-                swal("Error!", "Se genero un error, contacte al administrador (Error del ajax)", "error");
+                alert("Se genero un error, contacte al administrador (Error del ajax)");
             },
             success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
                 var respuestaTxt = data.substring(2);
                 var tipoRespuesta = data.substring(0, 2);
                 if (tipoRespuesta === "C~") {
-                    swal("Correcto!", respuestaTxt, "success");
-                limpiarForm();
-
+                    alert("Correcto");
                 } else {
                     if (tipoRespuesta === "E~") {
-                        swal("Error!", respuestaTxt, "error");
+                        alert("respuestaTxt");
                     } else {
-                        swal("Error!", "Se genero un error, contacte al administrador", "error");
+                        alert("Se genero un error, contacte al administrador");
                     }
                 }
 
             },
             type: 'POST'
         });
-    } else {
-        swal("Error!", "Debe digitar los campos del formulario y seleccionar la ubicación", "error");
     }
-}
 
-function limpiarForm() {
-
-    $('#formulario').trigger("reset");
-}

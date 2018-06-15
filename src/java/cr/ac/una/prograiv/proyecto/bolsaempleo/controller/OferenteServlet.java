@@ -6,13 +6,17 @@
 package cr.ac.una.prograiv.proyecto.bolsaempleo.controller;
 
 import com.google.gson.Gson;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.CaracteristicasoferenteBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.CategoriaBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.LocalizacionBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.OferenteBL;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.SubcategoriaBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.UsuarioBL;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Caracteristicasoferente;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Categoria;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Localizacion;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Oferente;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Subcategoria;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -57,11 +61,15 @@ public class OferenteServlet extends HttpServlet {
             Usuario u = new Usuario();
             UsuarioBL ubl = new UsuarioBL();
             Categoria cate = new Categoria();
+            Subcategoria sub =new Subcategoria();
+            Caracteristicasoferente caraOfe = new Caracteristicasoferente();
 
             //Se crea el objeto de la logica de negocio
             OferenteBL ofeBL = new OferenteBL();
             LocalizacionBL lpBL = new LocalizacionBL();
             CategoriaBL cateBL = new CategoriaBL();
+            SubcategoriaBL subBL = new SubcategoriaBL();
+            CaracteristicasoferenteBL caraOfeBL = new CaracteristicasoferenteBL();
             //Se hace una pausa para ver el modal
             Thread.sleep(1000);
 
@@ -69,6 +77,7 @@ public class OferenteServlet extends HttpServlet {
             //se toman los datos de la session
             //**********************************************************************
             HttpSession session = request.getSession();
+            
 
             //**********************************************************************
             //se consulta cual accion se desea realizar
@@ -81,8 +90,30 @@ public class OferenteServlet extends HttpServlet {
                     break;
                     
                 case "guardarCaracteristicasOfe":
-                    json = new Gson().toJson(ofeBL.findByQuery("Select * from  mydbproyecto.oferente where oferente.Usuario_PK_Usuario is null"));
-                    out.print(json);
+                    
+                    int idUsuActivo = (int) session.getAttribute("idUsuario");
+                    String nomCat = request.getParameter("nomCate");
+                    String nomSub = request.getParameter("nomSub");
+                    String descripcion = request.getParameter("descripcion");
+                    
+                    List<Oferente> listOfe = ofeBL.findByQuery("Select * from   mydbproyecto.oferente where  Usuario_PK_Usuario= "+ idUsuActivo +"");                    
+                    Oferente cedOfe = listOfe.get(0);
+                    
+                    List<Categoria> listCate = cateBL.findByQuery("Select * from   mydbproyecto.categoria where  nombre_Cat= '"+ nomCat +"'");                    
+                    Categoria idCa = listCate.get(0);
+                     
+                    List<Subcategoria> listSub = subBL.findByQuery("Select * from   mydbproyecto.subcategoria where  nombre_Sub= '"+ nomSub +"'");                    
+                    Subcategoria idSu= listSub.get(0);
+                    
+                    caraOfe.setOferente(cedOfe.getPkCedula());
+                    caraOfe.setPkIdCaracteristicas(idCa.getPkIdCategoria());
+                    caraOfe.setSubcategoria(idSu.getPkIdSubcategoria());
+                   
+                    
+                    caraOfeBL.save(caraOfe);
+                    
+                     
+                    out.print("C~Caracteristica guarda con exito!!");
                     break;
                     
                 case "eliminarOferenteConUsuario":

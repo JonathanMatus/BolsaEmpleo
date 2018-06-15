@@ -75,7 +75,6 @@
         <link href="../css/cssRegistro.css" rel="stylesheet" type="text/css"/>
         <link href="../css/css.css" rel="stylesheet" type="text/css"/>
         <link href="../css/cssSideBar.css" rel="stylesheet" type="text/css"/>
-   
     </head>
     <body>
 
@@ -148,8 +147,8 @@
                             <a href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> Caracteristicas <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                             <ul id="submenu-1" class="collapse">
                                 <li><a type="button" id="ingresarPuesto"><i class="fa fa-angle-double-right"></i> Ingresar Caracteristicas</a></li>
-                                <li><a type="button" id="listaPuestosEmpresa"><i class="fa fa-angle-double-right"></i> Mostrar Cracteristicas</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Mis datos</a></li>
+                                <li><a type="button" id="listaPuestosEmpresa"><i class="fa fa-angle-double-right"></i> Mostrar mis caracteristicas</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Aplicar puesto</a></li>
                             </ul>
                         </li>
 
@@ -177,7 +176,7 @@
                                                         <div class="col-sm-6 form-group" >
                                                             <div class=" form-group" id="groupCate">
                                                                 <label>Categoria</label>
-                                                                <select class="js-example-data-ajax form-control" id="categoriaList">
+                                                                <select class="js-example-data-ajax form-control" name="Categoria" id="categoriaList">
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -200,7 +199,7 @@
                                                     <div class="row">
                                                         <div class=" form-group">
                                                             <input type="hidden" value="agregarPuesto" id="puestoAction"/>
-                                                            <button type="button" id="registrarPuesto" class="btn btn-lg btn-info">Registrar</button>
+                                                            <button type="button" id="registrarCaracteristica" class="btn btn-lg btn-info">Registrar</button>
                                                         </div>
                                                     </div>
                                             </form> 
