@@ -253,8 +253,6 @@ function dibujarTablaCaracteristicas(dataJson) {
 
         rowData = dataJson[i];
         datatable.row.add([
-            rowData.pkIdCaracteristicas,
-            rowData.oferente,
             rowData.subcategoria,
             '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="consultarCaracteristicaByID(' + rowData.pkIdCaracteristicas + ');">' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
