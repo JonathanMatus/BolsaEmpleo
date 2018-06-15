@@ -53,7 +53,7 @@ function enviar() {
                 var tipoRespuesta = data.substring(0, 2);
                 if (tipoRespuesta === "C~") {
                     swal("Correcto!", respuestaTxt, "success");
-
+limpiarForm();
 
                 } else {
                     if (tipoRespuesta === "E~") {
@@ -73,8 +73,7 @@ function enviar() {
 
 function validar() {
     var validacion = true;
-    //Elimina estilo de error en los css
-    //notese que es sobre el grupo que contienen el input
+    //Elimina estilo de error en los cs
 
     $("#groupCedula").removeClass("has-error");
     $("#groupNombre").removeClass("has-error");
@@ -110,16 +109,15 @@ function validar() {
         $("#groupCorreo").addClass("has-error");
         validacion = false;
     }
+//    else{
+//        validateEmail("correo");
+//    }
     if ($("#residencia").val() === "") {
         $("#groupResidencia").addClass("has-error");
         validacion = false;
     }
-//     if ($("#nacionalidad").data('date') === "") {
-//        $("#groupNacionalidad").addClass("has-error");
-//        validacion = false;
-//    }
-
     return validacion;
+
 }
 
 //******************************************************************************
@@ -223,16 +221,8 @@ function mostrarMensaje(classCss, msg, neg) {
 
 //******************************************************************************
 //******************************************************************************
-
 function limpiarForm() {
-//setea el focus del formulario
-    $('#cedula').focus();
-    $("#cedula").removeAttr("readonly"); //elimina el atributo de solo lectura
 
-    //se cambia la accion por agregarPersona
-    $("#personasAction").val("agregarPersona");
-    //esconde el div del mensaje
-    mostrarMensaje("hiddenDiv", "", "");
-    //Resetear el formulario
-    $('#formPersonas').trigger("reset");
+    $('#formulario').trigger("reset");
 }
+

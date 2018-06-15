@@ -60,6 +60,7 @@ public class ControllerLogin extends HttpServlet {
                             out.print("E~Usuario o contraseña incorrectos");
                         } else {
                             HttpSession session = request.getSession(true);
+                            session.setAttribute("email", usuario.getPkEmail());
                             session.setAttribute("usuario", usuariotext);
                             session.setAttribute("tipo", String.valueOf(usuario.getTipo()));
                             session.setAttribute("loginStatus", "login");

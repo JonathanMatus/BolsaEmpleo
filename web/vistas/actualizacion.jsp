@@ -172,12 +172,12 @@
                         <div class=" formPuesto col-sm-12 col-md-12 well" id="content">
 
                             <div class="  col-sm-12 col-md-12" >
-
+                               
                                 <div id="registroPuesto">
                                     <h1 class="well" id="titulo">Registro Caracteristicas</h1>
                                     <div class="col-lg-12 well">
                                         <div class="row">
-                                            <form>
+                                            <form id="forma">
                                                 <div class="col-sm-12">
 
                                                     <div class="row">

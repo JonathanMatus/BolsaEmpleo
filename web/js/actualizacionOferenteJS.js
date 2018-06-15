@@ -30,7 +30,6 @@ $(function () {
 
     $('#categoriaList').change(function () {
         var idCategoria = $('#categoriaList').select2('data');
-//        alert(idEmpresaText.val);
         if ((idCategoria[0] != null)) {
             document.getElementById("SubcategoriaList").disabled = false;
             $('#ingresarSubCategoria').show();
@@ -39,6 +38,8 @@ $(function () {
     });
 
 });
+
+
 
 
 function ocultarCampos() {
@@ -150,3 +151,4 @@ function cargarListaSubCategorias(nombre) {
 
     });
 }
+//
