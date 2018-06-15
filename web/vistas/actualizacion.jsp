@@ -107,7 +107,7 @@
                         <% if (tipoUsuario.equals("2")) { %> 
                     <li> <a href="administrador.jsp">Administrador</a></li>
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
-                     <li> <a href="actualizacion.jsp">Actualizacion</a></li>
+                    <li> <a href="actualizacion.jsp">Actualizacion</a></li>
                         <% }%> 
                         <% if (tipoUsuario.equals("1")) { %> 
 
@@ -127,7 +127,7 @@
                         </button>
                     </li>
                     <% }%> 
-                    
+
                     <% if (!tipoUsuario.equals("-1")) { %> 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><% out.print(sesion.getAttribute("usuario")); %> <b class="fa fa-angle-down"></b></a>
@@ -147,7 +147,7 @@
                             <a href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> Caracteristicas <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                             <ul id="submenu-1" class="collapse">
                                 <li><a type="button" id="ingresarPuesto"><i class="fa fa-angle-double-right"></i> Ingresar Caracteristicas</a></li>
-                                <li><a type="button" id="listaPuestosEmpresa"><i class="fa fa-angle-double-right"></i> Mostrar mis caracteristicas</a></li>
+                                <li><a type="button" id="listaCaracteristicas"><i class="fa fa-angle-double-right"></i> Mostrar mis caracteristicas</a></li>
                                 <li><a href="#"><i class="fa fa-angle-double-right"></i> Aplicar puesto</a></li>
                             </ul>
                         </li>
@@ -157,13 +157,25 @@
                 <!-- /.navbar-collapse -->
             </nav>
 
-                <div id="page-wrapper">
+            <div id="page-wrapper">
                 <div class="container-fluid">
-                     <div class="row" id="main" >
+                    <div class="row" id="main" >
                         <div class=" formPuesto col-sm-12 col-md-12 well" id="content">
-
                             <div class="  col-sm-12 col-md-12" >
-                               
+                                
+                            <table class="table table-hover table-condensed" id="tablaCaracteristica" width="100%" >
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>correo</th>
+                                        <th>Telefono</th>
+                                        <th>Descripcion</th>
+                                        <th>localizacion</th>
+                                        <th>Accion</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
                                 <div id="registroPuesto">
                                     <h1 class="well" id="titulo">Registro Caracteristicas</h1>
                                     <div class="col-lg-12 well">
@@ -176,7 +188,7 @@
                                                         <div class="col-sm-6 form-group" >
                                                             <div class=" form-group" id="groupCate">
                                                                 <label>Categoria</label>
-                                                                <select class="js-example-data-ajax form-control" name="Categoria" id="categoriaList">
+                                                                <select class="js-example-data-ajax form-control" id="categoriaList">
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -206,7 +218,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>                         
                         </div>
                         <!-- Modal -->
                         <div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

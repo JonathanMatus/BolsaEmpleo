@@ -101,13 +101,15 @@
                         <% if (tipoUsuario.equals("2")) { %> 
                     <li> <a href="administrador.jsp">Administrador</a></li>
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
-                     <li> <a href="actualizacion.jsp">Actualizacion</a></li>
+                    <li> <a href="actualizacion.jsp">Actualizacion</a></li>
                         <% }%> 
                         <% if (tipoUsuario.equals("1")) { %> 
 
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
                         <% }%> 
+                        <% if (tipoUsuario.equals("0")) { %> 
                     <li> <a href="puestos.jsp">Puestos</a></li>
+                        <% }%> 
                 </ul>
                 <ul class="nav navbar-right top-nav">
 
@@ -156,11 +158,11 @@
                             <table class="table table-hover table-condensed" id="tablaPuestos" width="100%" >
                                 <thead>
                                     <tr> 
-                                        <td>Empresa</td>
-                                        <td>Nombre</td>
-                                        <td>Salario</td>
-                                        <td>Tipo</td>
-                                        <td>Accion</td>
+                                        <th>Empresa</th>
+                                        <th>Nombre</th>
+                                        <th>Salario</th>
+                                        <th>Tipo</th>
+                                        <th>Accion</th>
                                     </tr>
                                 </thead>
                             </table>

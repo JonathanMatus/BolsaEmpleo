@@ -317,17 +317,23 @@ function cargarListaCategorias() {
     });
 }
 function llenarCategorias(datajson) {
-    $.each(datajson, function (i, item) {
-        $("#categoria option[value='" + item.pkIdCategoria + "']").remove();
+    $('#categoria').select2({
+        allowClear: true,
+        placeholder: "Buscar una categoria"
+    }); 
+    $('#categoria option').each(function () {
+        if ($(this).val() != 'X') {
+            $(this).remove();
+        }
+    });
+    $.each(datajson, function (i, item) {  
         $('#categoria').append($('<option>', {
             value: item.pkIdCategoria,
             text: item.nombreCat
         }));
     });
-    $('#categoria').select2({
-        allowClear: true,
-        placeholder: "Buscar una categoria"
-    });
+   
+    
 }
 function cargarListaSubCategorias(id) {
     $.ajax({
@@ -348,8 +354,12 @@ function cargarListaSubCategorias(id) {
     });
 }
 function llenarSubCategorias(datajson) {
+     $('#subCategoria option').each(function () {
+        if ($(this).val() != 'X') {
+            $(this).remove();
+        }
+    });
     $.each(datajson, function (i, item) {
-        $("#subCategoria option[value='" + item.pkIdSubcategoria + "']").remove();
         $('#subCategoria').append($('<option>', {
             value: item.pkIdSubcategoria,
             text: item.nombreSub

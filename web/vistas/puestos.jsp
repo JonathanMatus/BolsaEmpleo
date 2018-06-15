@@ -142,11 +142,11 @@
                             <table class="table table-hover table-condensed" id="tablaPuestos" width="100%" >
                                 <thead>
                                     <tr> 
-                                        <td>Empresa</td>
-                                        <td>Nombre</td>
-                                        <td>Salario</td>
-                                        <td>Tipo</td>
-                                        <td>Accion</td>
+                                        <th>Empresa</th>
+                                        <th>Nombre</th>
+                                        <th>Salario</th>
+                                        <th>Tipo</th>
+                                        <th>Accion</th>
                                     </tr>
                                 </thead>
                             </table>
