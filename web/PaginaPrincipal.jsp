@@ -63,10 +63,6 @@
                     <span class="icon-bar"></span>
                 </button>
 
-
-
-
-
             </div>
 
             <!-- responsive top nav -->
