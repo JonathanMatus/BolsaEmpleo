@@ -56,7 +56,7 @@
                 <img src="img/logo_1.png" alt="Bolsa Empleo CR" class="img-responsive img-rounded"/>
             </div>
             <div class="navbar-header">
-               
+
 
 
 
@@ -73,14 +73,15 @@
                     <% if (tipoUsuario.equals("2")) { %> 
                 <li> <a href="vistas/administrador.jsp">Administrador</a></li>
                 <li> <a href="vistas/gestionEmpresa.jsp">Gestion Empresa</a></li>
-                 <li> <a href="vistas/actualizacion.jsp">Actualizacion</a></li>
+                <li> <a href="vistas/actualizacion.jsp">Actualizacion</a></li>
                     <% }%> 
-                 <% if (tipoUsuario.equals("1")) { %>            
+                    <% if (tipoUsuario.equals("1")) { %>            
                 <li> <a href="vistas/gestionEmpresa.jsp">Gestion Empresa</a></li>
                     <% }%> 
                     <% if (tipoUsuario.equals("0")) { %> 
                 <li> <a href="vistas/actualizacion.jsp">Actualizacion</a></li>
-                    <% }%> 
+                 <li> <a href="vistas/puestos.jsp">Puestos</a></li>
+                <% }%> 
             </ul>
             <ul class="nav navbar-right top-nav">
 

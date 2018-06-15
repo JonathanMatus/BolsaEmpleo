@@ -259,7 +259,7 @@ body{
 /*---------------------------------------------------*/
 .carousel {
     width:auto;
-    height:auto;
+    height:400px;
     max-height: 400px;
 }
 .carouselCont{
@@ -267,9 +267,9 @@ body{
     padding: 0;
     width: auto;
 }
-.carousel-inner img{
-    height: auto;
-    max-height: 360px;
+.carousel-inner>img{
+    height: 400px;
+    max-height: 400px;
     width: auto;
     max-width: available;
     margin: auto; 

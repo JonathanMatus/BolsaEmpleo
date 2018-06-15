@@ -105,7 +105,9 @@
 
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
                         <% }%> 
+                     <% if (tipoUsuario.equals("0")) { %> 
                     <li> <a href="puestos.jsp">Puestos</a></li>
+                     <% }%> 
                 </ul>
                 <ul class="nav navbar-right top-nav">
 

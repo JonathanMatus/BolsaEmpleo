@@ -115,6 +115,7 @@
                         <% }%> 
                         <% if (tipoUsuario.equals("0")) { %> 
                     <li> <a href="actualizacion.jsp">Actualizacion</a></li>
+                    <li> <a href="puestos.jsp">Puestos</a></li>
                         <% }%> 
                 </ul>
                 <ul class="nav navbar-right top-nav">
@@ -162,19 +163,19 @@
                     <div class="row" id="main" >
                         <div class=" formPuesto col-sm-12 col-md-12 well" id="content">
                             <div class="  col-sm-12 col-md-12" >
-                                
-                            <table class="table table-hover table-condensed" id="tablaCaracteristica" width="100%" >
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>correo</th>
-                                        <th>Telefono</th>
-                                        <th>Descripcion</th>
-                                        <th>localizacion</th>
-                                        <th>Accion</th>
-                                    </tr>
-                                </thead>
-                            </table>
+
+                                <table class="table table-hover table-condensed" id="tablaCaracteristica" width="100%" >
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>correo</th>
+                                            <th>Telefono</th>
+                                            <th>Descripcion</th>
+                                            <th>localizacion</th>
+                                            <th>Accion</th>
+                                        </tr>
+                                    </thead>
+                                </table>
 
                                 <div id="registroPuesto">
                                     <h1 class="well" id="titulo">Registro Caracteristicas</h1>
