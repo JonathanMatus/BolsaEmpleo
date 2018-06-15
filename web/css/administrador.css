@@ -2,3 +2,7 @@
 #tablaEmpresas1,#tablaOferente1,#tablaPuestos,#tablaOferenteEspera1,#tablaEmpresaEspera,#tablaCategorias,#tablaSubCategorias{
     display: none;
 }
+th{
+    background-color: #16A085;
+    color:white;
+}

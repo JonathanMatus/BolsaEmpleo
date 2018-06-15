@@ -34,3 +34,7 @@ and open the template in the editor.
 .select2 {
 width:100%!important;
 }
+#ingresarCategoria,#ingresarSubCategoria{
+    color:  #16A085;
+    background-color: #A9F5D0;
+}

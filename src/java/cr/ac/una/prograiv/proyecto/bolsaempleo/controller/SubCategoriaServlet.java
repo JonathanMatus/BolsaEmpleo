@@ -6,13 +6,10 @@
 package cr.ac.una.prograiv.proyecto.bolsaempleo.controller;
 
 import com.google.gson.Gson;
-import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.CategoriaBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.SubcategoriaBL;
-import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Categoria;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Subcategoria;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -50,7 +47,6 @@ public class SubCategoriaServlet extends HttpServlet {
             SubcategoriaBL pBL = new SubcategoriaBL();
 
             //Se hace una pausa para ver el modal
-            Thread.sleep(1000);
 
             //**********************************************************************
             //se toman los datos de la session
@@ -78,17 +74,9 @@ public class SubCategoriaServlet extends HttpServlet {
                     out.print(json);
                     break;
                 case "consultarSubCategoriasByCat":
-                    if (!request.getParameter("where").equals("")) {
-                        List<Subcategoria> list = pBL.findByQuery("select * from mydbproyecto.subcategoria where nombre_sub like '%" + request.getParameter("where") + "%' And "
-                                + "fk_id_categoria=" + request.getParameter("idCategoria") + ";");
-                        json = new Gson().toJson(list);
-                        out.print(json);
-                    } else {
                         List<Subcategoria> list = pBL.findByQuery("select * from mydbproyecto.subcategoria where fk_id_categoria=" + request.getParameter("idCategoria") + ";");
                         json = new Gson().toJson(list);
                         out.print(json);
-                    }
-
                     break;
                 case "agregarSubCategoria":
                 case "modificarSubCategoria":

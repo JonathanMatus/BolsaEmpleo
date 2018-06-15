@@ -101,6 +101,7 @@
                         <% if (tipoUsuario.equals("2")) { %> 
                     <li> <a href="administrador.jsp">Administrador</a></li>
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
+                     <li> <a href="actualizacion.jsp">Actualizacion</a></li>
                         <% }%> 
                         <% if (tipoUsuario.equals("1")) { %> 
 
@@ -202,32 +203,35 @@
                                                             </div>
                                                             <% }%>
                                                         </div>
-                                                        <div class="col-sm-6 form-group" id="groupDescripcion">
+                                                        <div class="col-sm-6 form-group" >
                                                             <div class=" form-group" >
-                                                                <label>Categoria</label>
-                                                                <select class="js-example-data-ajax form-control" id="categoria">
-                                                                </select>
-                                                            </div>
-                                                            <div class=" form-group col-sm-12 " >
-                                                                <div class="col-sm-6 form-group">
-                                                                    <button type="button" id="ingresarCategoria" class="btn  btn-info form-control" data-toggle="modal" data-target="#ModalCategorias">ingresar</button>
+                                                                <div class="col-sm-12 form-group">
+                                                                    <label>Categoria</label>
                                                                 </div>
-                                                                <div class="col-sm-6 form-group"></div>
+
+                                                                <div class="col-sm-10 form-group">
+                                                                    <select class="js-example-data-ajax form-control" id="categoria">
+                                                                    </select>   
+                                                                </div>
+                                                                <div class="col-sm-2 form-group">
+                                                                    <button type="button" id="ingresarCategoria" class="btn  glyphicon glyphicon-plus form-control" data-toggle="modal" data-target="#ModalCategorias"></button>
+                                                                </div>
 
                                                             </div>
-
 
                                                             <div class=" form-group " >
-                                                                <label>Sub Categoria</label>
-                                                                <select class="js-example-data-ajax form-control" id="subCategoria" disabled="true">
-                                                                </select>
-                                                            </div>
-                                                            <div class=" form-group col-sm-12" >
-                                                                <div class="col-sm-6 form-group">
-                                                                    <button type="button" id="ingresarSubCategoria" class="btn  btn-info form-control" data-toggle="modal" data-target="#ModalSubCategorias">ingresar</button>
+                                                                <div class="col-sm-12 form-group">
+                                                                    <label>SubCategoria</label>
                                                                 </div>
-                                                                <div class="col-sm-6 form-group"></div>
+                                                                <div class="col-sm-10 form-group">
+                                                                    <select class="js-example-data-ajax form-control" id="subCategoria" disabled="true">
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-sm-2 form-group">
+                                                                    <button type="button" id="ingresarSubCategoria" class="btn glyphicon glyphicon-plus form-control" data-toggle="modal" data-target="#ModalSubCategorias"></button>
+                                                                </div>
                                                             </div>
+
 
 
 
@@ -477,6 +481,7 @@
                                 <li><a href="contacto.jsp">Contacto</a></li>
                                 <li><a href="acerca.jsp">Sobre nosotros</a></li>
                                 <li><a href="registroEmpresa.jsp">Empresa</a></li>
+                                <li><a href="registro.jsp">Oferente</a></li>
                             </ul>
                         </div>
                         <div class="col-sm-6 col-md-6 col-lg-6"></div>

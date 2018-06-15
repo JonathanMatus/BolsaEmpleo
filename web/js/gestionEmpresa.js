@@ -20,7 +20,7 @@ $(function () {
         cargarListaEmpresas();
         cargarListaCategorias();
     });
-    $('#categoria').on('select2:select', function (e) {
+    $('#categoria').on('select2:selecting', function (e) {
         var idCategoria = $('#categoria').select2('data');
         document.getElementById("subCategoria").disabled = false;
         $('#ingresarSubCategoria').show();
@@ -267,118 +267,93 @@ function validar() {
     return true;
 }
 function cargarListaEmpresas() {
+
+    $.ajax({
+        url: 'EmpresaServlet',    
+        data: {
+            accion: "consultarEmpresas"
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de las empresas en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            llenarEmpresas(data);
+            // se oculta el modal esta funcion se encuentra en el utils.js
+        },
+        type: 'POST',
+        dataType: "json"
+
+    });
+}
+function llenarEmpresas(datajson) {
+    $.each(datajson, function (i, item) {
+        $("#empresaList option[value='" + item.pkIdEmp + "']").remove();
+        $('#empresaList').append($('<option>', {
+            value: item.pkIdEmp,
+            text: item.nombre
+        }));
+    });
     $('#empresaList').select2({
-        minimumInputLength: 0,
-        tags: [],
-        ajax: {
-            url: 'EmpresaServlet',
-            dataType: 'json',
-            type: "GET",
-            quietMillis: 50,
-            data: {
-                accion: "consultarEmpresas"
-            },
-            processResults: function (data) {
-
-                return {
-
-                    results:
-                            $.map(data, function (data) {
-                                return {
-                                    text: data.nombre,
-                                    id: data.pkIdEmp
-                                };
-                            })
-
-                };
-            }
-        }
-
+        allowClear: true,
+        placeholder: "Buscar una Empresa"
     });
 }
 function cargarListaCategorias() {
+
+    $.ajax({
+        url: 'CategoriaServlet',
+        data: {
+            accion: "consultarCategorias"
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de las categorias en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            llenarCategorias(data);
+            // se oculta el modal esta funcion se encuentra en el utils.js
+        },
+        type: 'POST',
+        dataType: "json"
+    });
+}
+function llenarCategorias(datajson) {
+    $.each(datajson, function (i, item) {
+        $("#categoria option[value='" + item.pkIdCategoria + "']").remove();
+        $('#categoria').append($('<option>', {
+            value: item.pkIdCategoria,
+            text: item.nombreCat
+        }));
+    });
     $('#categoria').select2({
-        minimumInputLength: 0,
-        tags: [],
-        ajax: {
-            url: 'CategoriaServlet',
-            dataType: 'json',
-            type: "GET",
-            quietMillis: 50,
-            data: function (params) {
-                if (params.term) {
-                    return {
-                        where: params.term,
-                        accion: 'consultarCategorias'
-
-                    };
-                } else {
-                    return {
-                        where: "",
-                        accion: 'consultarCategorias'
-                    };
-                }
-
-            },
-            processResults: function (data) {
-
-                return {
-
-                    results:
-                            $.map(data, function (data) {
-                                return {
-                                    text: data.nombreCat,
-                                    id: data.pkIdCategoria
-                                };
-                            })
-
-                };
-            }
-        }
-
+        allowClear: true,
+        placeholder: "Buscar una categoria"
     });
 }
 function cargarListaSubCategorias(id) {
-    $('#subCategoria').select2({
-        minimumInputLength: 0,
-        tags: [],
-        ajax: {
-            url: 'SubCategoriaServlet',
-            dataType: 'json',
-            type: "GET",
-            quietMillis: 50,
-            data:
-                    function (params) {
-                        if (params.term) {
-                            return {
-                                where: params.term,
-                                accion: 'consultarSubCategoriasByCat',
-                                idCategoria: id
-                            };
-                        } else {
-                            return {
-                                where: "",
-                                accion: 'consultarSubCategoriasByCat',
-                                idCategoria: id
-                            };
-                        }
-                    },
-
-            processResults: function (data) {
-
-                return {
-
-                    results:
-                            $.map(data, function (data) {
-                                return {
-                                    text: data.nombreSub,
-                                    id: data.pkIdSubcategoria
-                                };
-                            })
-
-                };
-            }
-        }
-
+    $.ajax({
+        url: 'SubCategoriaServlet',
+        data: {
+            accion: "consultarSubCategoriasByCat",
+            idCategoria: id
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de las categorias en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            llenarSubCategorias(data);
+            // se oculta el modal esta funcion se encuentra en el utils.js
+        },
+        type: 'POST',
+        dataType: "json"
     });
+}
+function llenarSubCategorias(datajson) {
+    $.each(datajson, function (i, item) {
+        $("#subCategoria option[value='" + item.pkIdSubcategoria + "']").remove();
+        $('#subCategoria').append($('<option>', {
+            value: item.pkIdSubcategoria,
+            text: item.nombreSub
+        }));
+    });
+    $('#subCategoria').select2();
 }

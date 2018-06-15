@@ -66,107 +66,107 @@ function validar() {
     return true;
 }
 function cargarListaEmpresas() {
+
+    $.ajax({
+        url: 'EmpresaServlet',
+        data: {
+            accion: "consultarEmpresas"
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de las empresas en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            llenarEmpresas(data);
+            // se oculta el modal esta funcion se encuentra en el utils.js
+        },
+        type: 'POST',
+        dataType: "json"
+
+    });
+}
+function llenarEmpresas(datajson) {
+    $.each(datajson, function (i, item) {
+        $("#empresaList option[value='" + item.pkIdEmp + "']").remove();
+        $('#empresaList').append($('<option>', {
+            value: item.pkIdEmp,
+            text: item.nombre
+        }));
+    });
     $('#empresaList').select2({
-        minimumInputLength: 0,
-        tags: [],
-        ajax: {
-            url: 'EmpresaServlet',
-            dataType: 'json',
-            type: "GET",
-            quietMillis: 50,
-            data: {
-                accion: "consultarEmpresas"
-            },
-            processResults: function (data) {
-
-                return {
-
-                    results:
-                            $.map(data, function (data) {
-                                return {
-                                    text: data.nombre,
-                                    id: data.pkIdEmp
-                                };
-                            })
-
-                };
-            }
-        }
-
+        allowClear: true,
+        placeholder: "Buscar una Empresa"
     });
 }
 function cargarListaCategorias() {
-    $('#categoriaList').select2({
-        minimumInputLength: 0,
-        tags: [],
-        ajax: {
-            url: 'CategoriaServlet',
-            dataType: 'json',
-            type: "GET",
-            quietMillis: 50,
-            data: {
-                accion: "consultarCategorias",
-                where:""
-            },
-            processResults: function (data) {
-                return {
 
-                    results:
-                            $.map(data, function (data) {
-                                return {
-                                    text: data.nombreCat,
-                                    id: data.pkIdCategoria
-                                };
-                            })
-
-                };
-            }
-        }
-
+    $.ajax({
+        url: 'CategoriaServlet',
+        data: {
+            accion: "consultarCategorias"
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de las categorias en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            llenarCategorias(data);
+            // se oculta el modal esta funcion se encuentra en el utils.js
+        },
+        type: 'POST',
+        dataType: "json"
     });
+}
+function llenarCategorias(datajson) {
+     $('#categoriaList').select2({
+        allowClear: true,
+        placeholder: "Buscar una categoria"
+    });
+    $('#categoriaList option').each(function () {
+        if ($(this).val() != 'X') {
+            $(this).remove();
+        }
+    });
+    $.each(datajson, function (i, item) {
+        $('#categoriaList').append($('<option>', {
+            value: item.pkIdCategoria,
+            text: item.nombreCat
+        }));
+    });
+   
 }
 
 function cargarListaSubCategorias(id) {
-    $('#SubcategoriaList').select2({
-        minimumInputLength: 0,
-        tags: [],
-        ajax: {
-            url: 'SubCategoriaServlet',
-            dataType: 'json',
-            type: "GET",
-            quietMillis: 50,
-            data:
-                    function (params) {
-                       if (params.term) {
-                            return {
-                                where: params.term,
-                                accion: 'consultarSubCategoriasByCat',
-                                idCategoria: id
-                            };
-                        } else {
-                            return {
-                                where: "",
-                                accion: 'consultarSubCategoriasByCat',
-                                idCategoria: id
-                            };
-                        }
-                    },
-
-            processResults: function (data) {
-
-                return {
-
-                    results:
-                            $.map(data, function (data) {
-                                return {
-                                    text: data.nombreSub,
-                                    id: data.pkIdSubcategoria
-                                };
-                            })
-
-                };
-            }
-        }
-
+    $.ajax({
+        url: 'SubCategoriaServlet',
+        data: {
+            accion: "consultarSubCategoriasByCat",
+            idCategoria: id
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de las categorias en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            llenarSubCategorias(data);
+            // se oculta el modal esta funcion se encuentra en el utils.js
+        },
+        type: 'POST',
+        dataType: "json"
     });
+}
+function llenarSubCategorias(datajson) {
+
+
+    $('#SubcategoriaList').select2();
+    $('#SubcategoriaList option').each(function () {
+        if ($(this).val() != 'X') {
+            $(this).remove();
+        }
+    });
+    $.each(datajson, function (i, item) {
+//        $('#SubcategoriaList option[value="' + item.pkIdSubcategoria +' "]').remove();
+        $('#SubcategoriaList').append($('<option>', {
+            value: item.pkIdSubcategoria,
+            text: item.nombreSub
+        }));
+    });
+
 }

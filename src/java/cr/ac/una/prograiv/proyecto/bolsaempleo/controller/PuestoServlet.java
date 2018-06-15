@@ -6,13 +6,16 @@
 package cr.ac.una.prograiv.proyecto.bolsaempleo.controller;
 
 import com.google.gson.Gson;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.EmpresaBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.PuestoBL;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Empresa;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Puesto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -73,9 +76,35 @@ public class PuestoServlet extends HttpServlet {
 
                     break;
                 case "consultarPuestos":
-                    json = new Gson().toJson(pBL.findAll(Puesto.class.getName()));
-//                    select empresa.nombre from mydbproyecto.empresa
-                    out.print(json);
+                    List<Puesto> puestos = pBL.findAll(Puesto.class.getName());
+                    EmpresaBL eBL = new EmpresaBL();
+                    List<Empresa> empresas = eBL.findAll(Empresa.class.getName());
+                    Empresa aux = new Empresa();
+                    String salida = "";
+                    salida += "[";
+                    for (int i = 0; i < puestos.size(); i++) {
+                        salida += "{";
+                        Puesto aux2 = puestos.get(i);
+                        for (int j = 0; j < empresas.size(); j++) {
+                            aux = empresas.get(j);
+                            if (aux2.getEmpresa() == aux.getPkIdEmp()) {
+                                salida += "\"pkIdPuesto\":" + aux2.getPkIdPuesto() + ","
+                                        + "\"empresa\":\"" + aux.getNombre() + "\","
+                                        + "\"tipoPublicacion\":\"" + aux2.getTipoPublicacion() + "\","
+                                        + "\"salario\":" + aux2.getSalario() + ","
+                                        + "\"nombre\":\"" + aux2.getNombre() + "\"";
+                            }
+                           
+                        }
+                         if (i + 1 == puestos.size()) {
+                                salida += "}";
+                            } else {
+                                salida += "},";
+                            }
+                        
+                    }
+                    salida += "]";
+                    out.print(salida);
                     break;
                 case "agregarPuesto":
                 case "modificarPuesto":
@@ -84,7 +113,6 @@ public class PuestoServlet extends HttpServlet {
                     p.setNombre(request.getParameter("nombre"));
                     p.setEmpresa(Integer.parseInt(request.getParameter("idEmpresa")));
                     p.setTipoPublicacion(request.getParameter("tipo"));
-                    
 
                     //--------------------castear a bigDecimal--------------------------------
                     DecimalFormatSymbols symbols = new DecimalFormatSymbols();
@@ -96,8 +124,7 @@ public class PuestoServlet extends HttpServlet {
 
                     // parse the string
                     BigDecimal bigDecimal = (BigDecimal) decimalFormat.parse(request.getParameter("salario"));
-                   
-                   
+
                     // ----------------------------------------------------------------------------
                     p.setSalario(bigDecimal);
                     //Guardar Correctamente en la base de datos

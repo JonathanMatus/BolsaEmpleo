@@ -28,7 +28,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Gestion Empresa</title>
+        <title>Actualizacion Oferente</title>
 
 
         <!--CSS Lbrary -->
@@ -74,7 +74,7 @@
         <link href="../css/gestionEmpresa.css" rel="stylesheet" type="text/css"/>
         <link href="../css/cssRegistro.css" rel="stylesheet" type="text/css"/>
         <link href="../css/css.css" rel="stylesheet" type="text/css"/>
-   
+        <link href="../css/cssSideBar.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
 
@@ -107,6 +107,7 @@
                         <% if (tipoUsuario.equals("2")) { %> 
                     <li> <a href="administrador.jsp">Administrador</a></li>
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
+                     <li> <a href="actualizacion.jsp">Actualizacion</a></li>
                         <% }%> 
                         <% if (tipoUsuario.equals("1")) { %> 
 
@@ -145,8 +146,8 @@
                             <a href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> Caracteristicas <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                             <ul id="submenu-1" class="collapse">
                                 <li><a type="button" id="ingresarPuesto"><i class="fa fa-angle-double-right"></i> Ingresar Caracteristicas</a></li>
-                                <li><a type="button" id="listaPuestosEmpresa"><i class="fa fa-angle-double-right"></i> Mostrar puestos</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Mostrar solicitudes de oferentes</a></li>
+                                <li><a type="button" id="listaPuestosEmpresa"><i class="fa fa-angle-double-right"></i> Mostrar mis caracteristicas</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Aplicar puesto</a></li>
                             </ul>
                         </li>
 
@@ -442,6 +443,7 @@
                                 <li><a href="contacto.jsp">Contacto</a></li>
                                 <li><a href="acerca.jsp">Sobre nosotros</a></li>
                                 <li><a href="registroEmpresa.jsp">Empresa</a></li>
+                                <li><a href="registro.jsp">Oferente</a></li>
                             </ul>
                         </div>
                         <div class="col-sm-6 col-md-6 col-lg-6"></div>

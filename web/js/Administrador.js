@@ -357,7 +357,7 @@ function consultarEmpresas() {
     $.ajax({
         url: 'EmpresaServlet',
         data: {
-            accion: "consultarEmpresas"
+            accion: "empresaConUsuario"
         },
         error: function () { //si existe un error en la respuesta del ajax
             swal("Error", "Se presento un error a la hora de cargar la información de las empresas en la base de datos", "error");
@@ -460,10 +460,10 @@ function dibujarTablaCategorias(dataJson) {
         datatable.row.add([
             rowData.pkIdCategoria,
             rowData.nombreCat,
-            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="consultarCategoriaByID(' + rowData.pkIdEmp + ');">' +
+            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="consultarCategoriaByID(' + rowData.pkIdCategoria + ');">' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
                     '</button>' +
-                    '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="eliminarCategoria(' + rowData.pkIdEmp + ');">' +
+                    '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="eliminarCategoria(' + rowData.pkIdCategoria + ');">' +
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>' +
                     '</button>'
         ]).draw(false);
@@ -482,10 +482,10 @@ function dibujarTablaSubCategorias(dataJson) {
             rowData.pkIdSubcategoria,
             rowData.categoria,
             rowData.nombreSub,
-            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="consultarSubCategoriaByID(' + rowData.pkIdEmp + ');">' +
+            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="consultarSubCategoriaByID(' + rowData.pkIdSubcategoria + ');">' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
                     '</button>' +
-                    '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="eliminarSubCategoria(' + rowData.pkIdEmp + ');">' +
+                    '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="eliminarSubCategoria(' + rowData.pkIdSubcategoria + ');">' +
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>' +
                     '</button>'
         ]).draw(false);
