@@ -28,7 +28,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Gestion Empresa</title>
+        <title>Actualizacion Oferente</title>
 
 
         <!--CSS Lbrary -->
@@ -108,6 +108,7 @@
                         <% if (tipoUsuario.equals("2")) { %> 
                     <li> <a href="administrador.jsp">Administrador</a></li>
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
+                     <li> <a href="actualizacion.jsp">Actualizacion</a></li>
                         <% }%> 
                         <% if (tipoUsuario.equals("1")) { %> 
 
@@ -428,6 +429,7 @@
                                 <li><a href="contacto.jsp">Contacto</a></li>
                                 <li><a href="acerca.jsp">Sobre nosotros</a></li>
                                 <li><a href="registroEmpresa.jsp">Empresa</a></li>
+                                <li><a href="registro.jsp">Oferente</a></li>
                             </ul>
                         </div>
                         <div class="col-sm-6 col-md-6 col-lg-6"></div>

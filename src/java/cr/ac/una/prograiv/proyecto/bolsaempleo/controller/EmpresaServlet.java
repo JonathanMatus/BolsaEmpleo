@@ -73,7 +73,11 @@ public class EmpresaServlet extends HttpServlet {
             String accion = request.getParameter("accion");
             switch (accion) {
                 case "empresaEspera":
-                    json = new Gson().toJson(pBL.findByQuery("Select * from  mydbproyecto.empresa where Usuario_PK_Usuario is null"));
+                    json = new Gson().toJson(pBL.findByQuery("Select * from  mydbproyecto.empresa where Usuario_PK_Usuario is null;"));
+                    out.print(json);
+                    break;
+                case "empresaConUsuario":
+                    json = new Gson().toJson(pBL.findByQuery("Select * from  mydbproyecto.empresa where Usuario_PK_Usuario is not null;"));
                     out.print(json);
                     break;
                 case "eliminarEmpresa":
@@ -94,7 +98,7 @@ public class EmpresaServlet extends HttpServlet {
                         Puesto puesto = puestos.get(i);
                         puestoBL.delete(puesto);
                     }
-                    
+
                     //Se imprime la respuesta con el response
                     out.print("La empresa fue eliminada correctamente");
 

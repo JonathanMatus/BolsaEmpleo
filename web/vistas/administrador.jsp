@@ -93,6 +93,7 @@
                         <% if (tipoUsuario.equals("2")) { %> 
                     <li> <a href="administrador.jsp">Administrador</a></li>
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
+                     <li> <a href="actualizacion.jsp">Actualizacion</a></li>
                         <% }%> 
                     <li> <a href="puestos.jsp">Puestos</a></li>
                 </ul>
@@ -162,45 +163,45 @@
                             <table class="table table-hover table-condensed" id="tablaEmpresas1" width="100%" >
                                 <thead>
                                     <tr>
-                                        <td>Nombre</td>
-                                        <td>correo</td>
-                                        <td>Telefono</td>
-                                        <td>Descripcion</td>
-                                        <td>localizacion</td>
-                                        <td>Accion</td>
+                                        <th>Nombre</th>
+                                        <th>correo</th>
+                                        <th>Telefono</th>
+                                        <th>Descripcion</th>
+                                        <th>localizacion</th>
+                                        <th>Accion</th>
                                     </tr>
                                 </thead>
                             </table>
                              <table class="table table-hover table-condensed" id="tablaCategorias" width="100%" >
                                 <thead>
                                     <tr>
-                                        <td>id</td>
-                                        <td>nombre</td>   
-                                        <td>Accion</td>
+                                        <th>id</th>
+                                        <th>nombre</th>   
+                                        <th>Accion</th>
                                     </tr>
                                 </thead>
                             </table>
                             <table class="table table-hover table-condensed" id="tablaSubCategorias" width="100%" >
                                 <thead>
                                     <tr>
-                                        <td>id</td>
-                                        <td>id categoria</td>
-                                        <td>nombre</td>   
-                                        <td>Accion</td>
+                                        <th>id</th>
+                                        <th>id categoria</th>
+                                        <th>nombre</th>   
+                                        <th>Accion</th>
                                     </tr>
                                 </thead>
                             </table>
                             <table class="table table-hover table-condensed" id="tablaOferente1" width="100%" >
                                 <thead>
                                     <tr>
-                                        <td>Cedula</td>
-                                        <td>Nombre</td>
-                                        <td>Primer apellido</td>
-                                        <td>Segundo Apellido</td>
-                                        <td>Nacionalidad</td>
-                                        <td>correo</td>
-                                        <td>residencia</td>
-                                        <td>Accion</td>
+                                        <th>Cedula</th>
+                                        <th>Nombre</th>
+                                        <th>Primer apellido</th>
+                                        <th>Segundo Apellido</th>
+                                        <th>Nacionalidad</th>
+                                        <th>correo</th>
+                                        <th>residencia</th>
+                                        <th>Accion</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -231,11 +232,11 @@
                             <table class="table table-hover table-condensed" id="tablaPuestos" width="100%" >
                                 <thead>
                                     <tr> 
-                                        <td>Empresa</td>
-                                        <td>Nombre</td>
-                                        <td>Salario</td>
-                                        <td>Tipo</td>
-                                        <td>Accion</td>
+                                        <th>Empresa</th>
+                                        <th>Nombre</th>
+                                        <th>Salario</th>
+                                        <th>Tipo</th>
+                                        <th>Accion</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -356,6 +357,7 @@
                                 <li><a href="contacto.jsp">Contacto</a></li>
                                 <li><a href="acerca.jsp">Sobre nosotros</a></li>
                                 <li><a href="registroEmpresa.jsp">Empresa</a></li>
+                                <li><a href="registro.jsp">Oferente</a></li>
                             </ul>
                         </div>
                         <div class="col-sm-6 col-md-6 col-lg-6"></div>

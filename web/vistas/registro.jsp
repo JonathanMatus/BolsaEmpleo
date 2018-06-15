@@ -88,9 +88,10 @@
                     <li class="activo"><a class="activo" href="../PaginaPrincipal.jsp">Inicio</a></li>
 
                     <li> <a href="contacto.jsp">Contacto</a></li>
-                        <% if (tipoUsuario.equals("2")) { %> 
+                       <% if (tipoUsuario.equals("2")) { %> 
                     <li> <a href="administrador.jsp">Administrador</a></li>
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
+                     <li> <a href="actualizacion.jsp">Actualizacion</a></li>
                         <% }%> 
                     <li> <a href="puestos.jsp">Puestos</a></li>
                 </ul>
@@ -307,6 +308,7 @@
                                             <li><a href="contacto.jsp">Contacto</a></li>
                                             <li><a href="acerca.jsp">Sobre nosotros</a></li>
                                             <li><a href="registroEmpresa.jsp">Empresa</a></li>
+                                            <li><a href="registro.jsp">Oferente</a></li>
                                         </ul>
                                     </div>
                                     <div class="col-sm-6 col-md-6 col-lg-6"></div>
