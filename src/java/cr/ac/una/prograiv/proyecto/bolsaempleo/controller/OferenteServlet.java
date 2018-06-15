@@ -54,14 +54,13 @@ public class OferenteServlet extends HttpServlet {
             String json;
 
             //Se crea el objeto Persona
-            
             Oferente ofe = new Oferente();
             Localizacion l = new Localizacion();
             Localizacion l1 = new Localizacion();
             Usuario u = new Usuario();
             UsuarioBL ubl = new UsuarioBL();
             Categoria cate = new Categoria();
-            Subcategoria sub =new Subcategoria();
+            Subcategoria sub = new Subcategoria();
             Caracteristicasoferente caraOfe = new Caracteristicasoferente();
 
             //Se crea el objeto de la logica de negocio
@@ -71,13 +70,11 @@ public class OferenteServlet extends HttpServlet {
             SubcategoriaBL subBL = new SubcategoriaBL();
             CaracteristicasoferenteBL caraOfeBL = new CaracteristicasoferenteBL();
             //Se hace una pausa para ver el modal
-            Thread.sleep(1000);
 
             //**********************************************************************
             //se toman los datos de la session
             //**********************************************************************
             HttpSession session = request.getSession();
-            
 
             //**********************************************************************
             //se consulta cual accion se desea realizar
@@ -88,34 +85,40 @@ public class OferenteServlet extends HttpServlet {
                     json = new Gson().toJson(ofeBL.findByQuery("Select * from  mydbproyecto.oferente where oferente.Usuario_PK_Usuario is null"));
                     out.print(json);
                     break;
-                    
+
                 case "guardarCaracteristicasOfe":
-                    
+
                     int idUsuActivo = (int) session.getAttribute("idUsuario");
-                    String nomCat = request.getParameter("nomCate");
-                    String nomSub = request.getParameter("nomSub");
+                    String idCat = request.getParameter("idCate");
+                    String idSub = request.getParameter("idSub");
                     String descripcion = request.getParameter("descripcion");
-                    
-                    List<Oferente> listOfe = ofeBL.findByQuery("Select * from   mydbproyecto.oferente where  Usuario_PK_Usuario= "+ idUsuActivo +"");                    
-                    Oferente cedOfe = listOfe.get(0);
-                    
-                    List<Categoria> listCate = cateBL.findByQuery("Select * from   mydbproyecto.categoria where  nombre_Cat= '"+ nomCat +"'");                    
-                    Categoria idCa = listCate.get(0);
-                     
-                    List<Subcategoria> listSub = subBL.findByQuery("Select * from   mydbproyecto.subcategoria where  nombre_Sub= '"+ nomSub +"'");                    
-                    Subcategoria idSu= listSub.get(0);
-                    
-                    caraOfe.setOferente(cedOfe.getPkCedula());
-                    caraOfe.setPkIdCaracteristicas(idCa.getPkIdCategoria());
-                    caraOfe.setSubcategoria(idSu.getPkIdSubcategoria());
-                   
-                    
-                    caraOfeBL.save(caraOfe);
-                    
-                     
-                    out.print("C~Caracteristica guarda con exito!!");
+
+                    List<Oferente> listOfe = ofeBL.findByQuery("Select * from   mydbproyecto.oferente where  Usuario_PK_Usuario= " + idUsuActivo + "");
+                    if (listOfe.size() > 0) {
+                        Oferente cedOfe = listOfe.get(0);
+                        List<Caracteristicasoferente> c = caraOfeBL.findByQuery("select * from mydbproyecto.caracteristicasoferente where Fk_id_subcategoria=" + idSub + " and oferente_fk_cedula=" + cedOfe.getPkCedula() + ";");
+                        if (c.size() == 0) {
+                            List<Categoria> listCate = cateBL.findByQuery("Select * from   mydbproyecto.categoria where  pk_id_categoria= " + idCat + ";");
+                            Categoria idCa = listCate.get(0);
+
+                            List<Subcategoria> listSub = subBL.findByQuery("Select * from   mydbproyecto.subcategoria where  pk_id_subcategoria= '" + idSub + ";");
+                            Subcategoria idSu = listSub.get(0);
+
+                            caraOfe.setOferente(cedOfe.getPkCedula());
+                            caraOfe.setPkIdCaracteristicas(idCa.getPkIdCategoria());
+                            caraOfe.setSubcategoria(idSu.getPkIdSubcategoria());
+
+                            caraOfeBL.save(caraOfe);
+
+                            out.print("C~Caracteristica guarda con exito!!");
+                        }else{
+                         throw new Exception("Caracteristica ya registrada");
+                        }
+                    }else{
+                   throw new Exception("Usuario no es oferente");
+                    }
                     break;
-                    
+
                 case "eliminarOferenteConUsuario":
 
                     ofe.setPkCedula(Integer.parseInt(request.getParameter("idOferente")));
@@ -142,7 +145,7 @@ public class OferenteServlet extends HttpServlet {
                     ofeBL.delete(ofe);
                     l.setPkIdLocalizacion(ofer1.getLocalizacion());
                     lpBL.delete(l);
-                   
+
                     //Se imprime la respuesta con el response
                     out.print("El oferente fue eliminada correctamente");
 

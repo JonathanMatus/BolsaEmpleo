@@ -186,8 +186,8 @@ if (validar()){
             url: 'OferenteServlet',
             data: {
                 accion: "guardarCaracteristicasOfe",          
-                nomCate: $('select[id="categoriaList"] option:selected').text(),
-                nomSub: $('select[id="SubcategoriaList"] option:selected').text(),
+                idCate: $('select[id="categoriaList"] option:selected').val(),
+                idSub: $('select[id="SubcategoriaList"] option:selected').val(),
                 descripcion: $("#descripcion").val()
             },
             error: function () { //si existe un error en la respuesta del ajax
