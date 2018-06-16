@@ -57,7 +57,9 @@ function consultarPuestos() {
 function dibujarTablaPuesto(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
-    datatable.clear();
+     datatable
+            .clear()
+            .draw();
     for (var i = 0; i < dataJson.length; i++) {
 
         rowData = dataJson[i];

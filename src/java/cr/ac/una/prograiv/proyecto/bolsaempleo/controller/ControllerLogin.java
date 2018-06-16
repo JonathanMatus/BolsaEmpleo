@@ -47,7 +47,6 @@ public class ControllerLogin extends HttpServlet {
             UsuarioBL uBL = new UsuarioBL();
             OferenteBL ofeBL = new OferenteBL();
             String accion = request.getParameter("accion");
-            
 
             switch (accion) {
                 case "loginUsuario":
@@ -55,11 +54,11 @@ public class ControllerLogin extends HttpServlet {
                     String passwordtext = request.getParameter("password");
 
                     usuario = uBL.findByNombreUsuario(usuariotext);
-                    
+
                     List<Oferente> listOfe = ofeBL.findByQuery("Select * from   mydbproyecto.oferente where  Usuario_PK_Usuario= " + usuario.getPkUsuario() + "");
-                    
+
                     if (usuario == null) {
-                        out.print("E~Usuario no registrado en el sistema");
+                        out.print("E~Usuario o contraseña incorrectos");
                     }
                     if (usuario != null) {
                         if (!usuario.getPassword().equals(passwordtext)) {
@@ -68,7 +67,7 @@ public class ControllerLogin extends HttpServlet {
                             HttpSession session = request.getSession(true);
                             session.setAttribute("idUsuario", usuario.getPkUsuario());
                             session.setAttribute("email", usuario.getPkEmail());
-                            session.setAttribute("ofeCompleto",listOfe.get(0));
+                            session.setAttribute("ofeCompleto", listOfe.get(0));
                             session.setAttribute("usuario", usuariotext);
                             session.setAttribute("tipo", String.valueOf(usuario.getTipo()));
                             session.setAttribute("loginStatus", "login");

@@ -127,48 +127,52 @@ public class EmpresaServlet extends HttpServlet {
                     break;
                 case "agregarEmpresa":
                 case "modificarEmpresa":
+                    List<Empresa> existeCorreo = pBL.findByQuery("SELECT * FROM mydbproyecto.empresa where "
+                            + "correo='" + request.getParameter("correo") + "';");
+                    if (existeCorreo.size() == 0) {
+                        //Se llena el objeto con los datos enviados por AJAX por el metodo post
+                        p.setNombre(request.getParameter("nombre"));
+                        p.setCorreo(request.getParameter("correo"));
+                        p.setDescripcion(request.getParameter("descripcion"));
+                        p.setTelefono(request.getParameter("telefono"));
+                        //--------------------castear a bigDecimal--------------------------------
+                        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+                        symbols.setGroupingSeparator(',');
+                        symbols.setDecimalSeparator('.');
+                        String pattern = "#,##0.0#";
+                        DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
+                        decimalFormat.setParseBigDecimal(true);
 
-                    //Se llena el objeto con los datos enviados por AJAX por el metodo post
-                    p.setNombre(request.getParameter("nombre"));
-                    p.setCorreo(request.getParameter("correo"));
-                    p.setDescripcion(request.getParameter("descripcion"));
-                    p.setTelefono(request.getParameter("telefono"));
-                    //--------------------castear a bigDecimal--------------------------------
-                    DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-                    symbols.setGroupingSeparator(',');
-                    symbols.setDecimalSeparator('.');
-                    String pattern = "#,##0.0#";
-                    DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
-                    decimalFormat.setParseBigDecimal(true);
+                        // parse the string
+                        BigDecimal bigDecimal1 = (BigDecimal) decimalFormat.parse(request.getParameter("latitud"));
+                        l.setLatitud(bigDecimal1);
+                        BigDecimal bigDecimal2 = (BigDecimal) decimalFormat.parse(request.getParameter("longitud"));
+                        l.setLongitud(bigDecimal2);
+                        // ----------------------------------------------------------------------------
 
-                    // parse the string
-                    BigDecimal bigDecimal1 = (BigDecimal) decimalFormat.parse(request.getParameter("latitud"));
-                    l.setLatitud(bigDecimal1);
-                    BigDecimal bigDecimal2 = (BigDecimal) decimalFormat.parse(request.getParameter("longitud"));
-                    l.setLongitud(bigDecimal2);
-                    // ----------------------------------------------------------------------------
+                        //Guardar Correctamente en la base de datos
+                        if (accion.equals("agregarEmpresa")) { //es insertar personas
+                            //Se guarda el objeto
+                            lpBL.save(l);
+                            List<Localizacion> list = lpBL.findAll(Localizacion.class.getName());
 
-                    //Guardar Correctamente en la base de datos
-                    if (accion.equals("agregarEmpresa")) { //es insertar personas
-                        //Se guarda el objeto
-                        lpBL.save(l);
-                        List<Localizacion> list = lpBL.findAll(Localizacion.class.getName());
+                            l = lpBL.findById(list.get(list.size() - 1).getPkIdLocalizacion());
+                            p.setLocalizacion(l.getPkIdLocalizacion());
+                            pBL.save(p);
 
-                        l = lpBL.findById(list.get(list.size() - 1).getPkIdLocalizacion());
-                        p.setLocalizacion(l.getPkIdLocalizacion());
-                        pBL.save(p);
+                            //Se imprime la respuesta con el response
+                            out.print("C~La empresa fue ingresada correctamente");
 
-                        //Se imprime la respuesta con el response
-                        out.print("C~La empresa fue ingresada correctamente");
+                        } else {//es modificar persona
+                            //Se guarda el objeto
+                            pBL.merge(p);
 
-                    } else {//es modificar persona
-                        //Se guarda el objeto
-                        pBL.merge(p);
-
-                        //Se imprime la respuesta con el response
-                        out.print("C~La Empresa fue modificada correctamente");
+                            //Se imprime la respuesta con el response
+                            out.print("C~La Empresa fue modificada correctamente");
+                        }
+                    } else {
+                        out.print("E~El correo esta en uso");
                     }
-
                     break;
 
                 default:

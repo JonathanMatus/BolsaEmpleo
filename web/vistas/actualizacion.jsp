@@ -184,7 +184,7 @@
                                         <td><% out.print(ofeCompleto.getNacionalidad()); %></td>
                                         <td><% out.print(ofeCompleto.getCorreo()); %></td>
                                         <td><% out.print(ofeCompleto.getResidencia()); %></td>
-                                        <td><input type="button" id="accion" value="Editar"></td>
+                                        <td><input type="button" id="editarOfe" value="Editar"></td>
                                     </tr>
                                     
                                 </tbody>
