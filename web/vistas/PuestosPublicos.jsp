@@ -58,11 +58,10 @@
 
         <script src="../js/jscode.js" type="text/javascript"></script>
         <script src="../js/LoginJS.js" type="text/javascript"></script>
+        <script src="../js/puestosPublicosJS.js" type="text/javascript"></script>
 
-        <script src="../js/PuestoJS.js" type="text/javascript"></script>
 
-
-        <!--        <link href="../css/gestionEmpresa.css" rel="stylesheet" type="text/css"/>
+    <!--        <link href="../css/gestionEmpresa.css" rel="stylesheet" type="text/css"/>
                 <link href="../css/cssRegistro.css" rel="stylesheet" type="text/css"/>-->
         <link href="../css/css.css" rel="stylesheet" type="text/css"/>
 
@@ -143,7 +142,7 @@
                     <!-- Page Heading -->
                     <div class="row" id="main" >
                         <div class=" tablas col-sm-12 col-md-12">
-                            <table class="table table-hover table-condensed" id="tablaPuestos" width="100%" >
+                            <table class="table table-hover table-condensed" id="tablaPuestosPublicos" width="100%" >
                                 <thead>
                                     <tr> 
                                         <th>Empresa</th>

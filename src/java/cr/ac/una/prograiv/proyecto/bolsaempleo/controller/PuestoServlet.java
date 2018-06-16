@@ -176,7 +176,7 @@ public class PuestoServlet extends HttpServlet {
                     break;
                     
                 case "consultarPuestosPublicos":
-                    json = new Gson().toJson(pBL.findByQuery("SELECT * FROM mydbproyecto.puesto where tipo_publicacion = 'Privada';"));
+                    json = new Gson().toJson(pBL.findByQuery("SELECT * FROM mydbproyecto.puesto where tipo_publicacion = 'Publica';"));
                     out.print(json);
                     break;
                     
