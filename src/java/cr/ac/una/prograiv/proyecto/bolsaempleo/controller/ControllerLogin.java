@@ -67,7 +67,7 @@ public class ControllerLogin extends HttpServlet {
                             HttpSession session = request.getSession(true);
                             session.setAttribute("idUsuario", usuario.getPkUsuario());
                             session.setAttribute("email", usuario.getPkEmail());
-                            if(usuario.getTipo() == 1){
+                            if(usuario.getTipo() == 0){
                             session.setAttribute("ofeCompleto", listOfe.get(0));
                             }
                             session.setAttribute("usuario", usuariotext);
