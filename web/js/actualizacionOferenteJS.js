@@ -18,9 +18,8 @@ $(function () {
         window.location.href = "http://localhost:8080/BolsaEmpleo/vistas/editarOferente.jsp";
     });
     
-    $('.tablas').show();
     $('#listaCaracteristicas').click(function () {
-        ocultarCampos2();
+        ocultarCampos();
         datatable = $('#tablaCaracteristica').DataTable({
             responsive: true,
             "destroy": true,
@@ -40,7 +39,7 @@ $(function () {
                 }
             }
         });
-        
+        $('.formPuesto').show();
         $('#tablaCaracteristica').show();
         consultarOferente();
     });
@@ -84,7 +83,9 @@ $(function () {
 
 
 function ocultarCampos() {
+    $('.formPuesto').hide();
     $('#tablaCaracteristica').hide();
+    $('#registroPuesto').hide();
     if (datatable !== null) {
         datatable.destroy();
         datatable = null;
@@ -92,17 +93,6 @@ function ocultarCampos() {
 
 }
 
-
-
-function ocultarCampos2() {
-    $('#tablaCaracteristica').hide();
-     $('#registroPuesto').hide();
-    if (datatable !== null) {
-        datatable.destroy();
-        datatable = null;
-    }
-
-}
 function validar() {
     return true;
 }

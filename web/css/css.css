@@ -267,7 +267,7 @@ body{
     padding: 0;
     width: auto;
 }
-.carousel-inner>img{
+.carousel-inner img{
     height: 400px;
     max-height: 400px;
     width: auto;
