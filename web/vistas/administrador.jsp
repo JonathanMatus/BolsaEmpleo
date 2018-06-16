@@ -92,8 +92,7 @@
                     <li> <a href="contacto.jsp">Contacto</a></li>
                         <% if (tipoUsuario.equals("2")) { %> 
                     <li> <a href="administrador.jsp">Administrador</a></li>
-                    <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
-                     <li> <a href="actualizacion.jsp">Actualizacion</a></li>
+                  
                         <% }%> 
                     <li> <a href="puestos.jsp">Puestos</a></li>
                 </ul>

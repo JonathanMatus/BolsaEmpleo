@@ -17,9 +17,9 @@ $(function () {
     $('#ingresarPuesto').click(function () {
         ocultarCampos();
         $('.formPuesto').show();
-        cargarListaEmpresas();
         cargarListaCategorias();
     });
+
     $('#categoria').on('select2:select', function (e) {
         document.getElementById("subCategoria").disabled = false;
         $('#ingresarSubCategoria').show();
@@ -71,8 +71,33 @@ $(function () {
             }
 
         });
-        $('.tablas').show();
+        $('#tablaPuestos').show();
         consultarPuestos();
+    });
+    $('#listaSolicitudOfer').click(function () {
+        ocultarCampos();
+        datatable = $('#tablaOferentesEspera').DataTable({
+            responsive: true,
+            "destroy": true,
+            "language": {
+                "emptyTable": "No hay Datos disponibles en la tabla",
+                "lengthMenu": "Mostrar _MENU_ datos por pagina",
+                "zeroRecords": "Nada encontrado",
+                "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                "infoEmpty": "Sin datos para mostrar",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+
+        });
+        $('#tablaOferentesEspera').show();
+        consultarOferentesEspera();
     });
 });
 function consultarPuestos() {
@@ -100,10 +125,54 @@ function consultarPuestos() {
         dataType: "json"
     });
 }
+function consultarOferentesEspera() {
+    swal({
+        title: "Espere por favor..",
+        text: "Consultando la información de los oferentes en la base de datos",
+        icon: "info",
+        buttons: false
+    });
+    //Se envia la información por ajax
+    $.ajax({
+        url: 'PuestoServlet',
+        data: {
+            accion: "consultarOferentesEspera"
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de los oferentes en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            dibujarTablaOferenteEspera(data);
+            // se oculta el modal esta funcion se encuentra en el utils.js
+            swal("Correcto!", "La informacion ha sido cargada correctamente.", "success");
+        },
+        type: 'POST',
+        dataType: "json"
+    });
+}
+function dibujarTablaOferenteEspera(dataJson) {
+//    //limpia la información que tiene la tabla
+    var rowData;
+    datatable
+            .clear()
+            .draw();
+    for (var i = 0; i < dataJson.length; i++) {
+
+        rowData = dataJson[i];
+        datatable.row.add([
+            rowData.nombreOfer,
+            rowData.correo,
+            rowData.nombre,
+            rowData.salario
+        ]).draw(false);
+    }
+
+
+}
 function dibujarTablaPuesto(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
-     datatable
+    datatable
             .clear()
             .draw();
     for (var i = 0; i < dataJson.length; i++) {
@@ -134,14 +203,12 @@ function enviar() {
             icon: "info",
             buttons: false
         });
-        var idEmpresaText = $('#empresaList').select2('data');
         var idSubcat = $('#subCategoria').select2('data');
         $.ajax({
             url: 'PuestoServlet',
             data: {
                 accion: $("#puestoAction").val(),
                 nombre: $("#nombre").val(),
-                idEmpresa: idEmpresaText[0].id,
                 salario: $("#salario").val(),
                 tipo: $("#tipos").val(),
                 idSubcategoria: idSubcat[0].id
@@ -258,7 +325,8 @@ function registrarCat() {
 }
 function ocultarCampos() {
     $('.formPuesto').hide();
-    $('.tablas').hide();
+    $('#tablaOferentesEspera').hide();
+    $('#tablaPuestos').hide();
     if (datatable !== null) {
         datatable.destroy();
         datatable = null;
@@ -269,38 +337,7 @@ function ocultarCampos() {
 function validar() {
     return true;
 }
-function cargarListaEmpresas() {
 
-    $.ajax({
-        url: 'EmpresaServlet',
-        data: {
-            accion: "consultarEmpresas"
-        },
-        error: function () { //si existe un error en la respuesta del ajax
-            swal("Error", "Se presento un error a la hora de cargar la información de las empresas en la base de datos", "error");
-        },
-        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
-            llenarEmpresas(data);
-            // se oculta el modal esta funcion se encuentra en el utils.js
-        },
-        type: 'POST',
-        dataType: "json"
-
-    });
-}
-function llenarEmpresas(datajson) {
-    $.each(datajson, function (i, item) {
-        $("#empresaList option[value='" + item.pkIdEmp + "']").remove();
-        $('#empresaList').append($('<option>', {
-            value: item.pkIdEmp,
-            text: item.nombre
-        }));
-    });
-    $('#empresaList').select2({
-        allowClear: true,
-        placeholder: "Buscar una Empresa"
-    });
-}
 function cargarListaCategorias() {
 
     $.ajax({

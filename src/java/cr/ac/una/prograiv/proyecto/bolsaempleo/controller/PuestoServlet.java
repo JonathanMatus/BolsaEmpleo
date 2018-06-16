@@ -29,6 +29,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -71,6 +73,7 @@ public class PuestoServlet extends HttpServlet {
 
             Aplicacionpuesto apli = new Aplicacionpuesto();
             AplicacionpuestoBL apliBL = new AplicacionpuestoBL();
+            List<Aplicacionpuesto> puestosAplicados;
             String salida;
             //Se hace una pausa para ver el modal
             Thread.sleep(1000);
@@ -120,7 +123,7 @@ public class PuestoServlet extends HttpServlet {
                     oferentes = oferBL.findByQuery("Select * from   mydbproyecto.oferente where  Usuario_PK_Usuario= " + idUsuActivo + ";");
                     if (oferentes.size() == 1) {
 
-                        List<Aplicacionpuesto> puestosAplicados = apliBL.findByQuery("SELECT * FROM mydbproyecto.aplicacionpuesto where "
+                        puestosAplicados = apliBL.findByQuery("SELECT * FROM mydbproyecto.aplicacionpuesto where "
                                 + "oferente_fk_cedula=" + oferentes.get(0).getPkCedula() + ";");
                         puestos = pBL.findAll(Puesto.class.getName());
                         empresas = eBL.findAll(Empresa.class.getName());
@@ -176,53 +179,24 @@ public class PuestoServlet extends HttpServlet {
                     puestos = pBL.findAll(Puesto.class.getName());
 
                     empresas = eBL.findAll(Empresa.class.getName());
-
-                    salida = "";
-                    salida += "[";
-                    for (int i = 0; i < puestos.size(); i++) {
-                        salida += "{";
-                        Puesto aux2 = puestos.get(i);
-                        for (int j = 0; j < empresas.size(); j++) {
-                            aux = empresas.get(j);
-                            if (aux2.getEmpresa() == aux.getPkIdEmp()) {
-                                salida += "\"pkIdPuesto\":" + aux2.getPkIdPuesto() + ","
-                                        + "\"empresa\":\"" + aux.getNombre() + "\","
-                                        + "\"tipoPublicacion\":\"" + aux2.getTipoPublicacion() + "\","
-                                        + "\"salario\":" + aux2.getSalario() + ","
-                                        + "\"nombre\":\"" + aux2.getNombre() + "\"";
-                            }
-
-                        }
-                        if (i + 1 == puestos.size()) {
-                            salida += "}";
-                        } else {
-                            salida += "},";
-                        }
-
-                    }
-                    salida += "]";
-                    out.print(salida);
-                    break;
-                case "consultarPuestosByEmpresa":
-                    idUsuActivo = (int) session.getAttribute("idUsuario");
-
-                    empresas = eBL.findByQuery("Select * from   mydbproyecto.empresa where  Usuario_PK_Usuario= " + idUsuActivo + ";");
-                    if (empresas.size() == 1) {
-                        aux = empresas.get(0);
-                        puestos = pBL.findByQuery("SELECT * FROM mydbproyecto.puesto where "
-                                + "fk_id_emp=" + aux.getPkIdEmp() + ";");
-
+                    if (puestos.size() > 0) {
                         salida = "";
+
                         salida += "[";
                         for (int i = 0; i < puestos.size(); i++) {
                             salida += "{";
                             Puesto aux2 = puestos.get(i);
-                           
-                                salida += "\"pkIdPuesto\":" + aux2.getPkIdPuesto() + ","
-                                        + "\"empresa\":\"" + aux.getNombre() + "\","
-                                        + "\"tipoPublicacion\":\"" + aux2.getTipoPublicacion() + "\","
-                                        + "\"salario\":" + aux2.getSalario() + ","
-                                        + "\"nombre\":\"" + aux2.getNombre() + "\"";
+                            for (int j = 0; j < empresas.size(); j++) {
+                                aux = empresas.get(j);
+                                if (aux2.getEmpresa() == aux.getPkIdEmp()) {
+                                    salida += "\"pkIdPuesto\":" + aux2.getPkIdPuesto() + ","
+                                            + "\"empresa\":\"" + aux.getNombre() + "\","
+                                            + "\"tipoPublicacion\":\"" + aux2.getTipoPublicacion() + "\","
+                                            + "\"salario\":" + aux2.getSalario() + ","
+                                            + "\"nombre\":\"" + aux2.getNombre() + "\"";
+                                }
+
+                            }
                             if (i + 1 == puestos.size()) {
                                 salida += "}";
                             } else {
@@ -232,49 +206,151 @@ public class PuestoServlet extends HttpServlet {
                         }
                         salida += "]";
                         out.print(salida);
+                    } else {
+                        out.print("[]");
                     }
                     break;
+                case "consultarPuestosByEmpresa":
+                    idUsuActivo = (int) session.getAttribute("idUsuario");
 
+                    empresas = eBL.findByQuery("Select * from   mydbproyecto.empresa where  Usuario_PK_Usuario= " + idUsuActivo + ";");
+                    if (empresas.size() == 1) {
+                        aux = empresas.get(0);
+                        puestos = pBL.findByQuery("SELECT * FROM mydbproyecto.puesto where "
+                                + "fk_id_emp=" + aux.getPkIdEmp() + ";");
+                        if (puestos.size() > 0) {
+                            salida = "";
+                            salida += "[";
+                            for (int i = 0; i < puestos.size(); i++) {
+                                salida += "{";
+                                Puesto aux2 = puestos.get(i);
+
+                                salida += "\"pkIdPuesto\":" + aux2.getPkIdPuesto() + ","
+                                        + "\"empresa\":\"" + aux.getNombre() + "\","
+                                        + "\"tipoPublicacion\":\"" + aux2.getTipoPublicacion() + "\","
+                                        + "\"salario\":" + aux2.getSalario() + ","
+                                        + "\"nombre\":\"" + aux2.getNombre() + "\"";
+                                if (i + 1 == puestos.size()) {
+                                    salida += "}";
+                                } else {
+                                    salida += "},";
+                                }
+
+                            }
+                            salida += "]";
+                            out.print(salida);
+                        } else {
+                            out.print("[]");
+                        }
+                    } else {
+                        out.print("[]");
+                    }
+                    break;
+                case "consultarOferentesEspera":
+                    idUsuActivo = (int) session.getAttribute("idUsuario");
+
+                    empresas = eBL.findByQuery("Select * from   mydbproyecto.empresa where  Usuario_PK_Usuario= " + idUsuActivo + ";");
+                    if (empresas.size() == 1) {
+                        aux = empresas.get(0);
+                        puestos = pBL.findByQuery("SELECT * FROM mydbproyecto.puesto where "
+                                + "fk_id_emp=" + aux.getPkIdEmp() + ";");
+                        Map<Integer, Puesto> datos = new HashMap<>();
+                        for (int i = 0; i < puestos.size(); i++) {
+                            datos.put(puestos.get(i).getPkIdPuesto(), puestos.get(i));
+                        }
+                        puestosAplicados = apliBL.findAll(Aplicacionpuesto.class.getName());
+                        List<Aplicacionpuesto> puestosEmp = new ArrayList();
+                        if (puestosAplicados.size() > 0) {
+                            for (int i = 0; i < puestosAplicados.size(); i++) {
+                                apli = puestosAplicados.get(i);
+                                if (datos.containsKey(apli.getPuesto())) {
+                                    puestosEmp.add(apli);
+                                }
+                            }
+                            if (puestosEmp.size() > 0) {
+                                oferentes = oferBL.findAll(Oferente.class.getName());
+                                Map<Integer, Oferente> datosOfer = new HashMap<>();
+                                for (int k = 0; k < oferentes.size(); k++) {
+                                    datosOfer.put(oferentes.get(k).getPkCedula(), oferentes.get(k));
+                                }
+                                salida = "";
+                                salida += "[";
+                                for (int i = 0; i < puestosEmp.size(); i++) {
+                                    salida += "{";
+                                    Puesto aux2 = datos.get(puestosEmp.get(i).getPuesto());
+                                    Oferente aux3 = datosOfer.get(puestosEmp.get(i).getOferente());
+                                    salida += "\"nombreOfer\":\"" + aux3.getNombre() + " " + aux3.getApellido1() + "\","
+                                            + "\"correo\":\"" + aux3.getCorreo() + "\","
+                                            + "\"pkIdPuesto\":" + aux2.getPkIdPuesto() + ","
+                                            + "\"empresa\":\"" + aux.getNombre() + "\","
+                                            + "\"tipoPublicacion\":\"" + aux2.getTipoPublicacion() + "\","
+                                            + "\"salario\":" + aux2.getSalario() + ","
+                                            + "\"nombre\":\"" + aux2.getNombre() + "\"";
+                                    if (i + 1 == puestosEmp.size()) {
+                                        salida += "}";
+                                    } else {
+                                        salida += "},";
+                                    }
+
+                                }
+                                salida += "]";
+                                out.print(salida);
+                            } else {
+                                out.print("[]");
+                            }
+                        } else {
+                            out.print("[]");
+                        }
+                    } else {
+                        out.print("[]");
+                    }
+                    break;
                 case "agregarPuesto":
                 case "modificarPuesto":
+                    idUsuActivo = (int) session.getAttribute("idUsuario");
 
-                    //Se llena el objeto con los datos enviados por AJAX por el metodo post
-                    p.setNombre(request.getParameter("nombre"));
-                    p.setEmpresa(Integer.parseInt(request.getParameter("idEmpresa")));
-                    p.setTipoPublicacion(request.getParameter("tipo"));
+                    empresas = eBL.findByQuery("Select * from   mydbproyecto.empresa where  Usuario_PK_Usuario= " + idUsuActivo + ";");
+                    if (empresas.size() == 1) {
+                        aux = empresas.get(0);
+                        //Se llena el objeto con los datos enviados por AJAX por el metodo post
+                        p.setNombre(request.getParameter("nombre"));
+                        p.setEmpresa(aux.getPkIdEmp());
+                        p.setTipoPublicacion(request.getParameter("tipo"));
 
-                    //--------------------castear a bigDecimal--------------------------------
-                    DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-                    symbols.setGroupingSeparator(',');
-                    symbols.setDecimalSeparator('.');
-                    String pattern = "#,##0.0#";
-                    DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
-                    decimalFormat.setParseBigDecimal(true);
+                        //--------------------castear a bigDecimal--------------------------------
+                        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+                        symbols.setGroupingSeparator(',');
+                        symbols.setDecimalSeparator('.');
+                        String pattern = "#,##0.0#";
+                        DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
+                        decimalFormat.setParseBigDecimal(true);
 
-                    // parse the string
-                    BigDecimal bigDecimal = (BigDecimal) decimalFormat.parse(request.getParameter("salario"));
+                        // parse the string
+                        BigDecimal bigDecimal = (BigDecimal) decimalFormat.parse(request.getParameter("salario"));
 
-                    // ----------------------------------------------------------------------------
-                    p.setSalario(bigDecimal);
-                    //Guardar Correctamente en la base de datos
-                    if (accion.equals("agregarPuesto")) { //es insertar personas
-                        //Se guarda el objeto
-                        pBL.save(p);
-                        subp.setPuesto(p.getPkIdPuesto());
-                        Integer idsubcategoria = Integer.parseInt(request.getParameter("idSubcategoria"));
-                        subp.setSubcategoria(idsubcategoria);
-                        scBL.save(subp);
-                        //Se imprime la respuesta con el response
-                        out.print("C~El puesto fue ingresado correctamente");
+                        // ----------------------------------------------------------------------------
+                        p.setSalario(bigDecimal);
+                        //Guardar Correctamente en la base de datos
+                        if (accion.equals("agregarPuesto")) { //es insertar personas
+                            //Se guarda el objeto
+                            pBL.save(p);
+                            subp.setPuesto(p.getPkIdPuesto());
+                            Integer idsubcategoria = Integer.parseInt(request.getParameter("idSubcategoria"));
+                            subp.setSubcategoria(idsubcategoria);
+                            scBL.save(subp);
+                            //Se imprime la respuesta con el response
+                            out.print("C~El puesto fue ingresado correctamente");
 
-                    } else {//es modificar persona
-                        //Se guarda el objeto
-                        pBL.merge(p);
+                        } else {//es modificar persona
+                            //Se guarda el objeto
+                            pBL.merge(p);
 
-                        //Se imprime la respuesta con el response
-                        out.print("C~El puesto fue modificada correctamente");
+                            //Se imprime la respuesta con el response
+                            out.print("C~El puesto fue modificado correctamente");
+                        }
+                    } else {
+                        out.print("E~El usuario no es una empresa");
                     }
-
                     break;
 
                 default:

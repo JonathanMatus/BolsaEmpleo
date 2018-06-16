@@ -9,12 +9,12 @@
     String tipoUsuario = "-1";
     if (sesion != null) {
         if (sesion.getAttribute("usuario") == null) {
-            response.sendRedirect("PaginaPrincipal.jsp");
+            response.sendRedirect("../PaginaPrincipal.jsp");
         } else {
-            tipoUsuario = (String) sesion.getAttribute("tipo");
+              tipoUsuario = (String) sesion.getAttribute("tipo");
         }
     } else {
-        response.sendRedirect("PaginaPrincipal.jsp");
+        response.sendRedirect("../PaginaPrincipal.jsp");
     }
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -100,8 +100,7 @@
                     <li> <a href="contacto.jsp">Contacto</a></li>
                         <% if (tipoUsuario.equals("2")) { %> 
                     <li> <a href="administrador.jsp">Administrador</a></li>
-                    <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
-                    <li> <a href="actualizacion.jsp">Actualizacion</a></li>
+                  
                         <% }%> 
                         <% if (tipoUsuario.equals("1")) { %> 
 
@@ -141,7 +140,7 @@
                             <ul id="submenu-1" class="collapse">
                                 <li><a type="button" id="ingresarPuesto"><i class="fa fa-angle-double-right"></i> Ingresar Puestos</a></li>
                                 <li><a type="button" id="listaPuestosEmpresa"><i class="fa fa-angle-double-right"></i> Mostrar puestos</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Mostrar solicitudes de oferentes</a></li>
+                                <li><a type="button" id="listaSolicitudOfer"><i class="fa fa-angle-double-right"></i> Mostrar solicitudes de oferentes</a></li>
                             </ul>
                         </li>
 
@@ -163,6 +162,16 @@
                                         <th>Salario</th>
                                         <th>Tipo</th>
                                         <th>Accion</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                              <table class="table table-hover table-condensed" id="tablaOferentesEspera" width="100%" >
+                                <thead>
+                                    <tr> 
+                                        <th>Nombre</th>
+                                        <th>correo</th>
+                                        <th>Puesto</th>
+                                        <th>Salario</th> 
                                     </tr>
                                 </thead>
                             </table>
@@ -196,14 +205,7 @@
                                                                 <label>Salario</label>
                                                                 <input type="text" placeholder="Ingresar Salario.." class="form-control" id="salario"/>                 
                                                             </div>
-                                                            <% if (tipoUsuario.equals("2")) {%> 
-                                                            <div class=" form-group" id="groupEmpresa">
-                                                                <label>Empresa</label>
-                                                                <select class="js-example-data-ajax form-control" id="empresaList">
-                                                                </select>
-
-                                                            </div>
-                                                            <% }%>
+                                                  
                                                         </div>
                                                         <div class="col-sm-6 form-group" >
                                                             <div class=" form-group" >
