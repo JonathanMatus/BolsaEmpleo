@@ -4,10 +4,13 @@
  * and open the template in the editor.
  */
 
+
+
+
 var datatable = null;
 $(function () {
     
-    datatable = $('#tablaPuestos').DataTable({
+    datatable = $('#tablaPuestosPublicos').DataTable({
         responsive: true,
         "destroy": true,
         "language": {
@@ -27,11 +30,11 @@ $(function () {
         }
 
     });
-    $('.tablas').show();
-    consultarPuestos();
+    consultarPuestosPublicos();
   
 });
-function consultarPuestos() {
+
+function consultarPuestosPublicos() {
     swal({
         title: "Espere por favor..",
         text: "Consultando la información de los puestos en la base de datos",
@@ -42,13 +45,10 @@ function consultarPuestos() {
     $.ajax({
         url: 'PuestoServlet',
         data: {
-            accion: "consultarPuestosNoAplicado"
-        },
-        error: function () { //si existe un error en la respuesta del ajax
-            swal("Error", "Se presento un error a la hora de cargar la información de los puestos en la base de datos", "error");
+            accion: "consultarPuestosPublicos"
         },
         success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
-            dibujarTablaPuesto(data);
+            dibujarTablaPuestoPublicos(data);
             // se oculta el modal esta funcion se encuentra en el utils.js
             swal("Correcto!", "La informacion ha sido cargada correctamente.", "success");
         },
@@ -56,7 +56,8 @@ function consultarPuestos() {
         dataType: "json"
     });
 }
-function dibujarTablaPuesto(dataJson) {
+
+function dibujarTablaPuestoPublicos(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
     datatable
@@ -70,38 +71,14 @@ function dibujarTablaPuesto(dataJson) {
             rowData.nombre,
             rowData.salario,
             rowData.tipoPublicacion,
-            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="AsignarOferente(' + rowData.pkIdPuesto + ')">' +
+            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="Registro()">' +
                     'Aplicar' +
                     '</button>'
         ]).draw(false);
     }
 }
-function AsignarOferente(idPuesto) {
 
-    //Se envia la información por ajax
-    $.ajax({
-        url: 'PuestoServlet',
-        data: {
-            accion: "aplicarPuesto",
-            idPuesto: idPuesto
-        },
-        error: function () { //si existe un error en la respuesta del ajax
-            swal("Error", "Se presento un error a la hora de realizar la operacion en la base de datos", "error");
-        },
-        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
 
-            var respuestaTxt = data.substring(2);
-            var tipoRespuesta = data.substring(0, 2);
-            if (tipoRespuesta === "E~") {
-                swal("Resultado acción", respuestaTxt, "info");
-            } else {
-                swal("Correcto!", "Ha aplicado en un puesto.", "success").then(setTimeout(consultarPuestos(), 3000));
-            }
-        },
-        type: 'POST'
-    });
+function Registro(){
+    window.location.href ="http://localhost:8080/BolsaEmpleo/vistas/registro.jsp";
 }
-
-
-
-
