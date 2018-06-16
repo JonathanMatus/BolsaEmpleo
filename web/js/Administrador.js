@@ -11,7 +11,7 @@
 
 var datatable = null;
 $(function () {
-    
+
     $('.tablas').show();
     $('#listaOferentes').click(function () {
         ocultarTablas();
@@ -210,12 +210,14 @@ $(function () {
         $('#tablaEmpresaEspera').show();
         consultarEmpresaEspera();
     });
-    
+
 });
 function dibujarTablaOferenteEspera(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
-    datatable.clear();
+    datatable
+            .clear()
+            .draw();
     for (var i = 0; i < dataJson.length; i++) {
         rowData = dataJson[i];
         var cedula = dataJson[i].pkCedula;
@@ -235,7 +237,9 @@ function dibujarTablaOferenteEspera(dataJson) {
 function dibujarTablaEmpresaEspera(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
-    datatable.clear();
+   datatable
+            .clear()
+            .draw();
     for (var i = 0; i < dataJson.length; i++) {
         rowData = dataJson[i];
         var id = dataJson[i].pkIdEmp;
@@ -253,7 +257,7 @@ function dibujarTablaEmpresaEspera(dataJson) {
     }
 }
 function consultarOferenteEspera() {
-    
+
     swal({
         title: "Espere por favor..",
         text: "Consultando la información de oferentes en la base de datos",
@@ -280,7 +284,7 @@ function consultarOferenteEspera() {
     });
 }
 function consultarEmpresaEspera() {
-    
+
     swal({
         title: "Espere por favor..",
         text: "Consultando la información de Empresas en la base de datos",
@@ -348,7 +352,7 @@ function consultarPuestos() {
     });
 }
 function consultarEmpresas() {
-    
+
     swal({
         title: "Espere por favor..",
         text: "Consultando la información de empresas en la base de datos",
@@ -375,7 +379,7 @@ function consultarEmpresas() {
 }
 
 function consultarOferente() {
-    
+
     swal({
         title: "Espere por favor..",
         text: "Consultando la información de oferentes en la base de datos",
@@ -386,7 +390,7 @@ function consultarOferente() {
     $.ajax({
         url: 'OferenteServlet',
         data: {
-            accion: "consultarOferente"
+            accion: "consultarOferenteConUsu"
         },
         error: function () { //si existe un error en la respuesta del ajax
             swal("Error", "Se presento un error a la hora de cargar la información de los oferentes en la base de datos", "error");
@@ -401,7 +405,7 @@ function consultarOferente() {
     });
 }
 function consultarCategorias() {
-    
+
     swal({
         title: "Espere por favor..",
         text: "Consultando la información de categorias en la base de datos",
@@ -455,7 +459,9 @@ function consultarSubCategorias() {
 function dibujarTablaCategorias(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
-    datatable.clear();
+    datatable
+            .clear()
+            .draw();
     for (var i = 0; i < dataJson.length; i++) {
 
         rowData = dataJson[i];
@@ -476,7 +482,9 @@ function dibujarTablaCategorias(dataJson) {
 function dibujarTablaSubCategorias(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
-    datatable.clear();
+   datatable
+            .clear()
+            .draw();
     for (var i = 0; i < dataJson.length; i++) {
 
         rowData = dataJson[i];
@@ -498,7 +506,9 @@ function dibujarTablaSubCategorias(dataJson) {
 function dibujarTablaEmpresa(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
-    datatable.clear();
+   datatable
+            .clear()
+            .draw();
     for (var i = 0; i < dataJson.length; i++) {
 
         rowData = dataJson[i];
@@ -522,7 +532,9 @@ function dibujarTablaEmpresa(dataJson) {
 function dibujarTablaPuesto(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
-    datatable.clear();
+    datatable
+            .clear()
+            .draw();
     for (var i = 0; i < dataJson.length; i++) {
 
         rowData = dataJson[i];
@@ -545,7 +557,9 @@ function dibujarTablaPuesto(dataJson) {
 function dibujarTablaOferente(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
-    datatable.clear();
+    datatable
+            .clear()
+            .draw();
     for (var i = 0; i < dataJson.length; i++) {
 
         rowData = dataJson[i];

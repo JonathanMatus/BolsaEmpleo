@@ -53,7 +53,7 @@ public class ControllerLogin extends HttpServlet {
                     usuario = uBL.findByNombreUsuario(usuariotext);
 
                     if (usuario == null) {
-                        out.print("E~Usuario no registrado en el sistema");
+                         out.print("E~Usuario o contraseña incorrectos");
                     }
                     if (usuario != null) {
                         if (!usuario.getPassword().equals(passwordtext)) {

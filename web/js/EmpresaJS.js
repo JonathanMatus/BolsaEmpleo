@@ -190,17 +190,7 @@ function consultarPersonaByID(idPersona) {
 //******************************************************************************
 //******************************************************************************
 
-function mostrarMensaje(classCss, msg, neg) {
-//se le eliminan los estilos al mensaje
-    $("#mesajeResult").removeClass();
-    //se setean los estilos
-    $("#mesajeResult").addClass(classCss);
-    //se muestra la capa del mensaje con los parametros del metodo
-    $("#mesajeResult").fadeIn("slow");
-    $("#mesajeResultNeg").html(neg);
-    $("#mesajeResultText").html(msg);
-    $("#mesajeResultText").html(msg);
-}
+
 
 //******************************************************************************
 //******************************************************************************

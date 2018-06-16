@@ -82,7 +82,7 @@ public class OferenteServlet extends HttpServlet {
             String accion = request.getParameter("accion");
             switch (accion) {
                 case "oferentesEspera":
-                    json = new Gson().toJson(ofeBL.findByQuery("Select * from  mydbproyecto.oferente where oferente.Usuario_PK_Usuario is null"));
+                    json = new Gson().toJson(ofeBL.findByQuery("Select * from  mydbproyecto.oferente where oferente.Usuario_PK_Usuario is null;"));
                     out.print(json);
                     break;
 
@@ -97,7 +97,6 @@ public class OferenteServlet extends HttpServlet {
                         Oferente cedOfe = listOfe.get(0);
                         List<Caracteristicasoferente> c = caraOfeBL.findByQuery("select * from mydbproyecto.caracteristicasoferente where Fk_id_subcategoria=" + idSub + " and oferente_fk_cedula=" + cedOfe.getPkCedula() + ";");
                         if (c.size() == 0) {
-                           
 
                             List<Subcategoria> listSub = subBL.findByQuery("Select * from   mydbproyecto.subcategoria where  pk_id_subcategoria= '" + idSub + ";");
                             Subcategoria idSu = listSub.get(0);
@@ -108,11 +107,11 @@ public class OferenteServlet extends HttpServlet {
                             caraOfeBL.save(caraOfe);
 
                             out.print("C~Caracteristica guarda con exito!!");
-                        }else{
-                         throw new Exception("Caracteristica ya registrada");
+                        } else {
+                            throw new Exception("Caracteristica ya registrada");
                         }
-                    }else{
-                   throw new Exception("Usuario no es oferente");
+                    } else {
+                        throw new Exception("Usuario no es oferente");
                     }
                     break;
 
@@ -128,13 +127,12 @@ public class OferenteServlet extends HttpServlet {
                     lpBL.delete(l);
                     u.setPkUsuario(ofer.getUsuario());
                     ubl.delete(u);
-                    List<Caracteristicasoferente> borrar=caraOfeBL.findByQuery("select * from mydbproyecto.caracteristicasoferente where oferente_fk_cedula=" + ofer.getPkCedula() + ";");
-                     for (int i = 0; i < borrar.size(); i++) {
+                    List<Caracteristicasoferente> borrar = caraOfeBL.findByQuery("select * from mydbproyecto.caracteristicasoferente where oferente_fk_cedula=" + ofer.getPkCedula() + ";");
+                    for (int i = 0; i < borrar.size(); i++) {
                         caraOfeBL.delete(borrar.get(i));
                     }
                     //Se imprime la respuesta con el response
                     out.print("El oferente fue eliminado correctamente");
-
                     break;
                 case "eliminarOferente":
 
@@ -155,44 +153,59 @@ public class OferenteServlet extends HttpServlet {
                     json = new Gson().toJson(ofeBL.findAll(Oferente.class.getName()));
                     out.print(json);
                     break;
+                case "consultarOferenteConUsu":
+                    json = new Gson().toJson(ofeBL.findByQuery("Select * from  mydbproyecto.oferente where Usuario_PK_Usuario is not null;"));
+                    out.print(json);
+                    break;
                 case "agregarOferente":
                 case "modificarOferente":
                     //Se llena el objeto con los datos enviados por AJAX por el metodo post
-                    ofe.setPkCedula(Integer.parseInt(request.getParameter("cedula")));
-                    ofe.setNombre(request.getParameter("nombre"));
-                    ofe.setApellido1(request.getParameter("apellido1"));
-                    ofe.setApellido2(request.getParameter("apellido2"));
-                    ofe.setNacionalidad(request.getParameter("nacionalidad"));
-                    ofe.setCorreo(request.getParameter("correo"));
-                    ofe.setResidencia(request.getParameter("residencia"));
+                    List<Oferente> existeCed = ofeBL.findByQuery("SELECT * FROM mydbproyecto.oferente where "
+                            + "pk_cedula=" + request.getParameter("cedula") + ";");
+                    if (existeCed.size() == 0) {
+                        List<Oferente> existeMail = ofeBL.findByQuery("SELECT * FROM mydbproyecto.oferente where "
+                                + "correo='" + request.getParameter("correo") + "';");
+                        if (existeMail.size() == 0) {
+                            ofe.setPkCedula(Integer.parseInt(request.getParameter("cedula")));
+                            ofe.setNombre(request.getParameter("nombre"));
+                            ofe.setApellido1(request.getParameter("apellido1"));
+                            ofe.setApellido2(request.getParameter("apellido2"));
+                            ofe.setNacionalidad(request.getParameter("nacionalidad"));
+                            ofe.setCorreo(request.getParameter("correo"));
+                            ofe.setResidencia(request.getParameter("residencia"));
 
-                    DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-                    symbols.setGroupingSeparator(',');
-                    symbols.setDecimalSeparator('.');
-                    String pattern = "#,##0.0#";
-                    DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
-                    decimalFormat.setParseBigDecimal(true);
-                    BigDecimal latitud = (BigDecimal) decimalFormat.parse(request.getParameter("latitud"));
-                    l.setLatitud(latitud);
-                    BigDecimal longitud = (BigDecimal) decimalFormat.parse(request.getParameter("longitud"));
-                    l.setLongitud(longitud);
-                    if (accion.equals("agregarOferente")) {
-                        lpBL.save(l);
-                        List<Localizacion> list = lpBL.findAll(Localizacion.class.getName());
+                            DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+                            symbols.setGroupingSeparator(',');
+                            symbols.setDecimalSeparator('.');
+                            String pattern = "#,##0.0#";
+                            DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
+                            decimalFormat.setParseBigDecimal(true);
+                            BigDecimal latitud = (BigDecimal) decimalFormat.parse(request.getParameter("latitud"));
+                            l.setLatitud(latitud);
+                            BigDecimal longitud = (BigDecimal) decimalFormat.parse(request.getParameter("longitud"));
+                            l.setLongitud(longitud);
+                            if (accion.equals("agregarOferente")) {
+                                lpBL.save(l);
+                                List<Localizacion> list = lpBL.findAll(Localizacion.class.getName());
 
-                        l1 = lpBL.findById(list.get(list.size() - 1).getPkIdLocalizacion());
-                        ofe.setLocalizacion(l1.getPkIdLocalizacion());
-                        ofeBL.save(ofe);
-                        //Se imprime la respuesta con el response
-                        out.print("C~El oferente fue ingresado correctamente");
-                    } else {//es modificar persona
-                        //Se guarda el objeto
-                        ofeBL.merge(ofe);
+                                l1 = lpBL.findById(list.get(list.size() - 1).getPkIdLocalizacion());
+                                ofe.setLocalizacion(l1.getPkIdLocalizacion());
+                                ofeBL.save(ofe);
+                                //Se imprime la respuesta con el response
+                                out.print("C~El oferente fue ingresado correctamente");
+                            } else {//es modificar persona
+                                //Se guarda el objeto
+                                ofeBL.merge(ofe);
+                                //Se imprime la respuesta con el response
+                                out.print("C~El oferente fue modificada correctamente");
+                            }
 
-                        //Se imprime la respuesta con el response
-                        out.print("C~El oferente fue modificada correctamente");
+                        } else {
+                            out.print("E~El correo ya ha sido utilizado");
+                        }
+                    } else {
+                        out.print("E~Ya existe un oferente con esa cedula");
                     }
-
                     break;
 
                 default:
@@ -207,7 +220,7 @@ public class OferenteServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

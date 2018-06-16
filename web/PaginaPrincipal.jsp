@@ -255,6 +255,7 @@
                                 <li><a href="vistas/contacto.jsp">Contacto</a></li>
                                 <li><a href="vistas/acerca.jsp">Sobre nosotros</a></li>
                                 <li><a href="vistas/registroEmpresa.jsp">Empresa</a></li>
+                                <li><a href="vistas/registro.jsp">Oferente</a></li>
                             </ul>
                         </div>
                         <div class="col-sm-6 col-md-6 col-lg-6"></div>
