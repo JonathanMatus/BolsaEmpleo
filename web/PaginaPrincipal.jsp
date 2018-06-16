@@ -25,7 +25,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-    
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Página Principal</title>
         <!--CSS Lbrary -->
@@ -67,7 +67,9 @@
                 <li class="activo"><a class="activo" href="PaginaPrincipal.jsp">Inicio</a></li>
 
                 <li> <a href="vistas/contacto.jsp">Contacto</a></li>
+                    <% if (tipoUsuario.equals("-1")) { %> 
                 <li> <a href="vistas/PuestosPublicos.jsp">Ver Puestos</a></li>
+                    <% }%> 
                     <% if (tipoUsuario.equals("2")) { %> 
                 <li> <a href="vistas/administrador.jsp">Administrador</a></li>
                     <% }%> 
@@ -76,8 +78,8 @@
                     <% }%> 
                     <% if (tipoUsuario.equals("0")) { %> 
                 <li> <a href="vistas/actualizacion.jsp">Actualizacion</a></li>
-                 <li> <a href="vistas/puestos.jsp">Puestos</a></li>
-                <% }%> 
+                <li> <a href="vistas/puestos.jsp">Puestos</a></li>
+                    <% }%> 
             </ul>
             <ul class="nav navbar-right top-nav">
 

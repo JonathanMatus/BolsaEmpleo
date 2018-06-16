@@ -39,7 +39,6 @@ $(function () {
                 }
             }
         });
-        $('.formPuesto').show();
         $('#tablaCaracteristica').show();
         consultarOferente();
     });
