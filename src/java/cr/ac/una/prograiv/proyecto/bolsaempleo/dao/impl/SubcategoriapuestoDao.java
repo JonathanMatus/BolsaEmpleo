@@ -6,7 +6,6 @@
 package cr.ac.una.prograiv.proyecto.bolsaempleo.dao.impl;
 
 import cr.ac.una.prograiv.proyecto.bolsaempleo.dao.IBaseDAO;
-import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Oferente;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Subcategoriapuesto;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.utils.HibernateUtil;
 import java.util.List;

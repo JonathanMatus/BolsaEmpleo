@@ -8,8 +8,10 @@ package cr.ac.una.prograiv.proyecto.bolsaempleo.controller;
 import com.google.gson.Gson;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.EmpresaBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.PuestoBL;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.SubcategoriapuestoBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Empresa;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Puesto;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Subcategoriapuesto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -50,7 +52,8 @@ public class PuestoServlet extends HttpServlet {
 
             //Se crea el objeto de la logica de negocio
             PuestoBL pBL = new PuestoBL();
-
+            Subcategoriapuesto subp = new Subcategoriapuesto();
+            SubcategoriapuestoBL scBL = new SubcategoriapuestoBL();
             //Se hace una pausa para ver el modal
             Thread.sleep(1000);
 
@@ -65,15 +68,18 @@ public class PuestoServlet extends HttpServlet {
             String accion = request.getParameter("accion");
             switch (accion) {
                 case "eliminarPuesto":
-
+                    
                     p.setPkIdPuesto(Integer.parseInt(request.getParameter("idPuesto")));
 
                     //Se elimina el objeto
                     pBL.delete(p);
-
-                    //Se imprime la respuesta con el response
+                    List<Subcategoriapuesto> borrar = scBL.findByQuery("SELECT * FROM mydbproyecto.subcategoriapuesto "
+                            + "where fk_id_puesto=" + request.getParameter("idPuesto") + ";");
+                    for (int i = 0; i < borrar.size(); i++) {
+                        scBL.delete(borrar.get(i));
+                    }
                     out.print("El puesto fue eliminado correctamente");
-
+                    
                     break;
                 case "consultarPuestos":
                     List<Puesto> puestos = pBL.findAll(Puesto.class.getName());
@@ -94,13 +100,13 @@ public class PuestoServlet extends HttpServlet {
                                         + "\"salario\":" + aux2.getSalario() + ","
                                         + "\"nombre\":\"" + aux2.getNombre() + "\"";
                             }
-                           
+                            
                         }
-                         if (i + 1 == puestos.size()) {
-                                salida += "}";
-                            } else {
-                                salida += "},";
-                            }
+                        if (i + 1 == puestos.size()) {
+                            salida += "}";
+                        } else {
+                            salida += "},";
+                        }
                         
                     }
                     salida += "]";
@@ -131,11 +137,13 @@ public class PuestoServlet extends HttpServlet {
                     if (accion.equals("agregarPuesto")) { //es insertar personas
                         //Se guarda el objeto
                         pBL.save(p);
-//
-
+                        subp.setPuesto(p.getPkIdPuesto());
+                        Integer idsubcategoria=Integer.parseInt(request.getParameter("idSubcategoria"));
+                        subp.setSubcategoria(idsubcategoria);
+                        scBL.save(subp);
                         //Se imprime la respuesta con el response
                         out.print("C~El puesto fue ingresado correctamente");
-
+                        
                     } else {//es modificar persona
                         //Se guarda el objeto
                         pBL.merge(p);
@@ -143,14 +151,14 @@ public class PuestoServlet extends HttpServlet {
                         //Se imprime la respuesta con el response
                         out.print("C~El puesto fue modificada correctamente");
                     }
-
+                    
                     break;
-
+                
                 default:
                     out.print("E~No se indico la acción que se desea realizare");
                     break;
             }
-
+            
         } catch (NumberFormatException e) {
             out.print("E~" + e.getMessage());
         } catch (Exception e) {

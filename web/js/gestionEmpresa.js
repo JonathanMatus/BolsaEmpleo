@@ -20,17 +20,15 @@ $(function () {
         cargarListaEmpresas();
         cargarListaCategorias();
     });
-    $('#categoria').on('select2:selecting', function (e) {
-        var idCategoria = $('#categoria').select2('data');
+    $('#categoria').on('select2:select', function (e) {
         document.getElementById("subCategoria").disabled = false;
         $('#ingresarSubCategoria').show();
-        cargarListaSubCategorias(idCategoria[0].id);
+        cargarListaSubCategorias();
     });
     $('#categoria').on('select2:change', function (e) {
-        var idCategoria = $('#categoria').select2('data');
         document.getElementById("subCategoria").disabled = false;
         $('#ingresarSubCategoria').show();
-        cargarListaSubCategorias(idCategoria[0].id);
+        cargarListaSubCategorias();
     });
 //    $('#mostrarSubCategoria').click(function () {
 //        var idCategoria = $('#categoria').select2('data');
@@ -135,6 +133,7 @@ function enviar() {
             buttons: false
         });
         var idEmpresaText = $('#empresaList').select2('data');
+        var idSubcat = $('#subCategoria').select2('data');
         $.ajax({
             url: 'PuestoServlet',
             data: {
@@ -142,7 +141,8 @@ function enviar() {
                 nombre: $("#nombre").val(),
                 idEmpresa: idEmpresaText[0].id,
                 salario: $("#salario").val(),
-                tipo: $("#tipos").val()
+                tipo: $("#tipos").val(),
+                idSubcategoria: idSubcat[0].id
 
             },
             error: function () { //si existe un error en la respuesta del ajax
@@ -177,13 +177,13 @@ function registrarSubCat() {
             icon: "info",
             buttons: false
         });
-        var idCategoria = $('#categoria').select2('data');
+        var idCategorias = $('#categoria').select2('data');
         $.ajax({
             url: 'SubCategoriaServlet',
             data: {
                 accion: 'agregarSubCategoria',
                 nombre: $("#nombreSubCat").val(),
-                idCategoria: idCategoria[0].id
+                idCategoria: idCategorias[0].id
             },
             error: function () { //si existe un error en la respuesta del ajax
                 swal("Error!", "Se genero un error, contacte al administrador (Error del ajax)", "error");
@@ -193,6 +193,7 @@ function registrarSubCat() {
                 var tipoRespuesta = data.substring(0, 2);
                 if (tipoRespuesta === "C~") {
                     swal("Correcto!", respuestaTxt, "success");
+                    cargarListaSubCategorias(idCategorias[0].id);
                     setTimeout(function () {
                         $(".close").click();
                     }, 1000);
@@ -234,7 +235,7 @@ function registrarCat() {
                 var tipoRespuesta = data.substring(0, 2);
                 if (tipoRespuesta === "C~") {
                     swal("Correcto!", respuestaTxt, "success");
-
+                    cargarListaCategorias();
                     setTimeout(function () {
                         $(".close").click();
                     }, 1000);
@@ -269,7 +270,7 @@ function validar() {
 function cargarListaEmpresas() {
 
     $.ajax({
-        url: 'EmpresaServlet',    
+        url: 'EmpresaServlet',
         data: {
             accion: "consultarEmpresas"
         },
@@ -320,27 +321,28 @@ function llenarCategorias(datajson) {
     $('#categoria').select2({
         allowClear: true,
         placeholder: "Buscar una categoria"
-    }); 
+    });
     $('#categoria option').each(function () {
         if ($(this).val() != 'X') {
             $(this).remove();
         }
     });
-    $.each(datajson, function (i, item) {  
+    $.each(datajson, function (i, item) {
         $('#categoria').append($('<option>', {
             value: item.pkIdCategoria,
             text: item.nombreCat
         }));
     });
-   
-    
+
+
 }
-function cargarListaSubCategorias(id) {
+function cargarListaSubCategorias() {
+    var idCategorias = $('#categoria').select2('data');
     $.ajax({
         url: 'SubCategoriaServlet',
         data: {
             accion: "consultarSubCategoriasByCat",
-            idCategoria: id
+            idCategoria: idCategorias[0].id
         },
         error: function () { //si existe un error en la respuesta del ajax
             swal("Error", "Se presento un error a la hora de cargar la información de las categorias en la base de datos", "error");
@@ -354,7 +356,7 @@ function cargarListaSubCategorias(id) {
     });
 }
 function llenarSubCategorias(datajson) {
-     $('#subCategoria option').each(function () {
+    $('#subCategoria option').each(function () {
         if ($(this).val() != 'X') {
             $(this).remove();
         }

@@ -89,7 +89,6 @@ public class OferenteServlet extends HttpServlet {
                 case "guardarCaracteristicasOfe":
 
                     int idUsuActivo = (int) session.getAttribute("idUsuario");
-                    String idCat = request.getParameter("idCate");
                     String idSub = request.getParameter("idSub");
                     String descripcion = request.getParameter("descripcion");
 
@@ -98,14 +97,12 @@ public class OferenteServlet extends HttpServlet {
                         Oferente cedOfe = listOfe.get(0);
                         List<Caracteristicasoferente> c = caraOfeBL.findByQuery("select * from mydbproyecto.caracteristicasoferente where Fk_id_subcategoria=" + idSub + " and oferente_fk_cedula=" + cedOfe.getPkCedula() + ";");
                         if (c.size() == 0) {
-                            List<Categoria> listCate = cateBL.findByQuery("Select * from   mydbproyecto.categoria where  pk_id_categoria= " + idCat + ";");
-                            Categoria idCa = listCate.get(0);
+                           
 
                             List<Subcategoria> listSub = subBL.findByQuery("Select * from   mydbproyecto.subcategoria where  pk_id_subcategoria= '" + idSub + ";");
                             Subcategoria idSu = listSub.get(0);
 
                             caraOfe.setOferente(cedOfe.getPkCedula());
-                            caraOfe.setPkIdCaracteristicas(idCa.getPkIdCategoria());
                             caraOfe.setSubcategoria(idSu.getPkIdSubcategoria());
 
                             caraOfeBL.save(caraOfe);
@@ -131,8 +128,12 @@ public class OferenteServlet extends HttpServlet {
                     lpBL.delete(l);
                     u.setPkUsuario(ofer.getUsuario());
                     ubl.delete(u);
+                    List<Caracteristicasoferente> borrar=caraOfeBL.findByQuery("select * from mydbproyecto.caracteristicasoferente where oferente_fk_cedula=" + ofer.getPkCedula() + ";");
+                     for (int i = 0; i < borrar.size(); i++) {
+                        caraOfeBL.delete(borrar.get(i));
+                    }
                     //Se imprime la respuesta con el response
-                    out.print("El oferente fue eliminada correctamente");
+                    out.print("El oferente fue eliminado correctamente");
 
                     break;
                 case "eliminarOferente":

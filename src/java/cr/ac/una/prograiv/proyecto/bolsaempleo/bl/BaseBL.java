@@ -37,7 +37,7 @@ public class BaseBL {
         daos.put("cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Usuario", new UsuarioDao());
         daos.put("cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Aplicacionpuesto", new AplicacionpuestoDao());
         daos.put("cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Caracteristicasoferente", new CaracteristicasoferenteDao());
-        daos.put("cr.am c.una.prograiv.proyecto.bolsaempleo.domain.Subcategoriapuesto", new SubcategoriapuestoDao());
+        daos.put("cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Subcategoriapuesto", new SubcategoriapuestoDao());
 
     }
 

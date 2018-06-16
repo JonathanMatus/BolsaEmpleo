@@ -119,6 +119,7 @@
                         <% }%> 
                         <% if (tipoUsuario.equals("0")) { %> 
                     <li> <a href="actualizacion.jsp">Actualizacion</a></li>
+                    <li> <a href="puestos.jsp">Puestos</a></li>
                         <% }%> 
                 </ul>
                 <ul class="nav navbar-right top-nav">

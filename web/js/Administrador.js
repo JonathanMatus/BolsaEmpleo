@@ -709,6 +709,51 @@ function eliminarCategoria(idCategoria) {
                 }
             });
 }
+function eliminarPuesto(idPuesto) {
+
+    swal({
+        title: "Esta seguro?",
+        text: "Una vez eliminado, no se podra recuperar el dato eliminado!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal({
+                        title: "Espere por favor..",
+                        text: "Eliminando la información de la categoria de la base de datos",
+                        icon: "info",
+                        buttons: false
+                    });
+                    $.ajax({
+                        url: 'PuestoServlet',
+                        data: {
+                            accion: "eliminarPuesto",
+                            idPuesto: idPuesto
+                        },
+                        error: function () { //si existe un error en la respuesta del ajax
+                            swal("Resultado acción", "Se presento un error, contactar al administador", "error");
+                        },
+                        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+                            // se cambia el mensaje del modal por la respuesta del ajax
+                            var respuestaTxt = data.substring(2);
+                            var tipoRespuesta = data.substring(0, 2);
+                            if (tipoRespuesta === "E~") {
+                                swal("Resultado acción", respuestaTxt, "info");
+                            } else {
+                                swal("Correcto", "El dato ha sido eliminado con exito!", "success")
+                                        .then(consultarPuestos());
+                            }
+                        },
+                        type: 'POST',
+                        dataType: "text"
+                    });
+                } else {
+                    swal("Cancelado", "Se cancelo con exito!", "info");
+                }
+            });
+}
 function eliminarSubCategoria(idSubCategoria) {
 
     swal({
