@@ -76,10 +76,10 @@ public class EmpresaServlet extends HttpServlet {
                     json = new Gson().toJson(pBL.findByQuery("Select * from  mydbproyecto.empresa where Usuario_PK_Usuario is null;"));
                     out.print(json);
                     break;
-                    
+
                 case "ConsultarEmpresa":
-                    int idEmpresa = (int)session.getAttribute("idUsuario");
-                    json = new Gson().toJson(pBL.findByQuery("Select * from  mydbproyecto.empresa where Usuario_PK_Usuario = "+ idEmpresa +";"));
+                    int idEmpresa = (int) session.getAttribute("idUsuario");
+                    json = new Gson().toJson(pBL.findByQuery("Select * from  mydbproyecto.empresa where Usuario_PK_Usuario = " + idEmpresa + ";"));
                     out.print(json);
                     break;
                 case "empresaConUsuario":
@@ -131,7 +131,7 @@ public class EmpresaServlet extends HttpServlet {
                     json = new Gson().toJson(pBL.findAll(Empresa.class.getName()));
                     out.print(json);
                     break;
-                    case "consultarEmpresaById":
+                case "consultarEmpresaById":
                     json = new Gson().toJson(pBL.findByQuery("select * from mydbproyecto.empresa where pk_id_emp = " + request.getParameter("idEmpresa") + ";"));
                     out.print(json);
                     break;
@@ -152,17 +152,14 @@ public class EmpresaServlet extends HttpServlet {
                         String pattern = "#,##0.0#";
                         DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
                         decimalFormat.setParseBigDecimal(true);
-                        
-                        if(accion.equals("agregarEmpresa")){
 
                         // parse the string
                         BigDecimal bigDecimal1 = (BigDecimal) decimalFormat.parse(request.getParameter("latitud"));
                         l.setLatitud(bigDecimal1);
                         BigDecimal bigDecimal2 = (BigDecimal) decimalFormat.parse(request.getParameter("longitud"));
                         l.setLongitud(bigDecimal2);
-                        }
-                        // ----------------------------------------------------------------------------
 
+                        // ----------------------------------------------------------------------------
                         //Guardar Correctamente en la base de datos
                         if (accion.equals("agregarEmpresa")) { //es insertar personas
                             //Se guarda el objeto
@@ -177,19 +174,16 @@ public class EmpresaServlet extends HttpServlet {
                             out.print("C~La empresa fue ingresada correctamente");
 
                         } else {//es modificar persona
-<<<<<<< HEAD
+
                             Empresa prueba = pBL.findById(Integer.parseInt(request.getParameter("idEmpresa")));
                             l.setPkIdLocalizacion(prueba.getLocalizacion());
                             p.setPkIdEmp(Integer.parseInt(request.getParameter("idEmpresa")));
                             p.setLocalizacion(l.getPkIdLocalizacion());
                             p.setUsuario(prueba.getUsuario());
                             lpBL.merge(l);
-=======
-                         p.setLocalizacion(Integer.parseInt(request.getParameter("idLongitud")));
-                         p.setPkIdEmp(Integer.parseInt(request.getParameter("idEmpresa"))); 
-                         p.setUsuario(existeCorreo.get(0).getUsuario());
+
+//                            p.setUsuario(existeCorreo.get(0).getUsuario());
                             //Se guarda el objeto
->>>>>>> d9d74ac4258db5d8c74ede3b1846ea6fcefc4b7d
                             pBL.merge(p);
 
                             //Se imprime la respuesta con el response
