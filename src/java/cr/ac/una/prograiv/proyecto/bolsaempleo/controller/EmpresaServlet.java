@@ -177,19 +177,19 @@ public class EmpresaServlet extends HttpServlet {
                             out.print("C~La empresa fue ingresada correctamente");
 
                         } else {//es modificar persona
-
+<<<<<<< HEAD
                             Empresa prueba = pBL.findById(Integer.parseInt(request.getParameter("idEmpresa")));
                             l.setPkIdLocalizacion(prueba.getLocalizacion());
                             p.setPkIdEmp(Integer.parseInt(request.getParameter("idEmpresa")));
                             p.setLocalizacion(l.getPkIdLocalizacion());
                             p.setUsuario(prueba.getUsuario());
                             lpBL.merge(l);
-
+=======
                          p.setLocalizacion(Integer.parseInt(request.getParameter("idLongitud")));
                          p.setPkIdEmp(Integer.parseInt(request.getParameter("idEmpresa"))); 
                          p.setUsuario(existeCorreo.get(0).getUsuario());
                             //Se guarda el objeto
-
+>>>>>>> d9d74ac4258db5d8c74ede3b1846ea6fcefc4b7d
                             pBL.merge(p);
 
                             //Se imprime la respuesta con el response
