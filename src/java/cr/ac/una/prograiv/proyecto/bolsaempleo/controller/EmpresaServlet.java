@@ -125,11 +125,15 @@ public class EmpresaServlet extends HttpServlet {
                     json = new Gson().toJson(pBL.findAll(Empresa.class.getName()));
                     out.print(json);
                     break;
+                    case "consultarEmpresaById":
+                    json = new Gson().toJson(pBL.findByQuery("select * from mydbproyecto.empresa where pk_id_emp = " + request.getParameter("idEmpresa") + ";"));
+                    out.print(json);
+                    break;
                 case "agregarEmpresa":
                 case "modificarEmpresa":
                     List<Empresa> existeCorreo = pBL.findByQuery("SELECT * FROM mydbproyecto.empresa where "
                             + "correo='" + request.getParameter("correo") + "';");
-                    if (existeCorreo.size() == 0) {
+                    if (existeCorreo.size() == 0 || accion.equals("modificarEmpresa")) {
                         //Se llena el objeto con los datos enviados por AJAX por el metodo post
                         p.setNombre(request.getParameter("nombre"));
                         p.setCorreo(request.getParameter("correo"));
@@ -164,7 +168,12 @@ public class EmpresaServlet extends HttpServlet {
                             out.print("C~La empresa fue ingresada correctamente");
 
                         } else {//es modificar persona
-                            //Se guarda el objeto
+                            Empresa prueba = pBL.findById(Integer.parseInt(request.getParameter("idEmpresa")));
+                            l.setPkIdLocalizacion(prueba.getLocalizacion());
+                            p.setPkIdEmp(Integer.parseInt(request.getParameter("idEmpresa")));
+                            p.setLocalizacion(l.getPkIdLocalizacion());
+                            p.setUsuario(prueba.getUsuario());
+                            lpBL.merge(l);
                             pBL.merge(p);
 
                             //Se imprime la respuesta con el response

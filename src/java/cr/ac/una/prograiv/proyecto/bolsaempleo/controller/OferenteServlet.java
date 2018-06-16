@@ -155,6 +155,10 @@ public class OferenteServlet extends HttpServlet {
                     json = new Gson().toJson(ofeBL.findAll(Oferente.class.getName()));
                     out.print(json);
                     break;
+                case "consultarOferenteById":
+                   json = new Gson().toJson(ofeBL.findByQuery("Select * from  mydbproyecto.oferente where pk_cedula="+request.getParameter("idOferente")+";"));
+                    out.print(json);
+                    break;
                 case "consultarOferenteConUsu":
                     json = new Gson().toJson(ofeBL.findByQuery("Select * from  mydbproyecto.oferente where Usuario_PK_Usuario is not null;"));
                     out.print(json);
@@ -196,15 +200,16 @@ public class OferenteServlet extends HttpServlet {
                                 //Se imprime la respuesta con el response
                                 out.print("C~El oferente fue ingresado correctamente");
                             } else {
-                                lpBL.save(l);
-                                List<Localizacion> list2 = lpBL.findAll(Localizacion.class.getName());
-                                l2 = lpBL.findById(list2.get(list2.size() - 1).getPkIdLocalizacion());
-                                ofe.setLocalizacion(l2.getPkIdLocalizacion());
+                                Oferente prueba = ofeBL.findById(Integer.parseInt(request.getParameter("cedula")));
+                                l.setPkIdLocalizacion(prueba.getLocalizacion());
+                                lpBL.merge(l);
+
+                                ofe.setLocalizacion(l.getPkIdLocalizacion());
                                 ofe.setUsuario(existeCed.get(0).getUsuario());
                                 ofeBL.merge(ofe);
-                                session.setAttribute("ofeCompleto",ofe);
+                                session.setAttribute("ofeCompleto", ofe);
                                 //Se imprime la respuesta con el response
-                                out.print("C~El oferente fue modificada correctamente");
+                                out.print("C~El oferente fue modificado correctamente");
                             }
                         } else {
                             out.print("E~El correo ya ha sido utilizado");

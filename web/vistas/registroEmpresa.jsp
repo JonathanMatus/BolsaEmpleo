@@ -48,7 +48,7 @@
     <script src="../js/EmpresaJS.js" type="text/javascript"></script>
     <script src="../js/LoginJS.js" type="text/javascript"></script>
     <script src="../js/jscode.js" type="text/javascript"></script>
-
+    <link href="../css/modalRegistro.css" rel="stylesheet" type="text/css"/>
 
 
 
@@ -124,11 +124,7 @@
                             <div class="row">
                                 <form>
                                     <div class="col-sm-12">
-                                        <div class="row">
 
-
-
-                                        </div>					
                                         <div class="row">
 
                                             <div class="col-sm-4 form-group" id="groupResidencia">
@@ -185,6 +181,7 @@
 
 
                                         </div>
+                                    </div>
                                 </form> 
                             </div>
                         </div>

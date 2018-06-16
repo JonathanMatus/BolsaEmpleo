@@ -65,7 +65,7 @@
         <!--        <link href="../css/gestionEmpresa.css" rel="stylesheet" type="text/css"/>
                 <link href="../css/cssRegistro.css" rel="stylesheet" type="text/css"/>-->
         <link href="../css/css.css" rel="stylesheet" type="text/css"/>
-
+        <link href="../css/modalRegistro.css" rel="stylesheet" type="text/css"/>
 
     </head>
     <body>
@@ -90,28 +90,28 @@
 
                 </div>
 
-            <ul class="nav navbar-nav top-nav">
-               
-                <li class="activo"><a class="activo" href="../PaginaPrincipal.jsp">Inicio</a></li>
-                
-                <li> <a href="contacto.jsp">Contacto</a></li>
-                <li> <a href="PuestosPublicos.jsp">Ver Puestos</a></li>
-                
+                <ul class="nav navbar-nav top-nav">
+
+                    <li class="activo"><a class="activo" href="../PaginaPrincipal.jsp">Inicio</a></li>
+
+                    <li> <a href="contacto.jsp">Contacto</a></li>
+                    <li> <a href="PuestosPublicos.jsp">Ver Puestos</a></li>
+
                     <% if (tipoUsuario.equals("2")) { %> 
-            
-                <li> <a href="administrador.jsp">Administrador</a></li>
-                <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
-                <li> <a href="actualizacion.jsp">Actualizacion</a></li>
-                    <% }%> 
-                    <% if (tipoUsuario.equals("1")) { %>            
-                <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
-                    <% }%> 
-                    <% if (tipoUsuario.equals("0")) { %> 
-                <li> <a href="actualizacion.jsp">Actualizacion</a></li>
-                 <li> <a href="puestos.jsp">Puestos</a></li>
-                <% }%> 
-            </ul>
-            <ul class="nav navbar-right top-nav">
+
+                    <li> <a href="administrador.jsp">Administrador</a></li>
+                    <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
+                    <li> <a href="actualizacion.jsp">Actualizacion</a></li>
+                        <% }%> 
+                        <% if (tipoUsuario.equals("1")) { %>            
+                    <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
+                        <% }%> 
+                        <% if (tipoUsuario.equals("0")) { %> 
+                    <li> <a href="actualizacion.jsp">Actualizacion</a></li>
+                    <li> <a href="puestos.jsp">Puestos</a></li>
+                        <% }%> 
+                </ul>
+                <ul class="nav navbar-right top-nav">
 
 
                     <% if (tipoUsuario.equals("-1")) { %> 

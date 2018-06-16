@@ -53,6 +53,7 @@
         <script src="../js/jscode.js" type="text/javascript"></script>
         <script src="../js/LoginJS.js" type="text/javascript"></script>
         <link href="../css/cssRegistro.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/modalRegistro.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
 

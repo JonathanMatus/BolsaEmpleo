@@ -55,10 +55,10 @@
         <link href="../css/cssRegistro.css" rel="stylesheet" type="text/css"/>
         <script src="../js/jscode.js" type="text/javascript"></script>
         <script src="../js/OferenteJS.js" type="text/javascript"></script>
-        <script src="../js/mapsJS.js" type="text/javascript"></script>
         <script src="../js/LoginJS.js" type="text/javascript"></script>
 
         <script src="../js/locationpicker.jquery.js" type="text/javascript"></script>
+        <link href="../css/modalRegistro.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
 
@@ -88,10 +88,10 @@
                     <li class="activo"><a class="activo" href="../PaginaPrincipal.jsp">Inicio</a></li>
 
                     <li> <a href="contacto.jsp">Contacto</a></li>
-                       <% if (tipoUsuario.equals("2")) { %> 
+                        <% if (tipoUsuario.equals("2")) { %> 
                     <li> <a href="administrador.jsp">Administrador</a></li>
-                
-                        <% }%> 
+
+                    <% }%> 
                     <li> <a href="puestos.jsp">Puestos</a></li>
                 </ul>
                 <ul class="nav navbar-right top-nav">
@@ -225,13 +225,13 @@
                                                             <hr>
                                                         </div>
                                                         <div class="col-md-6 "><div class="btnLogin">
-                                                    <a id="" href="registroEmpresa.jsp"><button type="button"  id="registrarEmpresa" name="signupE" class="btn btn-success" >Registrar Empresa</button> </a>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 "><div class="btnLogin">
-                                                    <a id="" href="registro.jsp"><button type="button"  id="registrarOferente" name="signupO" class="btn btn-success" >Registrar Oferente</button> </a>
-                                                </div>
-                                            </div>
+                                                                <a id="" href="registroEmpresa.jsp"><button type="button"  id="registrarEmpresa" name="signupE" class="btn btn-success" >Registrar Empresa</button> </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 "><div class="btnLogin">
+                                                                <a id="" href="registro.jsp"><button type="button"  id="registrarOferente" name="signupO" class="btn btn-success" >Registrar Oferente</button> </a>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane fade active in" id="signin">

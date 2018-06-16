@@ -15,13 +15,13 @@
 
     HttpSession sesion = request.getSession(true);
     String tipoUsuario = "-1";
-    Oferente ofeCompleto= null;
-            if (sesion != null) {
+    Oferente ofeCompleto = null;
+    if (sesion != null) {
         if (sesion.getAttribute("usuario") == null) {
             response.sendRedirect("PaginaPrincipal.jsp");
         } else {
             tipoUsuario = (String) sesion.getAttribute("tipo");
-            ofeCompleto= (Oferente) sesion.getAttribute("ofeCompleto");
+            ofeCompleto = (Oferente) sesion.getAttribute("ofeCompleto");
         }
     } else {
         response.sendRedirect("PaginaPrincipal.jsp");
@@ -79,6 +79,7 @@
         <link href="../css/cssRegistro.css" rel="stylesheet" type="text/css"/>
         <link href="../css/css.css" rel="stylesheet" type="text/css"/>
         <link href="../css/cssSideBar.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/modalRegistro.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
 
@@ -110,9 +111,9 @@
                     <li> <a href="contacto.jsp">Contacto</a></li>
                         <% if (tipoUsuario.equals("2")) { %> 
                     <li> <a href="administrador.jsp">Administrador</a></li>
-                  
-                        <% }%> 
-                        <% if (tipoUsuario.equals("1")) { %> 
+
+                    <% }%> 
+                    <% if (tipoUsuario.equals("1")) { %> 
 
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
                         <% }%> 
@@ -164,31 +165,29 @@
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row" id="main" >
+                        <table class="table table-hover table-condensed" id="tablaCaracteristica" width="100%" >
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Nacionalidad</th>
+                                    <th>Correo</th>
+                                    <th>Residencia</th>
+                                    <th>Accion</th>
+                                </tr>                                   
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><% out.print(ofeCompleto.getNombre() + " " + ofeCompleto.getApellido1()); %></td>                                     
+                                    <td><% out.print(ofeCompleto.getNacionalidad()); %></td>
+                                    <td><% out.print(ofeCompleto.getCorreo()); %></td>
+                                    <td><% out.print(ofeCompleto.getResidencia());%></td>
+                                    <td><input type="button" id="editarOfe" value="Editar"></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
                         <div class=" formPuesto col-sm-12 col-md-12 well" id="content">
                             <div class="  col-sm-12 col-md-12" >
-                                
-                            <table class="table table-hover table-condensed" id="tablaCaracteristica" width="100%" >
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Nacionalidad</th>
-                                        <th>Correo</th>
-                                        <th>Residencia</th>
-                                        <th>Accion</th>
-                                    </tr>                                   
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><% out.print(ofeCompleto.getNombre() + " " + ofeCompleto.getApellido1()); %></td>                                     
-                                        <td><% out.print(ofeCompleto.getNacionalidad()); %></td>
-                                        <td><% out.print(ofeCompleto.getCorreo()); %></td>
-                                        <td><% out.print(ofeCompleto.getResidencia()); %></td>
-                                        <td><input type="button" id="editarOfe" value="Editar"></td>
-                                    </tr>
-                                    
-                                </tbody>
-                            </table>
-
                                 <div id="registroPuesto">
                                     <h1 class="well" id="titulo">Registro Caracteristicas</h1>
                                     <div class="col-lg-12 well">
@@ -232,6 +231,97 @@
                                     </div>
                                 </div>
                             </div>                         
+                        </div>
+                        <div class="modal fade" id="ModalCategorias" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header1">
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                        <ul id="myTab" class="nav nav-tabs">
+                                            <li class="active"><a href="#ingresarCat" data-toggle="tab">Registro</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <!-- content goes here -->
+
+                                        <div id="myTabContent" class="tab-content">
+
+                                            <div class="tab-pane fade active in" id="actualizarOferente">
+                                                <div class="col-lg-12 well" id="cam-form">
+                                                    <div class="row">
+                                                        <form id="formulario" >
+                                                            <div class="col-sm-12">
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-3 form-group" id="groupCedula">
+                                                                        <label>Cedula</label>
+                                                                        <input type="text" placeholder="Ingresar Cedula.." class="form-control" id="cedula" maxlength="" value="<% out.print(ofeCompleto.getPkCedula()); %>" disabled="" >
+                                                                    </div>
+                                                                    <div class="col-sm-3 form-group" id="groupNombre">
+                                                                        <label>Nombre</label>
+                                                                        <input type="text" placeholder="Ingresar Nombre.." class="form-control" id="nombre"  value="<% out.print(ofeCompleto.getNombre()); %>" >
+                                                                    </div>
+                                                                    <div class="col-sm-3 form-group" id="groupApellido1" >
+                                                                        <label>Primer apellido</label>
+                                                                        <input type="text" placeholder="Ingresar Primer apellido.." class="form-control" id="priApellido"  value="<% out.print(ofeCompleto.getApellido1()); %>"  maxlength="">
+                                                                    </div>
+                                                                    <div class="col-sm-3 form-group" id="groupApellido2"  >
+                                                                        <label>Segundo apellido</label>
+                                                                        <input type="text" placeholder="Ingresar Segundo apellido.." class="form-control" id="segApellido"  value="<% out.print(ofeCompleto.getApellido2());%>" maxlength="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-3 form-group" id="groupNacionalidad">
+                                                                        <label>Nacionalidad</label>
+                                                                        <input type="text" placeholder="Ingresar Nacionalidad.." class="form-control" id="nacionalidad" value="<% out.print(ofeCompleto.getNacionalidad());%>" maxlength="">
+                                                                    </div>
+                                                                    <div class="col-sm-3 form-group" id="groupCorreo">
+                                                                        <label>Correo</label>
+                                                                        <input type="email" placeholder="Ingresar Correo.." class="form-control" id="correo"  value="<% out.print(ofeCompleto.getCorreo());%>" maxlength="">
+                                                                    </div>
+                                                                    <div class="col-sm-6 form-group" id="groupResidencia">
+                                                                        <label>Residencia</label>
+                                                                        <input type="text" placeholder="Ingresar Residencia.." class="form-control" id="residencia" value="<% out.print(ofeCompleto.getResidencia());%>" maxlength="">
+                                                                    </div>
+
+                                                                </div>
+
+
+
+                                                                <div class="col-sm-12 form-group">
+                                                                    <fieldset>
+                                                                        <label>Dirección</label>
+                                                                        <div id="us2"  class="col-md-12"></div>
+                                                                        <div class="row">
+                                                                            <div id="coordenadas">
+                                                                                <div class="form-group col-md-6">
+                                                                                    Lat.: <input type="text" class="form-control" readonly="yes" id="lat" />
+                                                                                </div>
+                                                                                <div class="form-group col-md-6">
+                                                                                    Long.: <input type="text" class="form-control" readonly="yes" id="lng"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </fieldset>
+
+                                                                </div>
+
+                                                                <div class=" form-group">
+                                                                    <input type="hidden" value="agregarOferente" id="oferenteAction"/>
+                                                                    <button type="button" id="editar" class="btn btn-lg btn-info">Editar</button>
+                                                                </div>					
+
+                                                            </div>
+                                                        </form> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- Modal -->
                         <div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

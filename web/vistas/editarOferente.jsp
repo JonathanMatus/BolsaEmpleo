@@ -60,6 +60,7 @@
         <script src="../js/mapsJS.js" type="text/javascript"></script>
         <script src="../js/LoginJS.js" type="text/javascript"></script>
         <script src="../js/locationpicker.jquery.js" type="text/javascript"></script>
+        <link href="../css/modalRegistro.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
 

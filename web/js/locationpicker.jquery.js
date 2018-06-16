@@ -462,20 +462,20 @@
     }
 }( jQuery ));
  $('#us2').locationpicker({
-        location: {
-            latitude: 9.9280694,
-            longitude: -84.09072459999999
-        },
-        radius: 0,
-        inputBinding: {
-            latitudeInput: $('#lat'),
-            longitudeInput: $('#lon'),
-            radiusInput: $('#us2-radius'),
-            locationNameInput: $('#direccion')
-        },
-        enableAutocomplete: true,
-        autocompleteOptions: {
+    location: {
+        latitude: 9.9280694,
+        longitude: -84.09072459999999
+    },
+    radius: 0,
+    inputBinding: {
+        latitudeInput: $('#lat'),
+        longitudeInput: $('#lon'),
+        radiusInput: $('#us2-radius'),
+        locationNameInput: $('#direccion')
+    },
+    enableAutocomplete: true,
+    autocompleteOptions: {
         types: ['(cities)']
     }
-    });
+});
     //Para mas información:    http://logicify.github.io/jquery-locationpicker-plugin/     

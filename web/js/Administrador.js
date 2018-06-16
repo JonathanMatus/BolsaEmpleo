@@ -11,7 +11,12 @@
 
 var datatable = null;
 $(function () {
-
+    $("#editarOferente").click(function () {
+        editarOferente();
+    });
+    $("#editarEmp").click(function () {
+        editarEmpresa();
+    });
     $('.tablas').show();
     $('#listaOferentes').click(function () {
         ocultarTablas();
@@ -237,7 +242,7 @@ function dibujarTablaOferenteEspera(dataJson) {
 function dibujarTablaEmpresaEspera(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
-   datatable
+    datatable
             .clear()
             .draw();
     for (var i = 0; i < dataJson.length; i++) {
@@ -482,7 +487,7 @@ function dibujarTablaCategorias(dataJson) {
 function dibujarTablaSubCategorias(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
-   datatable
+    datatable
             .clear()
             .draw();
     for (var i = 0; i < dataJson.length; i++) {
@@ -492,7 +497,7 @@ function dibujarTablaSubCategorias(dataJson) {
             rowData.pkIdSubcategoria,
             rowData.categoria,
             rowData.nombreSub,
-            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="consultarSubCategoriaByID(' + rowData.pkIdSubcategoria + ');">' +
+            '<button type="button" class="btn btn-default btn-xs"  aria-label="Left Align" onclick="consultarSubCategoriaByID(' + rowData.pkIdSubcategoria + ');">' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
                     '</button>' +
                     '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="eliminarSubCategoria(' + rowData.pkIdSubcategoria + ');">' +
@@ -506,7 +511,7 @@ function dibujarTablaSubCategorias(dataJson) {
 function dibujarTablaEmpresa(dataJson) {
 //    //limpia la información que tiene la tabla
     var rowData;
-   datatable
+    datatable
             .clear()
             .draw();
     for (var i = 0; i < dataJson.length; i++) {
@@ -518,7 +523,7 @@ function dibujarTablaEmpresa(dataJson) {
             rowData.telefono,
             rowData.descripcion,
             rowData.localizacion,
-            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="consultarEmpresaByID(' + rowData.pkIdEmp + ');">' +
+            '<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#ModalEmpresa" aria-label="Left Align" onclick="consultarEmpresaByID(' + rowData.pkIdEmp + ');">' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
                     '</button>' +
                     '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="eliminarEmpresa(' + rowData.pkIdEmp + ');">' +
@@ -571,7 +576,7 @@ function dibujarTablaOferente(dataJson) {
             rowData.nacionalidad,
             rowData.correo,
             rowData.residencia,
-            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="consultarEmpresaByID(' + rowData.pkCedula + ');">' +
+            '<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#ModalOferente" aria-label="Left Align" onclick="consultarOferenteByID(' + rowData.pkCedula + ');">' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
                     '</button>' +
                     '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="eliminarOferente(' + rowData.pkCedula + ');">' +
@@ -582,8 +587,259 @@ function dibujarTablaOferente(dataJson) {
 
 
 }
+function llenarModalOferente(dataJson) {
+//    //limpia la información que tiene la tabla
+    var rowData;
+
+    for (var i = 0; i < dataJson.length; i++) {
+
+        rowData = dataJson[i];
+        $('#cedulaOfer').val(rowData.pkCedula);
+        $('#nombreOfer').val(rowData.nombre);
+        $('#priApellidoOfer').val(rowData.apellido1);
+        $('#segApellidoOfer').val(rowData.apellido2);
+        $('#nacionalidadOfer').val(rowData.nacionalidad);
+        $('#correoOfer').val(rowData.nacionalidad);
+        $('#residenciaOfer').val(rowData.residencia);
+        $('#oferentemap').locationpicker({
+            location: {
+                latitude: 9.9280694,
+                longitude: -84.09072459999999
+            },
+            radius: 0,
+            inputBinding: {
+                latitudeInput: $('#latOfer'),
+                longitudeInput: $('#longOfer'),
+                radiusInput: $('#oferentemap-radius'),
+                locationNameInput: $('#residenciaOfer')
+            },
+            enableAutocomplete: true,
+            autocompleteOptions: {
+                types: ['(cities)']
+            }
+        });
+    }
 
 
+}
+function llenarModalEmpresa(dataJson) {
+//    //limpia la información que tiene la tabla
+    var rowData;
+
+    for (var i = 0; i < dataJson.length; i++) {
+
+        rowData = dataJson[i];
+        $("#idEmp").val(rowData.pkIdEmp);
+        $("#nombreEmp").val(rowData.nombre);
+        $("#telefonoEmp").val(rowData.telefono);
+        $("#correoEmp").val(rowData.correo);
+        $("#descripcionEmp").val(rowData.descripcion);
+        $('#empresamap').locationpicker({
+            location: {
+                latitude: 9.9280694,
+                longitude: -84.09072459999999
+            },
+            radius: 0,
+            inputBinding: {
+                latitudeInput: $('#latEmp'),
+                longitudeInput: $('#longEmp'),
+                radiusInput: $('#empresamap-radius'),
+                locationNameInput: $('#residenciaEmp')
+            },
+            enableAutocomplete: true,
+            autocompleteOptions: {
+                types: ['(cities)']
+            }
+        });
+    }
+
+
+}
+function consultarOferenteByID(idOferente) {
+
+
+    //Se envia la información por ajax
+    $.ajax({
+        url: 'OferenteServlet',
+        data: {
+            accion: "consultarOferenteById",
+            idOferente: idOferente
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de los oferentes en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            llenarModalOferente(data);
+        },
+        type: 'POST',
+        dataType: "json"
+    });
+}
+function consultarEmpresaByID(idEmpresa) {
+
+
+    //Se envia la información por ajax
+    $.ajax({
+        url: 'EmpresaServlet',
+        data: {
+            accion: "consultarEmpresaById",
+            idEmpresa: idEmpresa
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de los oferentes en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            llenarModalEmpresa(data);
+        },
+        type: 'POST',
+        dataType: "json"
+    });
+}
+function editarOferente() {
+    if (validar()) {
+//Se envia la información por ajax
+        swal({
+            title: "Espere por favor..",
+            text: "Ingresando la información de la Oferente en la base de datos",
+            icon: "info",
+            buttons: false
+        });
+        $.ajax({
+            url: 'OferenteServlet',
+            data: {
+                accion: "modificarOferente",
+                cedula: $("#cedulaOfer").val(),
+                nombre: $("#nombreOfer").val(),
+                telefono: $("#telefonoOfer").val(),
+                apellido1: $("#priApellidoOfer").val(),
+                apellido2: $("#segApellidoOfer").val(),
+                nacionalidad: $("#nacionalidadOfer").val(),
+                correo: $("#correoOfer").val(),
+                residencia: $("#residenciaOfer").val(),
+                latitud: $("#latOfer").val(),
+                longitud: $("#longOfer").val()
+
+            },
+            error: function () { //si existe un error en la respuesta del ajax
+                swal("Error!", "Se genero un error, contacte al administrador (Error del ajax)", "error");
+            },
+            success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+                var respuestaTxt = data.substring(2);
+                var tipoRespuesta = data.substring(0, 2);
+                if (tipoRespuesta === "C~") {
+                    swal("Correcto!", respuestaTxt, "success");
+                    limpiarForm();
+
+                } else {
+                    if (tipoRespuesta === "E~") {
+                        swal("Error!", respuestaTxt, "error");
+                    } else {
+                        swal("Error!", "Se genero un error, contacte al administrador", "error");
+                    }
+                }
+
+            },
+            type: 'POST'
+        });
+    } else {
+        swal("Error!", "Debe digitar los campos del formulario y seleccionar la ubicación", "error");
+    }
+}
+function editarEmpresa() {
+    if (validar()) {
+//Se envia la información por ajax
+        swal({
+            title: "Espere por favor..",
+            text: "Ingresando la información de la empresa en la base de datos",
+            icon: "info",
+            buttons: false
+        });
+        $.ajax({
+            url: 'EmpresaServlet',
+            data: {
+                accion: "modificarEmpresa",
+                idEmpresa: $("#idEmp").val(),
+                nombre: $("#nombreEmp").val(),
+                telefono: $("#telefonoEmp").val(),
+                correo: $("#correoEmp").val(),
+                descripcion: $("#descripcionEmp").val(),
+                longitud: $("#longEmp").val(),
+                latitud: $("#latEmp").val()
+
+            },
+            error: function () { //si existe un error en la respuesta del ajax
+                swal("Error!", "Se genero un error, contacte al administrador (Error del ajax)", "error");
+            },
+            success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+                var respuestaTxt = data.substring(2);
+                var tipoRespuesta = data.substring(0, 2);
+                if (tipoRespuesta === "C~") {
+                    swal("Correcto!", respuestaTxt, "success");
+                    limpiarForm();
+
+                } else {
+                    if (tipoRespuesta === "E~") {
+                        swal("Error!", respuestaTxt, "error");
+                    } else {
+                        swal("Error!", "Se genero un error, contacte al administrador", "error");
+                    }
+                }
+
+            },
+            type: 'POST'
+        });
+    } else {
+        swal("Error!", "Debe digitar los campos del formulario y seleccionar la ubicación", "error");
+    }
+}
+//function validar() {
+//    var validacion = true;
+//    //Elimina estilo de error en los cs
+//
+//    $("#groupCedula").removeClass("has-error");
+//    $("#groupNombre").removeClass("has-error");
+//    $("#groupTelefono").removeClass("has-error");
+//    $("#groupApellido1").removeClass("has-error");
+//    $("#groupApellido2").removeClass("has-error");
+//    $("#groupNacionalidad").removeClass("has-error");
+//    $("#groupCorreo").removeClass("has-error");
+//    $("#groupResidencia").removeClass("has-error");
+//
+//
+//    if ($("#cedula").val() === "") {
+//        $("#groupCedula").addClass("has-error");
+//        validacion = false;
+//    }
+//    if ($("#nombre").val() === "") {
+//        $("#groupNombre").addClass("has-error");
+//        validacion = false;
+//    }
+//    if ($("#priApellido").val() === "") {
+//        $("#groupApellido1").addClass("has-error");
+//        validacion = false;
+//    }
+//    if ($("#segApellido").val() === "") {
+//        $("#groupApellido2").addClass("has-error");
+//        validacion = false;
+//    }
+//    if ($("#nacionalidad").val() === "") {
+//        $("#groupNacionalidad").addClass("has-error");
+//        validacion = false;
+//    }
+//    if ($("#correo").val() === "") {
+//        $("#groupCorreo").addClass("has-error");
+//        validacion = false;
+//    }
+////    else{
+////        validateEmail("correo");
+////    }
+//    if ($("#residencia").val() === "") {
+//        $("#groupResidencia").addClass("has-error");
+//        validacion = false;
+//    }
+//    return validacion;
+//
+//}
 
 function eliminarEmpresa(idEmpresa) {
 

@@ -6,3 +6,18 @@ th{
     background-color: #16A085;
     color:white;
 }
+.modal-header1 {
+    background-color:#16A085;	
+    color: white;
+    border-top: 8px solid #1C2833  ;
+}
+.modal-header1 a{
+
+    color:white;
+}
+#oferentemap,#empresamap{
+    height: 230px;
+    width: 100%;
+    border: 2px solid grey; 
+}
+
