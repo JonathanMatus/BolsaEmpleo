@@ -174,7 +174,12 @@ public class PuestoServlet extends HttpServlet {
                         throw new Exception("El Usuario no es oferente");
                     }
                     break;
-
+                    
+                case "consultarPuestosPublicos":
+                    json = new Gson().toJson(pBL.findByQuery("SELECT * FROM mydbproyecto.puesto where tipo_publicacion = 'Privada';"));
+                    out.print(json);
+                    break;
+                    
                 case "consultarPuestos":
                     puestos = pBL.findAll(Puesto.class.getName());
 

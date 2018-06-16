@@ -67,6 +67,7 @@
                 <li class="activo"><a class="activo" href="PaginaPrincipal.jsp">Inicio</a></li>
 
                 <li> <a href="vistas/contacto.jsp">Contacto</a></li>
+                <li> <a href="vistas/PuestosPublicos.jsp">Ver Puestos</a></li>
                     <% if (tipoUsuario.equals("2")) { %> 
                 <li> <a href="vistas/administrador.jsp">Administrador</a></li>
                     <% }%> 
