@@ -599,7 +599,7 @@ function llenarModalOferente(dataJson) {
         $('#priApellidoOfer').val(rowData.apellido1);
         $('#segApellidoOfer').val(rowData.apellido2);
         $('#nacionalidadOfer').val(rowData.nacionalidad);
-        $('#correoOfer').val(rowData.nacionalidad);
+        $('#correoOfer').val(rowData.correo);
         $('#residenciaOfer').val(rowData.residencia);
         $('#oferentemap').locationpicker({
             location: {

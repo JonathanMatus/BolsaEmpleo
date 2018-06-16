@@ -52,6 +52,7 @@
         <!-- Script's de datatable -->
         <!-- ********************************************************** -->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.css"/>
+        <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyAwELjEzE3b3KXFZF7bS8AR1JTJSj6_e6o'></script>
 
         <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/r-2.2.1/datatables.min.js"></script>
         <!-- Script's de sweet alert -->
@@ -170,7 +171,7 @@
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row" id="main" >
-
+                        <input type="hidden" value="<% out.print(ofeCompleto.getPkCedula());%>" id="cedulaHidden"/>
                         <table class="table table-hover table-condensed" id="tablaCaracteristica" width="100%" >
                             <thead>
                                 <tr>
@@ -181,20 +182,7 @@
                                     <th>Accion</th>
                                 </tr>                                   
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td><% out.print(ofeCompleto.getNombre() + " " + ofeCompleto.getApellido1()); %></td>                                     
-                                    <td><% out.print(ofeCompleto.getNacionalidad()); %></td>
-                                    <td><% out.print(ofeCompleto.getCorreo()); %></td>
-                                    <td><% out.print(ofeCompleto.getResidencia());%></td>
-                                    <td>
-                                        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#ModalOferente" aria-label="Left Align" onclick="consultarOferenteByID(ofeCompleto.getPkCedula())"> 
-                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 
-                                        </button>
-                                    </td>
-                                </tr>
-
-                            </tbody>
+                            
                         </table>
                         <div class=" formPuesto col-sm-12 col-md-12 well" id="content">
                             <div class="  col-sm-12 col-md-12" >
@@ -242,95 +230,96 @@
                                 </div>
                             </div>                         
                         </div>
-                        <div class="modal fade" id="ModalOferente" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header1">
-                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                        <ul id="myTab" class="nav nav-tabs">
-                                            <li class="active"><a href="#actualizarOferente" data-toggle="tab">Registro</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="modal-body">
 
-                                        <!-- content goes here -->
+                    </div>
+                    <div class="modal fade" id="ModalOferente" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header1">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                    <ul id="myTab" class="nav nav-tabs">
+                                        <li class="active"><a href="#actualizarOferente" data-toggle="tab">Registro</a></li>
+                                    </ul>
+                                </div>
+                                <div class="modal-body">
 
-                                        <div id="myTabContent" class="tab-content">
+                                    <!-- content goes here -->
 
-                                            <div class="tab-pane fade active in" id="actualizarOferente">
+                                    <div id="myTabContent" class="tab-content">
 
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="panel panel-login">
-                                                            <div class="panel-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <form id="login-form" action="" method="post" role="form" style="display: block;">
-                                                                            <div class="col-sm-12">
+                                        <div class="tab-pane fade active in" id="actualizarOferente">
 
-                                                                                <div class="row">
-                                                                                    <div class="col-sm-3 form-group" id="groupCedula">
-                                                                                        <label>Cedula</label>
-                                                                                        <input type="text" placeholder="Ingresar Cedula.." class="form-control" id="cedulaOfer" maxlength="" value="" disabled="" >
-                                                                                    </div>
-                                                                                    <div class="col-sm-3 form-group" id="groupNombre">
-                                                                                        <label>Nombre</label>
-                                                                                        <input type="text" placeholder="Ingresar Nombre.." class="form-control" id="nombreOfer"  value="" >
-                                                                                    </div>
-                                                                                    <div class="col-sm-3 form-group" id="groupApellido1" >
-                                                                                        <label>Primer apellido</label>
-                                                                                        <input type="text" placeholder="Ingresar Primer apellido.." class="form-control" id="priApellidoOfer"    maxlength="">
-                                                                                    </div>
-                                                                                    <div class="col-sm-3 form-group" id="groupApellido2"  >
-                                                                                        <label>Segundo apellido</label>
-                                                                                        <input type="text" placeholder="Ingresar Segundo apellido.." class="form-control" id="segApellidoOfer"  maxlength="">
-                                                                                    </div>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="panel panel-login">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <form id="login-form" action="" method="post" role="form" style="display: block;">
+                                                                        <div class="col-sm-12">
+
+                                                                            <div class="row">
+                                                                                <div class="col-sm-3 form-group" id="groupCedula">
+                                                                                    <label>Cedula</label>
+                                                                                    <input type="text" placeholder="Ingresar Cedula.." class="form-control" id="cedulaOfer" maxlength="" value="" disabled="" >
                                                                                 </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-sm-3 form-group" id="groupNacionalidad">
-                                                                                        <label>Nacionalidad</label>
-                                                                                        <input type="text" placeholder="Ingresar Nacionalidad.." class="form-control" id="nacionalidadOfer"  maxlength="">
-                                                                                    </div>
-                                                                                    <div class="col-sm-3 form-group" id="groupCorreo">
-                                                                                        <label>Correo</label>
-                                                                                        <input type="email" placeholder="Ingresar Correo.." class="form-control" id="correoOfer"   maxlength="">
-                                                                                    </div>
-                                                                                    <div class="col-sm-6 form-group" id="groupResidencia">
-                                                                                        <label>Residencia</label>
-                                                                                        <input type="text" placeholder="Ingresar Residencia.." class="form-control" id="residenciaOfer"  maxlength="">
-                                                                                    </div>
-
+                                                                                <div class="col-sm-3 form-group" id="groupNombre">
+                                                                                    <label>Nombre</label>
+                                                                                    <input type="text" placeholder="Ingresar Nombre.." class="form-control" id="nombreOfer"  value="" >
                                                                                 </div>
-
-
-
-                                                                                <div class="col-sm-12 form-group">
-                                                                                    <fieldset>
-                                                                                        <label>Dirección</label>
-                                                                                        <div id="oferentemap"  class="col-md-12"></div>
-                                                                                        <div class="row">
-                                                                                            <div id="coordenadas">
-                                                                                                <div class="form-group col-md-6">
-                                                                                                    Lat.: <input type="text" class="form-control" readonly="yes" id="latOfer" />
-                                                                                                </div>
-                                                                                                <div class="form-group col-md-6">
-                                                                                                    Long.: <input type="text" class="form-control" readonly="yes" id="longOfer"/>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                    </fieldset>
-
+                                                                                <div class="col-sm-3 form-group" id="groupApellido1" >
+                                                                                    <label>Primer apellido</label>
+                                                                                    <input type="text" placeholder="Ingresar Primer apellido.." class="form-control" id="priApellidoOfer"    maxlength="">
                                                                                 </div>
-
-                                                                                <div class=" form-group">
-                                                                                    <button type="button" id="editarOferente" class="btn btn-lg btn-info">Editar</button>
-                                                                                </div>					
+                                                                                <div class="col-sm-3 form-group" id="groupApellido2"  >
+                                                                                    <label>Segundo apellido</label>
+                                                                                    <input type="text" placeholder="Ingresar Segundo apellido.." class="form-control" id="segApellidoOfer"  maxlength="">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-sm-3 form-group" id="groupNacionalidad">
+                                                                                    <label>Nacionalidad</label>
+                                                                                    <input type="text" placeholder="Ingresar Nacionalidad.." class="form-control" id="nacionalidadOfer"  maxlength="">
+                                                                                </div>
+                                                                                <div class="col-sm-3 form-group" id="groupCorreo">
+                                                                                    <label>Correo</label>
+                                                                                    <input type="email" placeholder="Ingresar Correo.." class="form-control" id="correoOfer"   maxlength="">
+                                                                                </div>
+                                                                                <div class="col-sm-6 form-group" id="groupResidencia">
+                                                                                    <label>Residencia</label>
+                                                                                    <input type="text" placeholder="Ingresar Residencia.." class="form-control" id="residenciaOfer"  maxlength="">
+                                                                                </div>
 
                                                                             </div>
 
-                                                                        </form> 
-                                                                    </div>
+
+
+                                                                            <div class="col-sm-12 form-group">
+                                                                                <fieldset>
+                                                                                    <label>Dirección</label>
+                                                                                    <div id="oferentemap"  class="col-md-12"></div>
+                                                                                    <div class="row">
+                                                                                        <div id="coordenadas">
+                                                                                            <div class="form-group col-md-6">
+                                                                                                Lat.: <input type="text" class="form-control" readonly="yes" id="latOfer" />
+                                                                                            </div>
+                                                                                            <div class="form-group col-md-6">
+                                                                                                Long.: <input type="text" class="form-control" readonly="yes" id="longOfer"/>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </fieldset>
+
+                                                                            </div>
+
+                                                                            <div class=" form-group">
+                                                                                <button type="button" id="editarOferente" class="btn btn-lg btn-info">Editar</button>
+                                                                            </div>					
+
+                                                                        </div>
+
+                                                                    </form> 
                                                                 </div>
                                                             </div>
                                                         </div>
