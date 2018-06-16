@@ -80,6 +80,7 @@
         <link href="../css/css.css" rel="stylesheet" type="text/css"/>
         <link href="../css/cssSideBar.css" rel="stylesheet" type="text/css"/>
         <link href="../css/modalRegistro.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/actualizacionOferente.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
 
@@ -152,8 +153,12 @@
                             <a href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> Caracteristicas <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                             <ul id="submenu-1" class="collapse">
                                 <li><a type="button" id="ingresarPuesto"><i class="fa fa-angle-double-right"></i> Ingresar Caracteristicas</a></li>
-                                <li><a type="button" id="listaCaracteristicas"><i class="fa fa-angle-double-right"></i> Mostrar mis caracteristicas</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> Aplicar puesto</a></li>
+                              
+                            </ul>
+                            <a href="#" data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw fa-search"></i> Perfil <i class="fa fa-fw fa-angle-down pull-right"></i></a>
+                            <ul id="submenu-2" class="collapse">
+
+                                <li><a type="button" id="listaCaracteristicas"><i class="fa fa-angle-double-right"></i> Actualizar mis datos</a></li>
                             </ul>
                         </li>
 
