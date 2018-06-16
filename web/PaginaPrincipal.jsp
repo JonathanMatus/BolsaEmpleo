@@ -72,8 +72,6 @@
                 <li> <a href="vistas/contacto.jsp">Contacto</a></li>
                     <% if (tipoUsuario.equals("2")) { %> 
                 <li> <a href="vistas/administrador.jsp">Administrador</a></li>
-                <li> <a href="vistas/gestionEmpresa.jsp">Gestion Empresa</a></li>
-                <li> <a href="vistas/actualizacion.jsp">Actualizacion</a></li>
                     <% }%> 
                     <% if (tipoUsuario.equals("1")) { %>            
                 <li> <a href="vistas/gestionEmpresa.jsp">Gestion Empresa</a></li>

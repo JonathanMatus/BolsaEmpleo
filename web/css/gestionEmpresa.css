@@ -10,8 +10,11 @@ and open the template in the editor.
 #usuario{
     display: none;
 }
-.formPuesto,.tablas{
+.formPuesto{
     display: none;
+}
+#tablaOferentesEspera,#tablaPuestos{
+     display: none;
 }
 @media(min-width:768px) {
     #wrapper {
