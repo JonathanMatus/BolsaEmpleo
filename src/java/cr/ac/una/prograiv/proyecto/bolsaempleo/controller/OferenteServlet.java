@@ -93,7 +93,7 @@ public class OferenteServlet extends HttpServlet {
                     String idSub = request.getParameter("idSub");
                     String descripcion = request.getParameter("descripcion");
 
-                    List<Oferente> listOfe = ofeBL.findByQuery("Select * from   mydbproyecto.oferente where  Usuario_PK_Usuario= " + idUsuActivo + "");
+                    List<Oferente> listOfe = ofeBL.findByQuery("Select * from   mydbproyecto.oferente where  Usuario_PK_Usuario= " + idUsuActivo + ";");
                     if (listOfe.size() > 0) {
                         Oferente cedOfe = listOfe.get(0);
                         List<Caracteristicasoferente> c = caraOfeBL.findByQuery("select * from mydbproyecto.caracteristicasoferente where Fk_id_subcategoria=" + idSub + " and oferente_fk_cedula=" + cedOfe.getPkCedula() + ";");
@@ -112,7 +112,7 @@ public class OferenteServlet extends HttpServlet {
                             throw new Exception("Caracteristica ya registrada");
                         }
                     } else {
-                        throw new Exception("Usuario no es oferente");
+                        throw new Exception("El Usuario no es oferente");
                     }
                     break;
 
