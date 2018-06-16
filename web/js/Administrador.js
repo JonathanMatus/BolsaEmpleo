@@ -14,8 +14,17 @@ $(function () {
     $("#editarOferente").click(function () {
         editarOferente();
     });
+    $("#editarSubCatB").click(function () {
+        editarSubCat();
+    });
+    $("#editarCatB").click(function () {
+        editarCat();
+    });
     $("#editarEmp").click(function () {
         editarEmpresa();
+    });
+    $("#editarPuesto").click(function () {
+        editarPuesto();
     });
     $('.tablas').show();
     $('#listaOferentes').click(function () {
@@ -447,7 +456,7 @@ function consultarSubCategorias() {
     $.ajax({
         url: 'SubCategoriaServlet',
         data: {
-            accion: "consultarSubCategorias"
+            accion: "consultarSubCategoriasEliminables"
         },
         error: function () { //si existe un error en la respuesta del ajax
             swal("Error", "Se presento un error a la hora de cargar la información de las subcategorias en la base de datos", "error");
@@ -473,7 +482,7 @@ function dibujarTablaCategorias(dataJson) {
         datatable.row.add([
             rowData.pkIdCategoria,
             rowData.nombreCat,
-            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="consultarCategoriaByID(' + rowData.pkIdCategoria + ');">' +
+            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" data-toggle="modal" data-target="#ModalCategorias" onclick="consultarCategoriaByID(' + rowData.pkIdCategoria + ');">' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
                     '</button>' +
                     '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="eliminarCategoria(' + rowData.pkIdCategoria + ');">' +
@@ -497,7 +506,7 @@ function dibujarTablaSubCategorias(dataJson) {
             rowData.pkIdSubcategoria,
             rowData.categoria,
             rowData.nombreSub,
-            '<button type="button" class="btn btn-default btn-xs"  aria-label="Left Align" onclick="consultarSubCategoriaByID(' + rowData.pkIdSubcategoria + ');">' +
+            '<button type="button" class="btn btn-default btn-xs"  aria-label="Left Align" data-toggle="modal" data-target="#ModalSubCategorias" onclick="consultarSubCategoriaByID(' + rowData.pkIdSubcategoria + ');">' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
                     '</button>' +
                     '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="eliminarSubCategoria(' + rowData.pkIdSubcategoria + ');">' +
@@ -548,7 +557,7 @@ function dibujarTablaPuesto(dataJson) {
             rowData.nombre,
             rowData.salario,
             rowData.tipoPublicacion,
-            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="consultarPuestoByID(' + rowData.pkIdPuesto + ');">' +
+            '<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#ModalPuesto" aria-label="Left Align" onclick="consultarPuestoByID(' + rowData.pkIdPuesto + ');">' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
                     '</button>' +
                     '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="eliminarPuesto(' + rowData.pkIdPuesto + ');">' +
@@ -618,6 +627,47 @@ function llenarModalOferente(dataJson) {
                 types: ['(cities)']
             }
         });
+    }
+
+
+}
+function llenarModalPuesto(dataJson) {
+//    //limpia la información que tiene la tabla
+    var rowData;
+
+    for (var i = 0; i < dataJson.length; i++) {
+
+        rowData = dataJson[i];
+        $("#salarioPuesto").val(rowData.salario);
+        $("#nombrePuesto").val(rowData.nombre);
+        $("#idPuesto").val(rowData.pkIdPuesto);
+
+    }
+
+
+}
+function llenarModalSubcat(dataJson) {
+//    //limpia la información que tiene la tabla
+    var rowData;
+
+    for (var i = 0; i < dataJson.length; i++) {
+
+        rowData = dataJson[i];
+        $("#idSubCat").val(rowData.pkIdSubcategoria);
+        $("#nombreSubCat").val(rowData.nombreSub);
+    }
+
+
+}
+function llenarModalCat(dataJson) {
+//    //limpia la información que tiene la tabla
+    var rowData;
+
+    for (var i = 0; i < dataJson.length; i++) {
+
+        rowData = dataJson[i];
+        $("#idCat").val(rowData.pkIdCategoria);
+        $("#nombreCat").val(rowData.nombreCat);
     }
 
 
@@ -695,6 +745,66 @@ function consultarEmpresaByID(idEmpresa) {
         dataType: "json"
     });
 }
+function consultarPuestoByID(idPuesto) {
+
+
+    //Se envia la información por ajax
+    $.ajax({
+        url: 'PuestoServlet',
+        data: {
+            accion: "consultarPuestoById",
+            idPuesto: idPuesto
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de los oferentes en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            llenarModalPuesto(data);
+        },
+        type: 'POST',
+        dataType: "json"
+    });
+}
+function consultarSubCategoriaByID(idSubcategoria) {
+
+
+    //Se envia la información por ajax
+    $.ajax({
+        url: 'SubCategoriaServlet',
+        data: {
+            accion: "consultarSubCategoriaByID",
+            idSubcategoria: idSubcategoria
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de los subCategorias en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            llenarModalSubcat(data);
+        },
+        type: 'POST',
+        dataType: "json"
+    });
+}
+function consultarCategoriaByID(idCategoria) {
+
+
+    //Se envia la información por ajax
+    $.ajax({
+        url: 'CategoriaServlet',
+        data: {
+            accion: "consultarCategoriaByID",
+            idCategoria: idCategoria
+        },
+        error: function () { //si existe un error en la respuesta del ajax
+            swal("Error", "Se presento un error a la hora de cargar la información de los categorias en la base de datos", "error");
+        },
+        success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+            llenarModalCat(data);
+        },
+        type: 'POST',
+        dataType: "json"
+    });
+}
 function editarOferente() {
     if (validar()) {
 //Se envia la información por ajax
@@ -727,8 +837,90 @@ function editarOferente() {
                 var respuestaTxt = data.substring(2);
                 var tipoRespuesta = data.substring(0, 2);
                 if (tipoRespuesta === "C~") {
-                    swal("Correcto!", respuestaTxt, "success");
-                    limpiarForm();
+                    swal("Correcto!", respuestaTxt, "success").then(consultarOferente());
+
+
+                } else {
+                    if (tipoRespuesta === "E~") {
+                        swal("Error!", respuestaTxt, "error");
+                    } else {
+                        swal("Error!", "Se genero un error, contacte al administrador", "error");
+                    }
+                }
+
+            },
+            type: 'POST'
+        });
+    } else {
+        swal("Error!", "Debe digitar los campos del formulario y seleccionar la ubicación", "error");
+    }
+}
+function editarCat() {
+    if (validar()) {
+//Se envia la información por ajax
+        swal({
+            title: "Espere por favor..",
+            text: "Ingresando la información de la categoria en la base de datos",
+            icon: "info",
+            buttons: false
+        });
+        $.ajax({
+            url: 'CategoriaServlet',
+            data: {
+                accion: "modificarCategoria",
+                idCat: $("#idCat").val(),
+                nombre: $("#nombreCat").val()
+            },
+            error: function () { //si existe un error en la respuesta del ajax
+                swal("Error!", "Se genero un error, contacte al administrador (Error del ajax)", "error");
+            },
+            success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+                var respuestaTxt = data.substring(2);
+                var tipoRespuesta = data.substring(0, 2);
+                if (tipoRespuesta === "C~") {
+                    swal("Correcto!", respuestaTxt, "success").then(consultarCategorias());
+
+
+                } else {
+                    if (tipoRespuesta === "E~") {
+                        swal("Error!", respuestaTxt, "error");
+                    } else {
+                        swal("Error!", "Se genero un error, contacte al administrador", "error");
+                    }
+                }
+
+            },
+            type: 'POST'
+        });
+    } else {
+        swal("Error!", "Debe digitar los campos del formulario y seleccionar la ubicación", "error");
+    }
+}
+function editarSubCat() {
+    if (validar()) {
+//Se envia la información por ajax
+        swal({
+            title: "Espere por favor..",
+            text: "Ingresando la información de la Oferente en la base de datos",
+            icon: "info",
+            buttons: false
+        });
+        $.ajax({
+            url: 'SubCategoriaServlet',
+            data: {
+                accion: "modificarSubCategoria",
+                idSubCat: $("#idSubCat").val(),
+                nombre: $("#nombreSubCat").val()
+            },
+            error: function () { //si existe un error en la respuesta del ajax
+                swal("Error!", "Se genero un error, contacte al administrador (Error del ajax)", "error");
+            },
+            success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+                var respuestaTxt = data.substring(2);
+                var tipoRespuesta = data.substring(0, 2);
+                if (tipoRespuesta === "C~") {
+                    swal("Correcto!", respuestaTxt, "success").then(consultarSubCategorias());
+
 
                 } else {
                     if (tipoRespuesta === "E~") {
@@ -774,8 +966,49 @@ function editarEmpresa() {
                 var respuestaTxt = data.substring(2);
                 var tipoRespuesta = data.substring(0, 2);
                 if (tipoRespuesta === "C~") {
-                    swal("Correcto!", respuestaTxt, "success");
-                    limpiarForm();
+                    swal("Correcto!", respuestaTxt, "success").then(consultarEmpresa());
+                } else {
+                    if (tipoRespuesta === "E~") {
+                        swal("Error!", respuestaTxt, "error");
+                    } else {
+                        swal("Error!", "Se genero un error, contacte al administrador", "error");
+                    }
+                }
+
+            },
+            type: 'POST'
+        });
+    } else {
+        swal("Error!", "Debe digitar los campos del formulario y seleccionar la ubicación", "error");
+    }
+}
+function editarPuesto() {
+    if (validar()) {
+//Se envia la información por ajax
+        swal({
+            title: "Espere por favor..",
+            text: "Ingresando la información del  puesto en la base de datos",
+            icon: "info",
+            buttons: false
+        });
+        $.ajax({
+            url: 'PuestoServlet',
+            data: {
+                accion: "modificarPuesto",
+                idPuesto: $("#idPuesto").val(),
+                nombre: $("#nombrePuesto").val(),
+                salario: $("#salarioPuesto").val(),
+                tipo: $("#tipos").val()
+
+            },
+            error: function () { //si existe un error en la respuesta del ajax
+                swal("Error!", "Se genero un error, contacte al administrador (Error del ajax)", "error");
+            },
+            success: function (data) { //si todo esta correcto en la respuesta del ajax, la respuesta queda en el data
+                var respuestaTxt = data.substring(2);
+                var tipoRespuesta = data.substring(0, 2);
+                if (tipoRespuesta === "C~") {
+                    swal("Correcto!", respuestaTxt, "success").then(consultarPuestos());
 
                 } else {
                     if (tipoRespuesta === "E~") {

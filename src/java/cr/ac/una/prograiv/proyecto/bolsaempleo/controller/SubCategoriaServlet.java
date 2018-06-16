@@ -7,10 +7,16 @@ package cr.ac.una.prograiv.proyecto.bolsaempleo.controller;
 
 import com.google.gson.Gson;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.SubcategoriaBL;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.SubcategoriapuestoBL;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Puesto;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Subcategoria;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Subcategoriapuesto;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +53,6 @@ public class SubCategoriaServlet extends HttpServlet {
             SubcategoriaBL pBL = new SubcategoriaBL();
 
             //Se hace una pausa para ver el modal
-
             //**********************************************************************
             //se toman los datos de la session
             //**********************************************************************
@@ -73,21 +78,52 @@ public class SubCategoriaServlet extends HttpServlet {
                     json = new Gson().toJson(pBL.findAll(Subcategoria.class.getName()));
                     out.print(json);
                     break;
+                case "consultarSubCategoriaByID":
+
+                    json = new Gson().toJson(pBL.findByQuery("select * from mydbproyecto.subcategoria where pk_id_subcategoria=" + request.getParameter("idSubcategoria") + ";"));
+                    out.print(json);
+                    break;
+                case "consultarSubCategoriasEliminables":
+                    SubcategoriapuestoBL sBL = new SubcategoriapuestoBL();
+                    List<Subcategoriapuesto> subpuestos = sBL.findAll(Subcategoriapuesto.class.getName());
+                    List<Subcategoria> subcat = pBL.findAll(Subcategoria.class.getName());
+
+                    Map<Integer, Subcategoria> datos = new HashMap<>();
+                    for (int k = 0; k < subcat.size(); k++) {
+                        datos.put(subcat.get(k).getPkIdSubcategoria(), subcat.get(k));
+                    }
+                    if (subpuestos.size() > 0) {
+
+                        for (int j = 0; j < subpuestos.size(); j++) {
+
+                            if (datos.get(subpuestos.get(j).getSubcategoria()).getPkIdSubcategoria() == subpuestos.get(j).getSubcategoria()) {
+                                datos.remove(subpuestos.get(j).getSubcategoria());
+
+                            }
+                        }
+                    }
+                    List<Subcategoria> comun = new ArrayList(datos.values());
+
+                    json = new Gson().toJson(comun);
+
+                    out.print(json);
+                    break;
+
                 case "consultarSubCategoriasByCat":
-                        List<Subcategoria> list = pBL.findByQuery("select * from mydbproyecto.subcategoria where fk_id_categoria=" + request.getParameter("idCategoria") + ";");
-                        json = new Gson().toJson(list);
-                        out.print(json);
+                    List<Subcategoria> list = pBL.findByQuery("select * from mydbproyecto.subcategoria where fk_id_categoria=" + request.getParameter("idCategoria") + ";");
+                    json = new Gson().toJson(list);
+                    out.print(json);
                     break;
                 case "agregarSubCategoria":
                 case "modificarSubCategoria":
 
                     //Se llena el objeto con los datos enviados por AJAX por el metodo post
                     p.setNombreSub(request.getParameter("nombre"));
-                    p.setCategoria(Integer.parseInt(request.getParameter("idCategoria")));
+
                     //Guardar Correctamente en la base de datos
                     if (accion.equals("agregarSubCategoria")) { //es insertar personas
                         //Se guarda el objeto
-
+                        p.setCategoria(Integer.parseInt(request.getParameter("idCategoria")));
                         pBL.save(p);
 
                         //Se imprime la respuesta con el response
@@ -95,7 +131,9 @@ public class SubCategoriaServlet extends HttpServlet {
 
                     } else {//es modificar persona
                         //Se guarda el objeto
-                        p.setPkIdSubcategoria(Integer.parseInt(request.getParameter("idCategoria")));
+                        p.setPkIdSubcategoria(Integer.parseInt(request.getParameter("idSubCat")));
+                        Subcategoria opc=pBL.findById(p.getPkIdSubcategoria());
+                        p.setCategoria(opc.getCategoria());
                         pBL.merge(p);
 
                         //Se imprime la respuesta con el response

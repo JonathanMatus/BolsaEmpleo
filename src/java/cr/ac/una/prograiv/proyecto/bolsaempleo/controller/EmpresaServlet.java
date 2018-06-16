@@ -6,13 +6,17 @@
 package cr.ac.una.prograiv.proyecto.bolsaempleo.controller;
 
 import com.google.gson.Gson;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.AplicacionpuestoBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.EmpresaBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.LocalizacionBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.PuestoBL;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.SubcategoriapuestoBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.UsuarioBL;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Aplicacionpuesto;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Empresa;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Localizacion;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Puesto;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Subcategoriapuesto;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -95,15 +99,15 @@ public class EmpresaServlet extends HttpServlet {
 
                     Empresa emp1 = empresas.get(0);
                     //Se elimina el objeto
-                    pBL.delete(p);
-                    l.setPkIdLocalizacion(emp1.getLocalizacion());
-                    lpBL.delete(l);
                     PuestoBL puestoBL = new PuestoBL();
                     List<Puesto> puestos = puestoBL.findByQuery("select * from mydbproyecto.puesto where fk_id_emp = " + request.getParameter("idEmpresa") + ";");
                     for (int i = 0; i < puestos.size(); i++) {
                         Puesto puesto = puestos.get(i);
                         puestoBL.delete(puesto);
                     }
+                    pBL.delete(p);
+                    l.setPkIdLocalizacion(emp1.getLocalizacion());
+                    lpBL.delete(l);
 
                     //Se imprime la respuesta con el response
                     out.print("La empresa fue eliminada correctamente");
@@ -118,6 +122,35 @@ public class EmpresaServlet extends HttpServlet {
 
                     Empresa emp = empresas1.get(0);
                     //Se elimina el objeto
+                    PuestoBL puestoBL1 = new PuestoBL();
+
+                    SubcategoriapuestoBL scBL = new SubcategoriapuestoBL();
+                    List<Puesto> puestos2 = puestoBL1.findByQuery("select * from mydbproyecto.puesto where fk_id_emp = " + request.getParameter("idEmpresa") + ";");
+
+                    for (int i = 0; i < puestos2.size(); i++) {
+                        Puesto puesto = puestos2.get(i);
+
+                        List<Subcategoriapuesto> borrar = scBL.findByQuery("SELECT * FROM mydbproyecto.subcategoriapuesto "
+                                + "where fk_id_puesto=" + puesto.getPkIdPuesto() + ";");
+
+                        for (int j = 0; j < borrar.size(); j++) {
+                            scBL.delete(borrar.get(j));
+                        }
+
+                    }
+                    AplicacionpuestoBL apliBL = new AplicacionpuestoBL();
+                    for (int i = 0; i < puestos2.size(); i++) {
+                        Puesto puesto = puestos2.get(i);
+
+                        List< Aplicacionpuesto> borrar2 = apliBL.findByQuery("SELECT * FROM mydbproyecto.aplicacionpuesto "
+                                + "where fk_id_puesto=" + puesto.getPkIdPuesto() + ";");
+
+                        for (int j = 0; j < borrar2.size(); j++) {
+                            apliBL.delete(borrar2.get(j));
+                        }
+                        puestoBL1.delete(puesto);
+                    }
+
                     pBL.delete(p);
                     l.setPkIdLocalizacion(emp.getLocalizacion());
                     lpBL.delete(l);

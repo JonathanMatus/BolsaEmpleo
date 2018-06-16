@@ -6,12 +6,14 @@
 package cr.ac.una.prograiv.proyecto.bolsaempleo.controller;
 
 import com.google.gson.Gson;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.AplicacionpuestoBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.CaracteristicasoferenteBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.CategoriaBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.LocalizacionBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.OferenteBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.SubcategoriaBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.UsuarioBL;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Aplicacionpuesto;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Caracteristicasoferente;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Categoria;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Localizacion;
@@ -123,15 +125,22 @@ public class OferenteServlet extends HttpServlet {
 
                     Oferente ofer = ofere.get(0);
                     //Se elimina el objeto
+                    AplicacionpuestoBL apliBL=new AplicacionpuestoBL();
+                    List<Aplicacionpuesto> borrar2 = apliBL.findByQuery("select * from mydbproyecto.aplicacionpuesto where oferente_fk_cedula=" + ofer.getPkCedula() + ";");
+                    for (int i = 0; i < borrar2.size(); i++) {
+                        apliBL.delete(borrar2.get(i));
+                    }
+                     List<Caracteristicasoferente> borrar = caraOfeBL.findByQuery("select * from mydbproyecto.caracteristicasoferente where oferente_fk_cedula=" + ofer.getPkCedula() + ";");
+                    for (int i = 0; i < borrar.size(); i++) {
+                        caraOfeBL.delete(borrar.get(i));
+                    }
                     ofeBL.delete(ofe);
                     l.setPkIdLocalizacion(ofer.getLocalizacion());
                     lpBL.delete(l);
                     u.setPkUsuario(ofer.getUsuario());
                     ubl.delete(u);
-                    List<Caracteristicasoferente> borrar = caraOfeBL.findByQuery("select * from mydbproyecto.caracteristicasoferente where oferente_fk_cedula=" + ofer.getPkCedula() + ";");
-                    for (int i = 0; i < borrar.size(); i++) {
-                        caraOfeBL.delete(borrar.get(i));
-                    }
+                   
+                    
                     //Se imprime la respuesta con el response
                     out.print("El oferente fue eliminado correctamente");
 

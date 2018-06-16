@@ -106,14 +106,20 @@ public class PuestoServlet extends HttpServlet {
                 case "eliminarPuesto":
 
                     p.setPkIdPuesto(Integer.parseInt(request.getParameter("idPuesto")));
-
-                    //Se elimina el objeto
-                    pBL.delete(p);
                     List<Subcategoriapuesto> borrar = scBL.findByQuery("SELECT * FROM mydbproyecto.subcategoriapuesto "
                             + "where fk_id_puesto=" + request.getParameter("idPuesto") + ";");
                     for (int i = 0; i < borrar.size(); i++) {
                         scBL.delete(borrar.get(i));
                     }
+
+                    List<Aplicacionpuesto> borrar2 = apliBL.findByQuery("SELECT * FROM mydbproyecto.aplicacionpuesto "
+                            + "where fk_id_puesto=" + request.getParameter("idPuesto") + ";");
+                    for (int i = 0; i < borrar2.size(); i++) {
+                        apliBL.delete(borrar2.get(i));
+                    }
+                    //Se elimina el objeto
+                    pBL.delete(p);
+
                     out.print("C~El puesto fue eliminado correctamente");
 
                     break;
@@ -311,8 +317,12 @@ public class PuestoServlet extends HttpServlet {
                         out.print("[]");
                     }
                     break;
+                case "consultarPuestoById":
+                    json = new Gson().toJson(pBL.findByQuery("SELECT * FROM mydbproyecto.puesto where pk_id_puesto =" + request.getParameter("idPuesto") + ";"));
+                    out.print(json);
+                    break;
                 case "agregarPuesto":
-                case "modificarPuesto":
+
                     idUsuActivo = (int) session.getAttribute("idUsuario");
 
                     empresas = eBL.findByQuery("Select * from   mydbproyecto.empresa where  Usuario_PK_Usuario= " + idUsuActivo + ";");
@@ -347,18 +357,36 @@ public class PuestoServlet extends HttpServlet {
                             //Se imprime la respuesta con el response
                             out.print("C~El puesto fue ingresado correctamente");
 
-                        } else {//es modificar persona
-                            //Se guarda el objeto
-                            pBL.merge(p);
-
-                            //Se imprime la respuesta con el response
-                            out.print("C~El puesto fue modificado correctamente");
                         }
                     } else {
                         out.print("E~El usuario no es una empresa");
                     }
                     break;
+                case "modificarPuesto":
+                    Puesto opc = pBL.findById(Integer.parseInt(request.getParameter("idPuesto")));
+                    p.setNombre(request.getParameter("nombre"));
+                    p.setEmpresa(opc.getEmpresa());
+                    p.setTipoPublicacion(request.getParameter("tipo"));
 
+                    //--------------------castear a bigDecimal--------------------------------
+                    DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+                    symbols.setGroupingSeparator(',');
+                    symbols.setDecimalSeparator('.');
+                    String pattern = "#,##0.0#";
+                    DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
+                    decimalFormat.setParseBigDecimal(true);
+
+                    // parse the string
+                    BigDecimal bigDecimal = (BigDecimal) decimalFormat.parse(request.getParameter("salario"));
+
+                    // ----------------------------------------------------------------------------
+                    p.setSalario(bigDecimal);
+                    p.setPkIdPuesto(Integer.parseInt(request.getParameter("idPuesto")));
+                    pBL.merge(p);
+
+                    //Se imprime la respuesta con el response
+                    out.print("C~El puesto fue modificado correctamente");
+                    break;
                 default:
                     out.print("E~No se indico la acción que se desea realizare");
                     break;

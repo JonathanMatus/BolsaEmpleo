@@ -47,7 +47,6 @@ public class CategoriaServlet extends HttpServlet {
             CategoriaBL pBL = new CategoriaBL();
 
             //Se hace una pausa para ver el modal
-
             //**********************************************************************
             //se toman los datos de la session
             //**********************************************************************
@@ -70,9 +69,15 @@ public class CategoriaServlet extends HttpServlet {
 
                     break;
                 case "consultarCategorias":
-                    
+
                     List<Categoria> list = pBL.findAll(Categoria.class.getName());
                     json = new Gson().toJson(list);
+                    out.print(json);
+                    break;
+                case "consultarCategoriaByID":
+
+                  
+                    json = new Gson().toJson(  pBL.findByQuery("select * from mydbproyecto.categoria where pk_id_categoria="+request.getParameter("idCategoria")+";"));
                     out.print(json);
                     break;
                 case "agregarCategoria":
@@ -92,7 +97,7 @@ public class CategoriaServlet extends HttpServlet {
 
                     } else {//es modificar persona
                         //Se guarda el objeto
-                        p.setPkIdCategoria(Integer.parseInt(request.getParameter("idCategoria")));
+                        p.setPkIdCategoria(Integer.parseInt(request.getParameter("idCat")));
                         pBL.merge(p);
 
                         //Se imprime la respuesta con el response
