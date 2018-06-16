@@ -9,7 +9,7 @@
     String tipoUsuario = "-1";
     if (sesion != null) {
         if (sesion.getAttribute("usuario") == null) {
-           
+
         } else {
             tipoUsuario = (String) sesion.getAttribute("tipo");
         }
@@ -62,10 +62,10 @@
         <script src="../js/PuestoJS.js" type="text/javascript"></script>
 
 
-<!--        <link href="../css/gestionEmpresa.css" rel="stylesheet" type="text/css"/>
-        <link href="../css/cssRegistro.css" rel="stylesheet" type="text/css"/>-->
+        <!--        <link href="../css/gestionEmpresa.css" rel="stylesheet" type="text/css"/>
+                <link href="../css/cssRegistro.css" rel="stylesheet" type="text/css"/>-->
         <link href="../css/css.css" rel="stylesheet" type="text/css"/>
-        
+
 
     </head>
     <body>
@@ -99,15 +99,16 @@
                         <% if (tipoUsuario.equals("2")) { %> 
                     <li> <a href="administrador.jsp">Administrador</a></li>
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
-                     <li> <a href="actualizacion.jsp">Actualizacion</a></li>
+                    <li> <a href="actualizacion.jsp">Actualizacion</a></li>
                         <% }%> 
                         <% if (tipoUsuario.equals("1")) { %> 
 
                     <li> <a href="gestionEmpresa.jsp">Gestion Empresa</a></li>
                         <% }%> 
-                     <% if (tipoUsuario.equals("0")) { %> 
+                        <% if (tipoUsuario.equals("0")) { %> 
                     <li> <a href="puestos.jsp">Puestos</a></li>
-                     <% }%> 
+                    <li> <a href="actualizacion.jsp">Actualizacion</a></li>
+                        <% }%> 
                 </ul>
                 <ul class="nav navbar-right top-nav">
 
@@ -132,7 +133,7 @@
                     <% }%> 
                 </ul>
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-              
+
                 <!-- /.navbar-collapse -->
             </nav>
 
@@ -153,7 +154,7 @@
                                 </thead>
                             </table>
                         </div>
-                        
+
                     </div>
                     <!-- /.row -->
                 </div>
