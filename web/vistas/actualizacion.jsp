@@ -153,7 +153,7 @@
                             <a href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> Caracteristicas <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                             <ul id="submenu-1" class="collapse">
                                 <li><a type="button" id="ingresarPuesto"><i class="fa fa-angle-double-right"></i> Ingresar Caracteristicas</a></li>
-                              
+
                             </ul>
                             <a href="#" data-toggle="collapse" data-target="#submenu-2"><i class="fa fa-fw fa-search"></i> Perfil <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                             <ul id="submenu-2" class="collapse">
@@ -170,6 +170,7 @@
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row" id="main" >
+
                         <table class="table table-hover table-condensed" id="tablaCaracteristica" width="100%" >
                             <thead>
                                 <tr>
@@ -186,7 +187,11 @@
                                     <td><% out.print(ofeCompleto.getNacionalidad()); %></td>
                                     <td><% out.print(ofeCompleto.getCorreo()); %></td>
                                     <td><% out.print(ofeCompleto.getResidencia());%></td>
-                                    <td><input type="button" id="editarOfe" value="Editar"></td>
+                                    <td>
+                                        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#ModalOferente" aria-label="Left Align" onclick="consultarOferenteByID(ofeCompleto.getPkCedula())"> 
+                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 
+                                        </button>
+                                    </td>
                                 </tr>
 
                             </tbody>
@@ -237,13 +242,13 @@
                                 </div>
                             </div>                         
                         </div>
-                        <div class="modal fade" id="ModalCategorias" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
+                        <div class="modal fade" id="ModalOferente" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header1">
                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
                                         <ul id="myTab" class="nav nav-tabs">
-                                            <li class="active"><a href="#ingresarCat" data-toggle="tab">Registro</a></li>
+                                            <li class="active"><a href="#actualizarOferente" data-toggle="tab">Registro</a></li>
                                         </ul>
                                     </div>
                                     <div class="modal-body">
@@ -253,268 +258,316 @@
                                         <div id="myTabContent" class="tab-content">
 
                                             <div class="tab-pane fade active in" id="actualizarOferente">
-                                                <div class="col-lg-12 well" id="cam-form">
-                                                    <div class="row">
-                                                        <form id="formulario" >
-                                                            <div class="col-sm-12">
 
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="panel panel-login">
+                                                            <div class="panel-body">
                                                                 <div class="row">
-                                                                    <div class="col-sm-3 form-group" id="groupCedula">
-                                                                        <label>Cedula</label>
-                                                                        <input type="text" placeholder="Ingresar Cedula.." class="form-control" id="cedula" maxlength="" value="<% out.print(ofeCompleto.getPkCedula()); %>" disabled="" >
-                                                                    </div>
-                                                                    <div class="col-sm-3 form-group" id="groupNombre">
-                                                                        <label>Nombre</label>
-                                                                        <input type="text" placeholder="Ingresar Nombre.." class="form-control" id="nombre"  value="<% out.print(ofeCompleto.getNombre()); %>" >
-                                                                    </div>
-                                                                    <div class="col-sm-3 form-group" id="groupApellido1" >
-                                                                        <label>Primer apellido</label>
-                                                                        <input type="text" placeholder="Ingresar Primer apellido.." class="form-control" id="priApellido"  value="<% out.print(ofeCompleto.getApellido1()); %>"  maxlength="">
-                                                                    </div>
-                                                                    <div class="col-sm-3 form-group" id="groupApellido2"  >
-                                                                        <label>Segundo apellido</label>
-                                                                        <input type="text" placeholder="Ingresar Segundo apellido.." class="form-control" id="segApellido"  value="<% out.print(ofeCompleto.getApellido2());%>" maxlength="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-sm-3 form-group" id="groupNacionalidad">
-                                                                        <label>Nacionalidad</label>
-                                                                        <input type="text" placeholder="Ingresar Nacionalidad.." class="form-control" id="nacionalidad" value="<% out.print(ofeCompleto.getNacionalidad());%>" maxlength="">
-                                                                    </div>
-                                                                    <div class="col-sm-3 form-group" id="groupCorreo">
-                                                                        <label>Correo</label>
-                                                                        <input type="email" placeholder="Ingresar Correo.." class="form-control" id="correo"  value="<% out.print(ofeCompleto.getCorreo());%>" maxlength="">
-                                                                    </div>
-                                                                    <div class="col-sm-6 form-group" id="groupResidencia">
-                                                                        <label>Residencia</label>
-                                                                        <input type="text" placeholder="Ingresar Residencia.." class="form-control" id="residencia" value="<% out.print(ofeCompleto.getResidencia());%>" maxlength="">
-                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <form id="login-form" action="" method="post" role="form" style="display: block;">
+                                                                            <div class="col-sm-12">
 
-                                                                </div>
-
-
-
-                                                                <div class="col-sm-12 form-group">
-                                                                    <fieldset>
-                                                                        <label>Dirección</label>
-                                                                        <div id="us2"  class="col-md-12"></div>
-                                                                        <div class="row">
-                                                                            <div id="coordenadas">
-                                                                                <div class="form-group col-md-6">
-                                                                                    Lat.: <input type="text" class="form-control" readonly="yes" id="lat" />
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-3 form-group" id="groupCedula">
+                                                                                        <label>Cedula</label>
+                                                                                        <input type="text" placeholder="Ingresar Cedula.." class="form-control" id="cedulaOfer" maxlength="" value="" disabled="" >
+                                                                                    </div>
+                                                                                    <div class="col-sm-3 form-group" id="groupNombre">
+                                                                                        <label>Nombre</label>
+                                                                                        <input type="text" placeholder="Ingresar Nombre.." class="form-control" id="nombreOfer"  value="" >
+                                                                                    </div>
+                                                                                    <div class="col-sm-3 form-group" id="groupApellido1" >
+                                                                                        <label>Primer apellido</label>
+                                                                                        <input type="text" placeholder="Ingresar Primer apellido.." class="form-control" id="priApellidoOfer"    maxlength="">
+                                                                                    </div>
+                                                                                    <div class="col-sm-3 form-group" id="groupApellido2"  >
+                                                                                        <label>Segundo apellido</label>
+                                                                                        <input type="text" placeholder="Ingresar Segundo apellido.." class="form-control" id="segApellidoOfer"  maxlength="">
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div class="form-group col-md-6">
-                                                                                    Long.: <input type="text" class="form-control" readonly="yes" id="lng"/>
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-3 form-group" id="groupNacionalidad">
+                                                                                        <label>Nacionalidad</label>
+                                                                                        <input type="text" placeholder="Ingresar Nacionalidad.." class="form-control" id="nacionalidadOfer"  maxlength="">
+                                                                                    </div>
+                                                                                    <div class="col-sm-3 form-group" id="groupCorreo">
+                                                                                        <label>Correo</label>
+                                                                                        <input type="email" placeholder="Ingresar Correo.." class="form-control" id="correoOfer"   maxlength="">
+                                                                                    </div>
+                                                                                    <div class="col-sm-6 form-group" id="groupResidencia">
+                                                                                        <label>Residencia</label>
+                                                                                        <input type="text" placeholder="Ingresar Residencia.." class="form-control" id="residenciaOfer"  maxlength="">
+                                                                                    </div>
+
+                                                                                </div>
+
+
+
+                                                                                <div class="col-sm-12 form-group">
+                                                                                    <fieldset>
+                                                                                        <label>Dirección</label>
+                                                                                        <div id="oferentemap"  class="col-md-12"></div>
+                                                                                        <div class="row">
+                                                                                            <div id="coordenadas">
+                                                                                                <div class="form-group col-md-6">
+                                                                                                    Lat.: <input type="text" class="form-control" readonly="yes" id="latOfer" />
+                                                                                                </div>
+                                                                                                <div class="form-group col-md-6">
+                                                                                                    Long.: <input type="text" class="form-control" readonly="yes" id="longOfer"/>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </fieldset>
+
+                                                                                </div>
+
+                                                                                <div class=" form-group">
+                                                                                    <button type="button" id="editarOferente" class="btn btn-lg btn-info">Editar</button>
+                                                                                </div>					
+
+                                                                            </div>
+
+                                                                        </form> 
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="ModalCategorias" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header1">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                    <ul id="myTab" class="nav nav-tabs">
+                                        <li class="active"><a href="#ingresarCat" data-toggle="tab">Registro</a></li>
+                                    </ul>
+                                </div>
+                                <div class="modal-body">
+
+                                    <!-- content goes here -->
+
+                                    <div id="myTabContent" class="tab-content">
+
+                                        <div class="tab-pane fade active in" id="actualizarOferente">
+                                            <div class="col-lg-12 well" id="cam-form">
+                                                <div class="row">
+                                                    <form id="formulario" >
+                                                        <div class="col-sm-12">
+
+                                                            <div class="row">
+                                                                <div class="col-sm-3 form-group" id="groupCedula">
+                                                                    <label>Cedula</label>
+                                                                    <input type="text" placeholder="Ingresar Cedula.." class="form-control" id="cedula" maxlength="" value="<% out.print(ofeCompleto.getPkCedula()); %>" disabled="" >
+                                                                </div>
+                                                                <div class="col-sm-3 form-group" id="groupNombre">
+                                                                    <label>Nombre</label>
+                                                                    <input type="text" placeholder="Ingresar Nombre.." class="form-control" id="nombre"  value="<% out.print(ofeCompleto.getNombre()); %>" >
+                                                                </div>
+                                                                <div class="col-sm-3 form-group" id="groupApellido1" >
+                                                                    <label>Primer apellido</label>
+                                                                    <input type="text" placeholder="Ingresar Primer apellido.." class="form-control" id="priApellido"  value="<% out.print(ofeCompleto.getApellido1()); %>"  maxlength="">
+                                                                </div>
+                                                                <div class="col-sm-3 form-group" id="groupApellido2"  >
+                                                                    <label>Segundo apellido</label>
+                                                                    <input type="text" placeholder="Ingresar Segundo apellido.." class="form-control" id="segApellido"  value="<% out.print(ofeCompleto.getApellido2());%>" maxlength="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-3 form-group" id="groupNacionalidad">
+                                                                    <label>Nacionalidad</label>
+                                                                    <input type="text" placeholder="Ingresar Nacionalidad.." class="form-control" id="nacionalidad" value="<% out.print(ofeCompleto.getNacionalidad());%>" maxlength="">
+                                                                </div>
+                                                                <div class="col-sm-3 form-group" id="groupCorreo">
+                                                                    <label>Correo</label>
+                                                                    <input type="email" placeholder="Ingresar Correo.." class="form-control" id="correo"  value="<% out.print(ofeCompleto.getCorreo());%>" maxlength="">
+                                                                </div>
+                                                                <div class="col-sm-6 form-group" id="groupResidencia">
+                                                                    <label>Residencia</label>
+                                                                    <input type="text" placeholder="Ingresar Residencia.." class="form-control" id="residencia" value="<% out.print(ofeCompleto.getResidencia());%>" maxlength="">
+                                                                </div>
+
+                                                            </div>
+
+
+
+                                                            <div class="col-sm-12 form-group">
+                                                                <fieldset>
+                                                                    <label>Dirección</label>
+                                                                    <div id="us2"  class="col-md-12"></div>
+                                                                    <div class="row">
+                                                                        <div id="coordenadas">
+                                                                            <div class="form-group col-md-6">
+                                                                                Lat.: <input type="text" class="form-control" readonly="yes" id="lat" />
+                                                                            </div>
+                                                                            <div class="form-group col-md-6">
+                                                                                Long.: <input type="text" class="form-control" readonly="yes" id="lng"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </fieldset>
+
+                                                            </div>
+
+                                                            <div class=" form-group">
+                                                                <input type="hidden" value="agregarOferente" id="oferenteAction"/>
+                                                                <button type="button" id="editar" class="btn btn-lg btn-info">Editar</button>
+                                                            </div>					
+
+                                                        </div>
+                                                    </form> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header1">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                    <ul id="myTab" class="nav nav-tabs">
+                                        <li class="active"><a href="#signin" data-toggle="tab">Ingresar</a></li>
+                                        <li class=""><a href="#signup" data-toggle="tab">Registrar</a></li>
+                                    </ul>
+                                </div>
+                                <div class="modal-body">
+
+                                    <!-- content goes here -->
+
+                                    <div id="myTabContent" class="tab-content">
+                                        <div class="tab-pane fade" id="signup">
+                                            <div class="row">
+                                                <div class="panel-heading">
+                                                    <div class="row">
+                                                        <center> 
+                                                            <h3>¿Que desea registrar?</h3>
+                                                        </center>
+
+
+                                                    </div>
+                                                    <hr>
+                                                </div>
+                                                <div class="col-md-6 "><div class="btnLogin">
+                                                        <a id="" href="registroEmpresa.jsp"><button type="button"  id="registrarEmpresa" name="signupE" class="btn btn-success" >Registrar Empresa</button> </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 "><div class="btnLogin">
+                                                        <a id="" href="registro.jsp"><button type="button"  id="registrarOferente" name="signupO" class="btn btn-success" >Registrar Oferente</button> </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade active in" id="signin">
+                                            <div class="row">
+                                                <div class="col-md-12 ">
+                                                    <div class="panel panel-login">
+                                                        <div class="panel-heading">
+                                                            <div class="row">
+
+
+                                                            </div>
+                                                            <hr>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <form id="login-form" action="" method="post" role="form" style="display: block;">
+                                                                        <div class="form-group">
+                                                                            <input type="text" name="userid" id="userid" tabindex="1" class="form-control" placeholder="usuario" value="">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <input type="password" name="password" id="passwordinput" tabindex="2" class="form-control" placeholder="Contraseña">
+                                                                        </div>
+                                                                        <div class="form-group text-center">
+                                                                            <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                                                            <label for="remember"> Recordarme</label>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <div class="btnLogin">
+                                                                                    <button type="button"  id="ingresar2" name="ingresar" class="btn btn-success" >Ingresar</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="text-center">
+                                                                                        <a href="" tabindex="5" class="forgot-password">¿Has olvidado tu contraseña?</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="ModalCategorias" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header1">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                    <ul id="myTab" class="nav nav-tabs">
+                                        <li class="active"><a href="#ingresarCat" data-toggle="tab">Registro</a></li>
+                                    </ul>
+                                </div>
+                                <div class="modal-body">
+
+                                    <!-- content goes here -->
+
+                                    <div id="myTabContent" class="tab-content">
+
+                                        <div class="tab-pane fade active in" id="ingresarCat">
+                                            <div class="row">
+                                                <div class="col-md-12 ">
+                                                    <div class="panel panel-login">
+
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <form id="login-form" action="" method="post" role="form" style="display: block;">
+                                                                        <div class="form-group">
+                                                                            <input type="text" name="nombreCat" id="nombreCat" tabindex="1" class="form-control" placeholder="Ingresar nombre" value="">
+                                                                        </div>
+
+
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <div class="btnLogin">
+                                                                                    <button type="button"  id="registrarCat" name="ingresar" class="btn btn-success" >Registrar</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
 
-                                                                    </fieldset>
-
-                                                                </div>
-
-                                                                <div class=" form-group">
-                                                                    <input type="hidden" value="agregarOferente" id="oferenteAction"/>
-                                                                    <button type="button" id="editar" class="btn btn-lg btn-info">Editar</button>
-                                                                </div>					
-
-                                                            </div>
-                                                        </form> 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Modal -->
-                        <div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header1">
-                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                        <ul id="myTab" class="nav nav-tabs">
-                                            <li class="active"><a href="#signin" data-toggle="tab">Ingresar</a></li>
-                                            <li class=""><a href="#signup" data-toggle="tab">Registrar</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="modal-body">
-
-                                        <!-- content goes here -->
-
-                                        <div id="myTabContent" class="tab-content">
-                                            <div class="tab-pane fade" id="signup">
-                                                <div class="row">
-                                                    <div class="panel-heading">
-                                                        <div class="row">
-                                                            <center> 
-                                                                <h3>¿Que desea registrar?</h3>
-                                                            </center>
+                                                                    </form>
 
 
-                                                        </div>
-                                                        <hr>
-                                                    </div>
-                                                    <div class="col-md-6 "><div class="btnLogin">
-                                                            <a id="" href="registroEmpresa.jsp"><button type="button"  id="registrarEmpresa" name="signupE" class="btn btn-success" >Registrar Empresa</button> </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 "><div class="btnLogin">
-                                                            <a id="" href="registro.jsp"><button type="button"  id="registrarOferente" name="signupO" class="btn btn-success" >Registrar Oferente</button> </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane fade active in" id="signin">
-                                                <div class="row">
-                                                    <div class="col-md-12 ">
-                                                        <div class="panel panel-login">
-                                                            <div class="panel-heading">
-                                                                <div class="row">
-
-
-                                                                </div>
-                                                                <hr>
-                                                            </div>
-                                                            <div class="panel-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <form id="login-form" action="" method="post" role="form" style="display: block;">
-                                                                            <div class="form-group">
-                                                                                <input type="text" name="userid" id="userid" tabindex="1" class="form-control" placeholder="usuario" value="">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <input type="password" name="password" id="passwordinput" tabindex="2" class="form-control" placeholder="Contraseña">
-                                                                            </div>
-                                                                            <div class="form-group text-center">
-                                                                                <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-                                                                                <label for="remember"> Recordarme</label>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <div class="row">
-                                                                                    <div class="btnLogin">
-                                                                                        <button type="button"  id="ingresar2" name="ingresar" class="btn btn-success" >Ingresar</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-12">
-                                                                                        <div class="text-center">
-                                                                                            <a href="" tabindex="5" class="forgot-password">¿Has olvidado tu contraseña?</a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </form>
-
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal fade" id="ModalCategorias" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header1">
-                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                        <ul id="myTab" class="nav nav-tabs">
-                                            <li class="active"><a href="#ingresarCat" data-toggle="tab">Registro</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="modal-body">
-
-                                        <!-- content goes here -->
-
-                                        <div id="myTabContent" class="tab-content">
-
-                                            <div class="tab-pane fade active in" id="ingresarCat">
-                                                <div class="row">
-                                                    <div class="col-md-12 ">
-                                                        <div class="panel panel-login">
-
-                                                            <div class="panel-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <form id="login-form" action="" method="post" role="form" style="display: block;">
-                                                                            <div class="form-group">
-                                                                                <input type="text" name="nombreCat" id="nombreCat" tabindex="1" class="form-control" placeholder="Ingresar nombre" value="">
-                                                                            </div>
-
-
-                                                                            <div class="form-group">
-                                                                                <div class="row">
-                                                                                    <div class="btnLogin">
-                                                                                        <button type="button"  id="registrarCat" name="ingresar" class="btn btn-success" >Registrar</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </form>
-
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal fade" id="ModalSubCategorias" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header1">
-                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                        <ul id="myTab" class="nav nav-tabs">
-                                            <li class="active"><a href="#ingresarCat" data-toggle="tab">Registro</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="modal-body">
-
-                                        <!-- content goes here -->
-
-                                        <div id="myTabContent" class="tab-content">
-
-                                            <div class="tab-pane fade active in" id="ingresarCat">
-                                                <div class="row">
-                                                    <div class="col-md-12 ">
-                                                        <div class="panel panel-login">
-
-                                                            <div class="panel-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <form id="login-form" action="" method="post" role="form" style="display: block;">
-                                                                            <div class="form-group">
-                                                                                <input type="text" name="nombreCat" id="nombreSubCat" tabindex="1" class="form-control" placeholder="Ingresar nombre" value="">
-                                                                            </div>
-
-
-                                                                            <div class="form-group">
-                                                                                <div class="row">
-                                                                                    <div class="btnLogin">
-                                                                                        <button type="button"  id="registrarSubCat" name="registrarSubCat" class="btn btn-success" >Registrar</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </form>
-
-
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -527,41 +580,94 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /.row -->
+                    <div class="modal fade" id="ModalSubCategorias" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header1">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                    <ul id="myTab" class="nav nav-tabs">
+                                        <li class="active"><a href="#ingresarCat" data-toggle="tab">Registro</a></li>
+                                    </ul>
+                                </div>
+                                <div class="modal-body">
+
+                                    <!-- content goes here -->
+
+                                    <div id="myTabContent" class="tab-content">
+
+                                        <div class="tab-pane fade active in" id="ingresarCat">
+                                            <div class="row">
+                                                <div class="col-md-12 ">
+                                                    <div class="panel panel-login">
+
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <form id="login-form" action="" method="post" role="form" style="display: block;">
+                                                                        <div class="form-group">
+                                                                            <input type="text" name="nombreCat" id="nombreSubCat" tabindex="1" class="form-control" placeholder="Ingresar nombre" value="">
+                                                                        </div>
+
+
+                                                                        <div class="form-group">
+                                                                            <div class="row">
+                                                                                <div class="btnLogin">
+                                                                                    <button type="button"  id="registrarSubCat" name="registrarSubCat" class="btn btn-success" >Registrar</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </form>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- /.container-fluid -->
+                <!-- /.row -->
             </div>
-            <!-- /#page-wrapper -->
-        </div><!-- /#wrapper -->
-        <!----------------------------Formulario------------------------>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div><!-- /#wrapper -->
+    <!----------------------------Formulario------------------------>
 
-        <!--footer-->
-        <!-- Footer -->
-        <div class="navbar navbar-default navbar-relative-bottom navbar-fixed-bottom  ">
-            <div class="container-fluid footer " id="myFooter">
-                <div class="row">
-                    <div class="footer-1">
-                        <div class="col-sm-2 col-md-2 col-lg-2"></div>
-                        <div class="col-sm-4 col-md-4 col-lg-4">
-                            <ul>
+    <!--footer-->
+    <!-- Footer -->
+    <div class="navbar navbar-default navbar-relative-bottom navbar-fixed-bottom  ">
+        <div class="container-fluid footer " id="myFooter">
+            <div class="row">
+                <div class="footer-1">
+                    <div class="col-sm-2 col-md-2 col-lg-2"></div>
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                        <ul>
 
-                                <li><a href="contacto.jsp">Contacto</a></li>
-                                <li><a href="acerca.jsp">Sobre nosotros</a></li>
-                                <li><a href="registroEmpresa.jsp">Empresa</a></li>
-                                <li><a href="registro.jsp">Oferente</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-6"></div>
+                            <li><a href="contacto.jsp">Contacto</a></li>
+                            <li><a href="acerca.jsp">Sobre nosotros</a></li>
+                            <li><a href="registroEmpresa.jsp">Empresa</a></li>
+                            <li><a href="registro.jsp">Oferente</a></li>
+                        </ul>
                     </div>
-
-                    <div class="copyright col-sm-12">
-                        <p>© 2018 Copyright Bolsa de Empleo CR </p>
-                    </div>
-
+                    <div class="col-sm-6 col-md-6 col-lg-6"></div>
                 </div>
+
+                <div class="copyright col-sm-12">
+                    <p>© 2018 Copyright Bolsa de Empleo CR </p>
+                </div>
+
             </div>
         </div>
-    </body>
+    </div>
+</body>
 
 </html>
 

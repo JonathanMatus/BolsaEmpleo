@@ -127,59 +127,60 @@ public class PuestoServlet extends HttpServlet {
                                 + "oferente_fk_cedula=" + oferentes.get(0).getPkCedula() + ";");
                         puestos = pBL.findAll(Puesto.class.getName());
                         empresas = eBL.findAll(Empresa.class.getName());
-                        List<Puesto> comun = new ArrayList<>();
 
-                        if (puestosAplicados.size() > 0) {
-                            for (int k = 0; k < puestos.size(); k++) {
-                                for (int k1 = 0; k1 < puestosAplicados.size(); k1++) {
-                                    p = puestos.get(k);
-                                    if (p.getPkIdPuesto() != puestosAplicados.get(k1).getPuesto()) {
-                                        if (!comun.contains(p)) {
-                                            comun.add(p);
-                                        }
-                                    }
-                                }
-                            }
-                        } else {
-                            comun = puestos;
+                        Map<Integer, Puesto> datos = new HashMap<>();
+                        for (int i = 0; i < puestos.size(); i++) {
+                            datos.put(puestos.get(i).getPkIdPuesto(), puestos.get(i));
                         }
+                        Map<Integer, Empresa> datosEmp = new HashMap<>();
+                        for (int i = 0; i < empresas.size(); i++) {
+                            datosEmp.put(empresas.get(i).getPkIdEmp(), empresas.get(i));
+                        }
+                        if (puestosAplicados.size() > 0) {
 
+                            for (int k = 0; k < puestosAplicados.size(); k++) {
+                                p = datos.get(puestosAplicados.get(k).getPuesto());
+                                if (p.getPkIdPuesto() == puestosAplicados.get(k).getPuesto()) {
+
+                                    datos.remove(p.getPkIdPuesto());
+
+                                }
+
+                            }
+                        }
+                        List<Puesto> comun = new ArrayList<>(datos.values());
                         salida = "";
                         salida += "[";
                         for (int i = 0; i < comun.size(); i++) {
                             salida += "{";
                             Puesto aux2 = comun.get(i);
 
-                            for (int j = 0; j < empresas.size(); j++) {
-                                aux = empresas.get(j);
-                                if (Objects.equals(aux2.getEmpresa(), aux.getPkIdEmp())) {
-                                    salida += "\"pkIdPuesto\":" + aux2.getPkIdPuesto() + ","
-                                            + "\"empresa\":\"" + aux.getNombre() + "\","
-                                            + "\"tipoPublicacion\":\"" + aux2.getTipoPublicacion() + "\","
-                                            + "\"salario\":" + aux2.getSalario() + ","
-                                            + "\"nombre\":\"" + aux2.getNombre() + "\"";
-                                }
+                            aux = datosEmp.get(aux2.getEmpresa());
 
-                            }
+                            salida += "\"pkIdPuesto\":" + aux2.getPkIdPuesto() + ","
+                                    + "\"empresa\":\"" + aux.getNombre() + "\","
+                                    + "\"tipoPublicacion\":\"" + aux2.getTipoPublicacion() + "\","
+                                    + "\"salario\":" + aux2.getSalario() + ","
+                                    + "\"nombre\":\"" + aux2.getNombre() + "\"";
                             if (i + 1 == comun.size()) {
                                 salida += "}";
                             } else {
                                 salida += "},";
                             }
-
                         }
+
                         salida += "]";
                         out.print(salida);
                     } else {
                         throw new Exception("El Usuario no es oferente");
                     }
                     break;
-                    
+
                 case "consultarPuestosPublicos":
                     json = new Gson().toJson(pBL.findByQuery("SELECT * FROM mydbproyecto.puesto where tipo_publicacion = 'Publica';"));
                     out.print(json);
                     break;
-                    
+
                 case "consultarPuestos":
                     puestos = pBL.findAll(Puesto.class.getName());
 
@@ -370,7 +371,7 @@ public class PuestoServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
