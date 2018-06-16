@@ -23,6 +23,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -84,6 +85,21 @@ public class PuestoServlet extends HttpServlet {
             //**********************************************************************
             String accion = request.getParameter("accion");
             switch (accion) {
+                case "aplicarPuesto": {
+                    idUsuActivo = (int) session.getAttribute("idUsuario");
+                    int idPuesto = Integer.parseInt(request.getParameter("idPuesto"));
+                    oferentes = oferBL.findByQuery("Select * from   mydbproyecto.oferente where  Usuario_PK_Usuario= " + idUsuActivo + ";");
+                    if (oferentes.size() == 1) {
+                        apli.setOferente(oferentes.get(0).getPkCedula());
+                        apli.setPuesto(idPuesto);
+                        apliBL.save(apli);
+                        out.print("C~Aplicacion en puesto correcto!");
+
+                    } else {
+                        throw new Exception("El Usuario no es oferente");
+                    }
+                    break;
+                }
                 case "eliminarPuesto":
 
                     p.setPkIdPuesto(Integer.parseInt(request.getParameter("idPuesto")));
@@ -109,12 +125,15 @@ public class PuestoServlet extends HttpServlet {
                         puestos = pBL.findAll(Puesto.class.getName());
                         empresas = eBL.findAll(Empresa.class.getName());
                         List<Puesto> comun = new ArrayList<>();
+
                         if (puestosAplicados.size() > 0) {
                             for (int k = 0; k < puestos.size(); k++) {
                                 for (int k1 = 0; k1 < puestosAplicados.size(); k1++) {
                                     p = puestos.get(k);
                                     if (p.getPkIdPuesto() != puestosAplicados.get(k1).getPuesto()) {
-                                        comun.add(p);
+                                        if (!comun.contains(p)) {
+                                            comun.add(p);
+                                        }
                                     }
                                 }
                             }
@@ -130,7 +149,7 @@ public class PuestoServlet extends HttpServlet {
 
                             for (int j = 0; j < empresas.size(); j++) {
                                 aux = empresas.get(j);
-                                if (aux2.getEmpresa() == aux.getPkIdEmp()) {
+                                if (Objects.equals(aux2.getEmpresa(), aux.getPkIdEmp())) {
                                     salida += "\"pkIdPuesto\":" + aux2.getPkIdPuesto() + ","
                                             + "\"empresa\":\"" + aux.getNombre() + "\","
                                             + "\"tipoPublicacion\":\"" + aux2.getTipoPublicacion() + "\","
@@ -184,6 +203,38 @@ public class PuestoServlet extends HttpServlet {
                     salida += "]";
                     out.print(salida);
                     break;
+                case "consultarPuestosByEmpresa":
+                    idUsuActivo = (int) session.getAttribute("idUsuario");
+
+                    empresas = eBL.findByQuery("Select * from   mydbproyecto.empresa where  Usuario_PK_Usuario= " + idUsuActivo + ";");
+                    if (empresas.size() == 1) {
+                        aux = empresas.get(0);
+                        puestos = pBL.findByQuery("SELECT * FROM mydbproyecto.puesto where "
+                                + "fk_id_emp=" + aux.getPkIdEmp() + ";");
+
+                        salida = "";
+                        salida += "[";
+                        for (int i = 0; i < puestos.size(); i++) {
+                            salida += "{";
+                            Puesto aux2 = puestos.get(i);
+                           
+                                salida += "\"pkIdPuesto\":" + aux2.getPkIdPuesto() + ","
+                                        + "\"empresa\":\"" + aux.getNombre() + "\","
+                                        + "\"tipoPublicacion\":\"" + aux2.getTipoPublicacion() + "\","
+                                        + "\"salario\":" + aux2.getSalario() + ","
+                                        + "\"nombre\":\"" + aux2.getNombre() + "\"";
+                            if (i + 1 == puestos.size()) {
+                                salida += "}";
+                            } else {
+                                salida += "},";
+                            }
+
+                        }
+                        salida += "]";
+                        out.print(salida);
+                    }
+                    break;
+
                 case "agregarPuesto":
                 case "modificarPuesto":
 
@@ -224,19 +275,6 @@ public class PuestoServlet extends HttpServlet {
                         out.print("C~El puesto fue modificada correctamente");
                     }
 
-                    break;
-                case "aplicarPuesto":
-                    idUsuActivo = (int) session.getAttribute("idUsuario");
-                    int idPuesto = Integer.parseInt(request.getParameter("idPuesto"));
-                    oferentes = oferBL.findByQuery("Select * from   mydbproyecto.oferente where  Usuario_PK_Usuario= " + idUsuActivo + ";");
-                    if (oferentes.size() == 1) {
-                        apli.setOferente(oferentes.get(0).getPkCedula());
-                        apli.setPuesto(idPuesto);
-                        apliBL.save(apli);
-                        out.print("C~Aplicacion en puesto correcto!");
-                    } else {
-                        throw new Exception("El Usuario no es oferente");
-                    }
                     break;
 
                 default:

@@ -86,7 +86,7 @@ function consultarPuestos() {
     $.ajax({
         url: 'PuestoServlet',
         data: {
-            accion: "consultarPuestos"
+            accion: "consultarPuestosByEmpresa"
         },
         error: function () { //si existe un error en la respuesta del ajax
             swal("Error", "Se presento un error a la hora de cargar la información de las empresas en la base de datos", "error");

@@ -96,8 +96,7 @@ function AsignarOferente(idPuesto) {
                 swal("Correcto!", "Ha aplicado en un puesto.", "success").then(setTimeout(consultarPuestos(), 3000));
             }
         },
-        type: 'POST',
-        dataType: "json"
+        type: 'POST'
     });
 }
 
