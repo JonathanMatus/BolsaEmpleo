@@ -14,6 +14,9 @@
 var datatable = null;
 $(function () {
 
+       $("#editarOfe").click(function () {
+        window.location.href = "http://localhost:8080/BolsaEmpleo/vistas/editarOferente.jsp";
+    });
     
     $('.tablas').show();
     $('#listaCaracteristicas').click(function () {
@@ -255,8 +258,6 @@ function dibujarTablaCaracteristicas(dataJson) {
 
         rowData = dataJson[i];
         datatable.row.add([
-            rowData.pkIdCaracteristicas,
-            rowData.oferente,
             rowData.subcategoria,
             '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align" onclick="consultarCaracteristicaByID(' + rowData.pkIdCaracteristicas + ');">' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
@@ -269,6 +270,11 @@ function dibujarTablaCaracteristicas(dataJson) {
 
 
 }
+
+
+
+
+
 
 function validar() {
     var validacion = true;

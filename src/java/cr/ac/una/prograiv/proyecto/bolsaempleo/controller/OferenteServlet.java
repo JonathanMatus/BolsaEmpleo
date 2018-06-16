@@ -57,6 +57,7 @@ public class OferenteServlet extends HttpServlet {
             Oferente ofe = new Oferente();
             Localizacion l = new Localizacion();
             Localizacion l1 = new Localizacion();
+            Localizacion l2 = new Localizacion();
             Usuario u = new Usuario();
             UsuarioBL ubl = new UsuarioBL();
             Categoria cate = new Categoria();
@@ -133,6 +134,7 @@ public class OferenteServlet extends HttpServlet {
                     }
                     //Se imprime la respuesta con el response
                     out.print("El oferente fue eliminado correctamente");
+
                     break;
                 case "eliminarOferente":
 
@@ -162,10 +164,10 @@ public class OferenteServlet extends HttpServlet {
                     //Se llena el objeto con los datos enviados por AJAX por el metodo post
                     List<Oferente> existeCed = ofeBL.findByQuery("SELECT * FROM mydbproyecto.oferente where "
                             + "pk_cedula=" + request.getParameter("cedula") + ";");
-                    if (existeCed.size() == 0) {
+                    if (existeCed.size() == 0 || accion.equals("modificarOferente")) {
                         List<Oferente> existeMail = ofeBL.findByQuery("SELECT * FROM mydbproyecto.oferente where "
                                 + "correo='" + request.getParameter("correo") + "';");
-                        if (existeMail.size() == 0) {
+                        if (existeMail.size() == 0 || accion.equals("modificarOferente")) {
                             ofe.setPkCedula(Integer.parseInt(request.getParameter("cedula")));
                             ofe.setNombre(request.getParameter("nombre"));
                             ofe.setApellido1(request.getParameter("apellido1"));
@@ -193,13 +195,17 @@ public class OferenteServlet extends HttpServlet {
                                 ofeBL.save(ofe);
                                 //Se imprime la respuesta con el response
                                 out.print("C~El oferente fue ingresado correctamente");
-                            } else {//es modificar persona
-                                //Se guarda el objeto
+                            } else {
+                                lpBL.save(l);
+                                List<Localizacion> list2 = lpBL.findAll(Localizacion.class.getName());
+                                l2 = lpBL.findById(list2.get(list2.size() - 1).getPkIdLocalizacion());
+                                ofe.setLocalizacion(l2.getPkIdLocalizacion());
+                                ofe.setUsuario(existeCed.get(0).getUsuario());
                                 ofeBL.merge(ofe);
+                                session.setAttribute("ofeCompleto",ofe);
                                 //Se imprime la respuesta con el response
                                 out.print("C~El oferente fue modificada correctamente");
                             }
-
                         } else {
                             out.print("E~El correo ya ha sido utilizado");
                         }

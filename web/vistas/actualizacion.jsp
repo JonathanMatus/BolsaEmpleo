@@ -4,6 +4,8 @@
     Author     : kerencita
 --%>
 
+
+<%@page import="cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Oferente"%>
 <%-- 
     Document   : gestionEmpresa
     Created on : 22-may-2018, 21:37:41
@@ -13,11 +15,13 @@
 
     HttpSession sesion = request.getSession(true);
     String tipoUsuario = "-1";
-    if (sesion != null) {
+    Oferente ofeCompleto= null;
+            if (sesion != null) {
         if (sesion.getAttribute("usuario") == null) {
             response.sendRedirect("PaginaPrincipal.jsp");
         } else {
             tipoUsuario = (String) sesion.getAttribute("tipo");
+            ofeCompleto= (Oferente) sesion.getAttribute("ofeCompleto");
         }
     } else {
         response.sendRedirect("PaginaPrincipal.jsp");
@@ -162,19 +166,28 @@
                     <div class="row" id="main" >
                         <div class=" formPuesto col-sm-12 col-md-12 well" id="content">
                             <div class="  col-sm-12 col-md-12" >
-
-                                <table class="table table-hover table-condensed" id="tablaCaracteristica" width="100%" >
-                                    <thead>
-                                        <tr>
-                                            <th>Nombre</th>
-                                            <th>correo</th>
-                                            <th>Telefono</th>
-                                            <th>Descripcion</th>
-                                            <th>localizacion</th>
-                                            <th>Accion</th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                                
+                            <table class="table table-hover table-condensed" id="tablaCaracteristica" width="100%" >
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Nacionalidad</th>
+                                        <th>Correo</th>
+                                        <th>Residencia</th>
+                                        <th>Accion</th>
+                                    </tr>                                   
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><% out.print(ofeCompleto.getNombre() + " " + ofeCompleto.getApellido1()); %></td>                                     
+                                        <td><% out.print(ofeCompleto.getNacionalidad()); %></td>
+                                        <td><% out.print(ofeCompleto.getCorreo()); %></td>
+                                        <td><% out.print(ofeCompleto.getResidencia()); %></td>
+                                        <td><input type="button" id="editarOfe" value="Editar"></td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
 
                                 <div id="registroPuesto">
                                     <h1 class="well" id="titulo">Registro Caracteristicas</h1>

@@ -6,13 +6,16 @@
 package cr.ac.una.prograiv.proyecto.bolsaempleo.controller;
 
 import com.google.gson.Gson;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.OferenteBL;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.bl.impl.UsuarioBL;
+import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Oferente;
 import cr.ac.una.prograiv.proyecto.bolsaempleo.domain.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,8 +45,8 @@ public class ControllerLogin extends HttpServlet {
         try {
             Usuario usuario = new Usuario();
             UsuarioBL uBL = new UsuarioBL();
+            OferenteBL ofeBL = new OferenteBL();
             String accion = request.getParameter("accion");
-            
 
             switch (accion) {
                 case "loginUsuario":
@@ -52,8 +55,10 @@ public class ControllerLogin extends HttpServlet {
 
                     usuario = uBL.findByNombreUsuario(usuariotext);
 
+                    List<Oferente> listOfe = ofeBL.findByQuery("Select * from   mydbproyecto.oferente where  Usuario_PK_Usuario= " + usuario.getPkUsuario() + "");
+
                     if (usuario == null) {
-                         out.print("E~Usuario o contraseña incorrectos");
+                        out.print("E~Usuario o contraseña incorrectos");
                     }
                     if (usuario != null) {
                         if (!usuario.getPassword().equals(passwordtext)) {
@@ -62,6 +67,9 @@ public class ControllerLogin extends HttpServlet {
                             HttpSession session = request.getSession(true);
                             session.setAttribute("idUsuario", usuario.getPkUsuario());
                             session.setAttribute("email", usuario.getPkEmail());
+                            if(usuario.getTipo() != 1){
+                            session.setAttribute("ofeCompleto", listOfe.get(0));
+                            }
                             session.setAttribute("usuario", usuariotext);
                             session.setAttribute("tipo", String.valueOf(usuario.getTipo()));
                             session.setAttribute("loginStatus", "login");
